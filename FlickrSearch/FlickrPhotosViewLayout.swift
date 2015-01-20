@@ -66,7 +66,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     func setup()
     {
-        println("Calling layout setup()")
+        println("\n\nCalling layout setup()")
 
         edgeInsets          = UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)
         itemSize            = CGSizeMake(200.0, 200.0)
@@ -78,7 +78,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     override func prepareLayout()
     {
-        println("Calling layout prepareLayout()")
+        println("\n\nCalling layout prepareLayout()")
 
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
@@ -93,8 +93,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
             for var section: Int = 0; section < sectionCount; section++
             {
-                println("section: \(section)")
-                
+                println("Number of items in section: \(collectionView?.numberOfItemsInSection(section))")
                 var itemCount   = collectionView?.numberOfItemsInSection(section)
 
                 var itemAttributes: UICollectionViewLayoutAttributes
@@ -112,7 +111,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         newLayoutInfo[PFFlickrPhotoCellKind]    = cellLayoutInfo
 
         layoutInfo      = newLayoutInfo
-        println(layoutInfo.description)
+        println("Here's what the layout looks like: \(layoutInfo as Dictionary)")
     }
 
 
@@ -121,11 +120,12 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     private func frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
-        println("Calling layout frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath)–>CGRect")
+        println("\n\nCalling layout frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath)–>CGRect")
 
         var row: Int        = (indexPath.section / numberOfColumns)
         var column: Int     = indexPath.section % numberOfColumns
 
+        println("itemSize.width = \(itemSize.width)")
         var itemSizeWidth   = Float(itemSize.width)
         var columnSpacing   = numberOfColumns * Int(itemSizeWidth)
 
@@ -148,7 +148,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         {
             var alertView   = UIAlertView(title: "Oops!", message: "Collections are not available", delegate: self, cancelButtonTitle: "Ok")
         }
-
+        println(CGRectMake(originX, originY, itemSize.width, itemSize.height))
 
         return CGRectMake(originX, originY, itemSize.width, itemSize.height)
     }
@@ -157,7 +157,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?
     {
-        println("Calling layout layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?")
+        println("\n\nCalling layout layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?")
 
         println("layoutInfo.count = \(layoutInfo.count)")
         let allAttributes: NSMutableArray       = NSMutableArray(capacity: layoutInfo.count)
@@ -199,16 +199,20 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         let attributesArray    = allAttributes as Array
         println("Attributes array = \(attributesArray)")
 
-        return allAttributes
+        return allAttributes as Array
     }
 
 
-
+    /*
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes!
     {
+        println("\n\nCalling layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes!\n\n")
+
         //let cell                               = layoutInfo[PFFlickrPhotoCellKind] as FlickrPhotoCell
+        //println("Cell.frame = \(cell.frame)")
         //let cellAttributes: UICollectionViewLayoutAttributes    = cell.indexPath
         //return layoutInfo[PFFlickrPhotoCellKind][indexPath] as UICollectionViewLayoutAttributes
+
 
         if var cell = layoutInfo[PFFlickrPhotoCellKind] as? FlickrPhotoCell
         {
@@ -216,8 +220,17 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
             println(cellAttribute)
         }
 
+
         return UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
     }
+    */
 
+
+
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        println("\n\nCalling layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes!\n\n")
+
+        return UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+    }
 
 }
