@@ -18,13 +18,14 @@ let reuseIdentifier = "FlickrCell"
 
 class FlickrPhotosViewController:
     UICollectionViewController,
-    UITextFieldDelegate /*,
-    UICollectionViewDelegateFlowLayout*/
+    UITextFieldDelegate
 {
     private var searches        = [FlickrSearchResults]()
     private let flickr          = Flickr()
     private var selectedPhotos  = [FlickrPhoto]()
     private let shareTextLabel  = UILabel()
+
+    @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosViewLayout!
 
 
     /*

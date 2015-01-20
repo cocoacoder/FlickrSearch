@@ -67,6 +67,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="flickrPhotosLayout" destination="c0p-nR-leQ" id="xFZ-WB-twh"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SYo-Ro-I22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
