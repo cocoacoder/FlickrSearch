@@ -28,7 +28,7 @@ class FlickrPhotosViewController:
     @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosViewLayout!
 
 
-    /*
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class FlickrPhotosViewController:
 
         // Do any additional setup after loading the view.
     }
-    */
+
 
 
     override func didReceiveMemoryWarning()
@@ -119,7 +119,7 @@ class FlickrPhotosViewController:
 
     func updateSharedPhotoCount()
     {
-        shareTextLabel.textColor    = themeColor
+        shareTextLabel.textColor    = UIColor.darkGrayColor()
         shareTextLabel.text         = "\(selectedPhotos.count) photos selected."
         shareTextLabel.sizeToFit()
     }
@@ -258,7 +258,7 @@ class FlickrPhotosViewController:
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as FlickrPhotoCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
-        //cell.backgroundColor = UIColor.blackColor()
+        cell.backgroundColor = UIColor.blackColor()
 
         cell.activityIndicator.stopAnimating()
 

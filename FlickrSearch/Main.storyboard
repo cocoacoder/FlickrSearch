@@ -11,32 +11,30 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="zpT-hw-1fF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewLayout key="collectionViewLayout" id="c0p-nR-leQ" customClass="FlickrPhotosViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XeW-RI-9Zp">
-                                            <rect key="frame" x="5" y="5" width="190" height="190"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XeW-RI-9Zp">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         </imageView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="krR-n8-4B0">
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="krR-n8-4B0">
                                             <rect key="frame" x="82" y="81" width="37" height="37"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="krR-n8-4B0" secondAttribute="centerX" id="842-bv-rL3"/>
-                                    <constraint firstAttribute="centerY" secondItem="krR-n8-4B0" secondAttribute="centerY" id="L4d-ok-HBF"/>
-                                    <constraint firstItem="XeW-RI-9Zp" firstAttribute="leading" secondItem="gfj-5H-K69" secondAttribute="leading" constant="5" id="Pja-Kx-QPc"/>
-                                    <constraint firstItem="XeW-RI-9Zp" firstAttribute="top" secondItem="gfj-5H-K69" secondAttribute="top" constant="5" id="p3m-ED-tVT"/>
-                                    <constraint firstAttribute="trailing" secondItem="XeW-RI-9Zp" secondAttribute="trailing" constant="5" id="uW0-84-wZJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="XeW-RI-9Zp" secondAttribute="bottom" constant="5" id="uc1-TK-oe8"/>
+                                    <constraint firstAttribute="centerY" secondItem="XeW-RI-9Zp" secondAttribute="centerY" id="9Fa-Ao-heg"/>
+                                    <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="s1t-gC-Bu6"/>
+                                    <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="wzR-Hm-DSl"/>
+                                    <constraint firstAttribute="centerY" secondItem="XeW-RI-9Zp" secondAttribute="centerY" id="zAi-qW-xFo"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>

@@ -10,6 +10,8 @@
 
 
 import UIKit
+import QuartzCore
+
 
 
 
@@ -21,10 +23,56 @@ class FlickrPhotoCell: UICollectionViewCell
 
 
 
+    required init(coder aDecoder: NSCoder)
+    {
+        //println("Calling cell init with coder method")
+
+        super.init(coder: aDecoder)
+
+        self.backgroundColor            = UIColor(white: 0.85, alpha: 1.0)
+
+        self.layer.borderColor          = UIColor.whiteColor().CGColor
+        self.layer.borderWidth          = 6.0
+        self.layer.shadowColor          = UIColor.redColor().CGColor
+        self.layer.shadowRadius         = 6.0
+        self.layer.shadowOffset         = CGSizeMake(0.0, 3.0)
+        self.layer.shadowOpacity        = 0.5
+    }
+
+
+
+    override init(frame: CGRect)
+    {
+        println("Calling initWithFrame: \(frame)")
+
+        super.init(frame: frame)
+
+        self.backgroundColor            = UIColor(white: 0.85, alpha: 1.0)
+        
+        self.layer.borderColor          = UIColor.whiteColor().CGColor
+        self.layer.borderWidth          = 1.0
+        self.layer.shadowColor          = UIColor.blackColor().CGColor
+        self.layer.shadowRadius         = 10.0
+        self.layer.shadowOffset         = CGSizeMake(0.0, 2.0)
+        self.layer.shadowOpacity        = 0.5
+
+    }
+
+
+
     override func awakeFromNib()
     {
         super.awakeFromNib()
+
         self.selected   = false
+    }
+
+
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        //imageView.image     = nil
     }
 
 
@@ -33,7 +81,7 @@ class FlickrPhotoCell: UICollectionViewCell
     {
         didSet
         {
-            self.backgroundColor    = selected ? themeColor : UIColor.blackColor()
+            self.backgroundColor    = selected ? themeColor : UIColor.lightGrayColor()
         }
     }
 }
