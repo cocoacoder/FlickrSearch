@@ -21,7 +21,8 @@ let PFFlickrPhotoCellKind           = "FlickrCell"
 
 class FlickrPhotosViewLayout: UICollectionViewLayout
 {
-    var edgeInsets: UIEdgeInsets
+    var itemInsets: UIEdgeInsets            = UIEdgeInsetsZero
+    var itemInsetValue: CGFloat             = CGFloat()
     var itemSize: CGSize                    = CGSize()
     var interItemSpacingY: CGFloat          = CGFloat()
     var numberOfColumns: Int                = Int()
@@ -33,7 +34,6 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
     override init()
     {
         println("Calling layout init method")
-        self.edgeInsets         = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
 
         super.init()
 
@@ -46,13 +46,12 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
     {
         println("Calling layout init method")
 
-        self.edgeInsets     = UIEdgeInsetsZero
+        self.itemInsets     = UIEdgeInsetsZero
 
         super.init(coder: aDecoder)
 
         self.setup()
     }
-
 
 
     /*
@@ -68,13 +67,74 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
     {
         println("\n\nCalling layout setup()")
 
-        edgeInsets          = UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)
+        itemInsetValue      = 10.0
+        itemInsets          = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
         itemSize            = CGSizeMake(200.0, 200.0)
         interItemSpacingY   = 2.0
         numberOfColumns     = 3
     }
 
 
+
+    // MARK: Properties
+
+    func setItemInsets(itemInsets: UIEdgeInsets) -> Void
+    {
+        if UIEdgeInsetsEqualToEdgeInsets(self.itemInsets, itemInsets)
+        {
+            return
+        }
+
+        self.itemInsets     = itemInsets
+
+        self.invalidateLayout()
+    }
+
+
+
+    func setItemSize(itemSize: CGSize) -> Void
+    {
+        if CGSizeEqualToSize(self.itemSize, itemSize)
+        {
+            return
+        }
+
+        self.itemSize       = itemSize
+
+        self.invalidateLayout()
+    }
+
+
+
+    func setInterItemSpacingY(interItemSpacingY: CGFloat) -> Void
+    {
+        if self.interItemSpacingY == interItemSpacingY
+        {
+            return
+        }
+
+        self.interItemSpacingY  = interItemSpacingY
+
+        self.invalidateLayout()
+    }
+
+
+
+    func setNumberOfColumns(numberOfColumns: NSInteger) -> Void
+    {
+        if self.numberOfColumns == numberOfColumns
+        {
+            return
+        }
+
+        self.numberOfColumns    = numberOfColumns
+
+        self.invalidateLayout()
+    }
+
+
+
+    // MARK: Layout Methods
 
     override func prepareLayout()
     {
@@ -86,27 +146,27 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         if var sections = collectionView?.numberOfSections()
         {
             var sectionCount: Int                   = sections
-            println("sectionCount = \(sectionCount)")
+            //println("sectionCount = \(sectionCount)")
 
             var indexPath: NSIndexPath              = NSIndexPath(forItem: 0, inSection: 0)
-            println("indexPath = \(indexPath)")
+            //println("indexPath = \(indexPath)")
 
             var section: Int
 
             for section in 0..<sectionCount
             {
-                println("Section: \(section)")
+                //println("Section: \(section)")
 
                 if var items: Int   = collectionView?.numberOfItemsInSection(section)
                 {
-                    println("items: \(items)")
+                    //println("items: \(items)")
 
                     for item in 0..<items
                     {
-                        println("item: \(item)")
+                        //println("item: \(item)")
                         
                         indexPath   = NSIndexPath(forItem: item, inSection: section)
-                        println("indexPath: \(indexPath)")
+                        //println("indexPath: \(indexPath)")
 
                         var itemAttributes: UICollectionViewLayoutAttributes
                         itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
@@ -132,7 +192,6 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         newLayoutInfo[PFFlickrPhotoCellKind]    = cellLayoutInfo
 
         layoutInfo      = newLayoutInfo
-        //println("layoutInfo.count = \(layoutInfo.count)")
     }
 
 
@@ -141,7 +200,35 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
     {
         println("\n\nCalling layout layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?")
 
-        //println("UIScreen.mainScreen().bounds: \(UIScreen.mainScreen().bounds)")
+        //println("rect: \(rect)")
+
+
+        //
+        // So, why am I doing all of this. Well, that's an interesting story. You see, rect was getting
+        // passed-in with values like (0.0,-768.0,1024.0,1536.0) or (0.0,-1024.0, 0.0,1536.0). Talk about
+        // screwing things up!
+        //
+        var updatedRect: CGRect         = rect
+
+        if var view = collectionView?
+        {
+            //println("collectionView.frame: \(view.frame)")
+            //println("collectionView.bounds: \(view.bounds)")
+
+            //var rectScale: CGFloat      = UIScreen.mainScreen().scale
+            var newRect: CGRect         = view.frame
+            //newRect.size.width          = newRect.size.width * rectScale
+            //newRect.size.height         = newRect.size.height * rectScale
+
+            updatedRect                 = newRect
+            //println("updatedRect: \(updatedRect)")
+        }
+        else
+        {
+            var alertView   = UIAlertView(title: "Oops!", message: "There is no collection view with which to work.", delegate: self, cancelButtonTitle: "Ok")
+            alertView.show()
+            assert(false, "There is no collection view with which to work.")
+        }
 
         //println("layoutInfo.count = \(layoutInfo.count)")
         let allAttributes: NSMutableArray       = NSMutableArray(capacity: layoutInfo.count)
@@ -165,21 +252,9 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                     if var myAttributes = myObjAttributes
                     {
                         //println("myAttributes: \(myAttributes)")
-                        //println("rect: \(rect)")
                         //println("myAttributes.frame: \(myAttributes.frame)")
 
-                        var myRect: CGRect  = CGRectMake(rect.origin.x, rect.origin.y, rect.width, rect.height)
-                        if myRect.origin.y < 0
-                        {
-                            var faultyOriginY   = myRect.origin.y
-                            var newRect: CGRect = CGRectMake(0.0, 0.0, -faultyOriginY, myRect.height)
-                            myRect              = newRect
-                        }
-
-                        //println("myRect: \(myRect)")
-                        //println("myAttributes.frame: \(myAttributes.frame)")
-
-                        if CGRectIntersectsRect(myRect, myAttributes.frame) // Oops, in simulator rect is (0.0,-1024.0,0.0,2048.0), which is weird.
+                        if CGRectIntersectsRect(updatedRect, myAttributes.frame) // Oops, in simulator rect is (0.0,-1024.0,0.0,2048.0), which is weird.
                         {
                             //println("You've got attributes")
                             //println("myAttributes: \(myObjAttributes)")
@@ -187,9 +262,11 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                         }
                         else
                         {
-                            var alertView   = UIAlertView(title: "Oops!", message: "No attributes are available", delegate: self, cancelButtonTitle: "Ok")
-                            alertView.show()
-                            println("Ummm...you have no attributes, dude.")
+                            //var alertView   = UIAlertView(title: "Oops!", message: "No attributes are available", delegate: self, cancelButtonTitle: "Ok")
+                            //alertView.show()
+                            //println("Ummm...you have no attributes, dude.")
+
+                            assert(false, "Ummm...you have no attributes, dude.")
                         }
                     }
                 })
@@ -243,12 +320,10 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                     rowCount++
                 }
 
-                var edgeSpacing: CGFloat    = edgeInsets.top + edgeInsets.bottom
+                var edgeSpacing: CGFloat    = itemInsets.top + itemInsets.bottom
                 var interSpacing: CGFloat   = CGFloat(rowCount) + itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
 
                 height                      = edgeSpacing + interSpacing
-
-                //return CGSizeMake(aCollectionView.bounds.size.width, height)
             }
             else
             {
@@ -256,9 +331,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
                 var alertView   = UIAlertView(title: "Oops!", message: "No multi-row content", delegate: self, cancelButtonTitle: "Ok")
                 alertView.show()
-                println("Ummm...you have no rows, dude.")
-                
-                //return CGSizeMake(200.00, 200.00)
+                //println("Ummm...you have no rows, dude.")
             }
 
             return CGSizeMake(aCollectionView.bounds.size.width, height)
@@ -267,7 +340,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         {
             var alertView   = UIAlertView(title: "Oops!", message: "No content", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
-            println("Ummm...you have no content, dude.")
+            //println("Ummm...you have no content, dude.")
 
             return CGSizeMake(200.00, 200.00)
         }
@@ -285,10 +358,10 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         var column: Int     = indexPath.section % numberOfColumns
 
         //println("indexPath: \(indexPath)")
-        println("indexPath.section = \(indexPath.section)")
-        println("column = \(column)")
+        //println("indexPath.section = \(indexPath.section)")
+        //println("column = \(column)")
 
-        println("itemSize.width = \(itemSize.width)")
+        //println("itemSize.width = \(itemSize.width)")
         var itemSizeWidth   = Float(itemSize.width)
         var columnSpacing   = numberOfColumns * Int(itemSizeWidth)
 
@@ -298,18 +371,18 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         if var sizeWidth = collectionView?.bounds.size.width
         {
             var itemWidth       = CGFloat(numberOfColumns) * itemSize.width
-            var spacingX        = sizeWidth - edgeInsets.left - edgeInsets.right - itemWidth
+            var spacingX        = sizeWidth - itemInsets.left - itemInsets.right - itemWidth
 
             if self.numberOfColumns > 1
             {
                 spacingX            = spacingX / (CGFloat(numberOfColumns - 1))
             }
 
-            originX         = CGFloat(floorf(Float(edgeInsets.left) + Float(itemSize.width + spacingX) * Float(column)))
-            originY         = CGFloat(floorf(Float(edgeInsets.top) + Float(itemSize.height + interItemSpacingY) * Float(row)))
+            originX         = CGFloat(floorf(Float(itemInsets.left) + Float(itemSize.width + spacingX) * Float(column)))
+            originY         = CGFloat(floorf(Float(itemInsets.top) + Float(itemSize.height + interItemSpacingY) * Float(row)))
 
-            println("originX = \(originX)")
-            println("originY = \(originY)")
+            //println("originX = \(originX)")
+            //println("originY = \(originY)")
         }
         else
         {

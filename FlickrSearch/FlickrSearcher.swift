@@ -172,9 +172,17 @@ class Flickr
                     let flickrPhoto = FlickrPhoto(photoID: photoID, farm: farm, server: server, secret: secret)
 
                     let imageData = NSData(contentsOfURL: flickrPhoto.flickrImageURL())
-                    flickrPhoto.thumbnail = UIImage(data: imageData!)
 
-                    return flickrPhoto
+                    if var anImageData = imageData?
+                    {
+                        flickrPhoto.thumbnail = UIImage(data: anImageData)
+
+                        return flickrPhoto
+                    }
+                    else
+                    {
+                        assert(false, "Oops, no imageData.")
+                    }
             }
             
             dispatch_async(dispatch_get_main_queue(),

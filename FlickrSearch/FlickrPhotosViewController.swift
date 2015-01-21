@@ -52,6 +52,27 @@ class FlickrPhotosViewController:
 
 
 
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval)
+    {
+        if UIInterfaceOrientationIsLandscape(toInterfaceOrientation)
+        {
+            flickrPhotosLayout.numberOfColumns  = 3
+
+            var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+
+            flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
+        }
+        else
+        {
+            flickrPhotosLayout.numberOfColumns  = 2
+
+            var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
+            flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)
+        }
+    }
+
+
+
     // MARK: - Properties
 
     func photoForIndexPath(indexPath: NSIndexPath) -> FlickrPhoto
