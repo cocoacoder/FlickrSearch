@@ -32,8 +32,8 @@ class FlickrPhotoCell: UICollectionViewCell
         self.backgroundColor            = UIColor(white: 0.85, alpha: 1.0)
 
         self.layer.borderColor          = UIColor.whiteColor().CGColor
-        self.layer.borderWidth          = 6.0
-        self.layer.shadowColor          = UIColor.redColor().CGColor
+        self.layer.borderWidth          = 5.0
+        self.layer.shadowColor          = UIColor.blackColor().CGColor
         self.layer.shadowRadius         = 6.0
         self.layer.shadowOffset         = CGSizeMake(0.0, 3.0)
         self.layer.shadowOpacity        = 0.5
