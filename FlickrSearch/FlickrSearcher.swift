@@ -162,27 +162,30 @@ class Flickr
 
             let flickrPhotos : [FlickrPhoto] = photosReceived.map
             {
-                    photoDictionary in
+                photoDictionary in
 
-                    let photoID = photoDictionary["id"] as? String ?? ""
-                    let farm = photoDictionary["farm"] as? Int ?? 0
-                    let server = photoDictionary["server"] as? String ?? ""
-                    let secret = photoDictionary["secret"] as? String ?? ""
+                let photoID = photoDictionary["id"] as? String ?? ""
+                let farm = photoDictionary["farm"] as? Int ?? 0
+                let server = photoDictionary["server"] as? String ?? ""
+                let secret = photoDictionary["secret"] as? String ?? ""
 
-                    let flickrPhoto = FlickrPhoto(photoID: photoID, farm: farm, server: server, secret: secret)
+                let flickrPhoto = FlickrPhoto(photoID: photoID, farm: farm, server: server, secret: secret)
 
-                    let imageData = NSData(contentsOfURL: flickrPhoto.flickrImageURL())
+                let imageData = NSData(contentsOfURL: flickrPhoto.flickrImageURL())
 
-                    if var anImageData = imageData?
-                    {
-                        flickrPhoto.thumbnail = UIImage(data: anImageData)
+                if var anImageData = imageData?
+                {
+                    flickrPhoto.thumbnail = UIImage(data: anImageData)
 
-                        return flickrPhoto
-                    }
-                    else
-                    {
-                        assert(false, "Oops, no imageData.")
-                    }
+                    return flickrPhoto
+                }
+                else
+                {
+                    var alertView   = UIAlertView(title: "Oops!", message: "No items in your section", delegate: self, cancelButtonTitle: "Ok")
+                    alertView.show()
+
+                    assert(false, "Oops, no imageData.")
+                }
             }
             
             dispatch_async(dispatch_get_main_queue(),

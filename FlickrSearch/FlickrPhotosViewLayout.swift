@@ -21,15 +21,61 @@ let PFFlickrPhotoCellKind           = "FlickrCell"
 
 class FlickrPhotosViewLayout: UICollectionViewLayout
 {
-    var itemInsets: UIEdgeInsets            = UIEdgeInsetsZero
-    var itemInsetValue: CGFloat             = CGFloat()
-    var itemSize: CGSize                    = CGSize()
-    var interItemSpacingY: CGFloat          = CGFloat()
-    var numberOfColumns: Int                = Int()
+    // MARK: - Properties
 
+    var itemInsetValue: CGFloat             = CGFloat()
     private var layoutInfo: NSDictionary    = NSDictionary()
 
+    var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
+        /*{
+            willSet(newInsets)
+            {
+                //println("About to set itemInsets to \(newInsets)")
+        }
+        didSet
+        {
+            println("self.invalidateLayout()")
+            self.invalidateLayout()
+        }
+    }*/
 
+
+    var itemSize: CGSize                    = CGSize()
+        {
+            willSet(newItemSize)
+            {
+                println("Setting itemSize")
+        }
+        didSet
+        {
+            self.invalidateLayout()
+        }
+    }
+
+    var interItemSpacingY: CGFloat          = CGFloat()
+        /*{
+        didSet
+        {
+            self.invalidateLayout()
+        }
+    }*/
+
+    var numberOfColumns: Int                = Int()
+        {
+            willSet(newColumnNumber)
+            {
+                //println("About to set numberOfColumns to \(newColumnNumber)")
+        }
+        didSet
+        {
+            println("self.invalidateLayout()")
+            self.invalidateLayout()
+        }
+    }
+
+
+
+    // MARK: - Initializer
 
     override init()
     {
@@ -71,70 +117,12 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         itemInsets          = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
         itemSize            = CGSizeMake(200.0, 200.0)
         interItemSpacingY   = 2.0
-        numberOfColumns     = 3
+        numberOfColumns     = 2
     }
 
 
 
-    // MARK: Properties
-
-    func setItemInsets(itemInsets: UIEdgeInsets) -> Void
-    {
-        if UIEdgeInsetsEqualToEdgeInsets(self.itemInsets, itemInsets)
-        {
-            return
-        }
-
-        self.itemInsets     = itemInsets
-
-        self.invalidateLayout()
-    }
-
-
-
-    func setItemSize(itemSize: CGSize) -> Void
-    {
-        if CGSizeEqualToSize(self.itemSize, itemSize)
-        {
-            return
-        }
-
-        self.itemSize       = itemSize
-
-        self.invalidateLayout()
-    }
-
-
-
-    func setInterItemSpacingY(interItemSpacingY: CGFloat) -> Void
-    {
-        if self.interItemSpacingY == interItemSpacingY
-        {
-            return
-        }
-
-        self.interItemSpacingY  = interItemSpacingY
-
-        self.invalidateLayout()
-    }
-
-
-
-    func setNumberOfColumns(numberOfColumns: NSInteger) -> Void
-    {
-        if self.numberOfColumns == numberOfColumns
-        {
-            return
-        }
-
-        self.numberOfColumns    = numberOfColumns
-
-        self.invalidateLayout()
-    }
-
-
-
-    // MARK: Layout Methods
+    // MARK: - Layout Methods
 
     override func prepareLayout()
     {
@@ -352,7 +340,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     private func frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
-        println("\n\nCalling layout frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath)–>CGRect")
+        //println("\n\nCalling layout frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath)–>CGRect")
 
         var row: Int        = (indexPath.section / numberOfColumns)
         var column: Int     = indexPath.section % numberOfColumns
