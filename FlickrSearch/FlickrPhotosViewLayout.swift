@@ -10,6 +10,8 @@
 
 
 import UIKit
+import QuartzCore
+
 
 
 
@@ -25,6 +27,11 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     var itemInsetValue: CGFloat             = CGFloat()
     private var layoutInfo: NSDictionary    = NSDictionary()
+    let rotationCount: NSInteger            = 32
+    let rotationStride: NSInteger           = 3
+
+    var rotations: NSArray                  = NSArray()
+
 
     var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
         /*{
@@ -76,7 +83,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
 
     // MARK: - Initializer
-
+    /*
     override init()
     {
         println("Calling layout init method")
@@ -85,12 +92,12 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
         self.setup()
     }
-
+    */
 
 
     required init(coder aDecoder: NSCoder)
     {
-        println("Calling layout init method")
+        println("Calling layout init with coder method")
 
         self.itemInsets     = UIEdgeInsetsZero
 
@@ -100,13 +107,13 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
     }
 
 
-    /*
+
     override func awakeFromNib()
     {
         println("Calling layout awakeFromNib")
         super.awakeFromNib()
     }
-    */
+
 
 
     func setup()
@@ -118,6 +125,42 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         itemSize            = CGSizeMake(200.0, 200.0)
         interItemSpacingY   = 2.0
         numberOfColumns     = 2
+
+        // Create rotatioon at load so that they are consisten during prepareLayout()
+        var cellRotations: NSMutableArray  = NSMutableArray(capacity: rotationCount)
+
+        var percentage: Double  = 0.0
+
+        for i: Int in 0..<rotationCount
+        {
+            var newPercentage: Double = 0.0
+            var deltaPercentage: Double
+
+            do
+            {
+                newPercentage       = ((Double(arc4random()) % 220.0) - 110.0) * 0.0001
+
+                deltaPercentage     = percentage - newPercentage
+                deltaPercentage     = fabs(deltaPercentage)
+
+            } while deltaPercentage < 0.006
+
+            println("percentage = \(percentage)")
+            println("newPercentage = \(newPercentage)")
+
+            percentage      = newPercentage
+
+            var angle       = CGFloat(2.0 * M_PI * (1.0 + percentage))
+
+            var transform: CATransform3D
+            transform       = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
+
+            println("angle = \(angle)")
+
+            cellRotations.addObject(NSValue(CATransform3D: transform))
+        }
+
+        rotations   = cellRotations
     }
 
 
@@ -159,6 +202,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                         var itemAttributes: UICollectionViewLayoutAttributes
                         itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
                         itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
+                        itemAttributes.transform3D  = self.transformForGroupPhotoAtIndex(indexPath)
 
                         cellLayoutInfo[indexPath]   = itemAttributes
                         //println("cellLayoutInfo: \(cellLayoutInfo) for indexPath: \(indexPath)")
@@ -336,6 +380,17 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
 
 
+    func transformForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D
+    {
+        println("transformForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D")
+
+        var offset  = NSInteger(indexPath.section * rotationStride + indexPath.item)
+
+        return  rotations[offset % rotationCount].CATransform3DValue
+    }
+
+
+
     // MARK: - Private Methods
 
     private func frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath) -> CGRect
@@ -345,11 +400,6 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         var row: Int        = (indexPath.section / numberOfColumns)
         var column: Int     = indexPath.section % numberOfColumns
 
-        //println("indexPath: \(indexPath)")
-        //println("indexPath.section = \(indexPath.section)")
-        //println("column = \(column)")
-
-        //println("itemSize.width = \(itemSize.width)")
         var itemSizeWidth   = Float(itemSize.width)
         var columnSpacing   = numberOfColumns * Int(itemSizeWidth)
 
@@ -368,15 +418,16 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
             originX         = CGFloat(floorf(Float(itemInsets.left) + Float(itemSize.width + spacingX) * Float(column)))
             originY         = CGFloat(floorf(Float(itemInsets.top) + Float(itemSize.height + interItemSpacingY) * Float(row)))
-
-            //println("originX = \(originX)")
-            //println("originY = \(originY)")
         }
         else
         {
             var alertView   = UIAlertView(title: "Oops!", message: "Collections are not available", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
         }
+
+
+        var photoSize: CGSize
+        //println("FlickrPhoto.sizeForWidth: \(FlickrPhoto.siz))
         
         return CGRectMake(originX, originY, itemSize.width, itemSize.height)
     }

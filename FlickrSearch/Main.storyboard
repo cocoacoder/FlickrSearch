@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C99d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jlb-fM-i1q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C106a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jlb-fM-i1q">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -11,10 +11,10 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="zpT-hw-1fF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewLayout key="collectionViewLayout" id="c0p-nR-leQ" customClass="FlickrPhotosViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -31,10 +31,8 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="XeW-RI-9Zp" secondAttribute="centerY" id="9Fa-Ao-heg"/>
-                                    <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="s1t-gC-Bu6"/>
-                                    <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="wzR-Hm-DSl"/>
-                                    <constraint firstAttribute="centerY" secondItem="XeW-RI-9Zp" secondAttribute="centerY" id="zAi-qW-xFo"/>
+                                    <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="dCu-Ul-9IS"/>
+                                    <constraint firstAttribute="centerY" secondItem="XeW-RI-9Zp" secondAttribute="centerY" id="k7C-iV-ffE"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>

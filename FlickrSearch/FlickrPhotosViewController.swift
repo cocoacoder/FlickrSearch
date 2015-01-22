@@ -11,7 +11,7 @@ import UIKit
 
 
 
-let reuseIdentifier = "FlickrCell"
+let reuseIdentifier: String = "FlickrCell"
 
 
 
@@ -28,16 +28,37 @@ class FlickrPhotosViewController:
     @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosViewLayout!
 
 
+    /*
+    override init(collectionViewLayout layout: UICollectionViewLayout!)
+    {
+        super.init(collectionViewLayout: layout)
+
+        collectionView?.registerClass(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: reuseIdentifier)
+
+        collectionView?.backgroundColor     = UIColor(white: 0.85, alpha: 1.0)
+    }
+    */
+
+    /*
+    convenience required init(coder aDecoder: NSCoder)
+    {
+        let collectionLayout    = FlickrPhotosViewLayout()
+
+        self.init(collectionViewLayout: collectionLayout)
+    }
+    */
+
 
     override func viewDidLoad()
     {
+        println("view controller viewDidLoad()")
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        //self.collectionView!.registerClass(FlickrPhotoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //self.collectionView!.registerClass(FlickrPhotoCell.self, forCellWithReuseIdentifier: "FlickrCell")
 
         // Do any additional setup after loading the view.
     }
@@ -258,7 +279,7 @@ class FlickrPhotosViewController:
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as FlickrPhotoCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
-        cell.backgroundColor = UIColor.blackColor()
+        //cell.backgroundColor = UIColor.blackColor()
 
         cell.activityIndicator.stopAnimating()
 
@@ -301,6 +322,7 @@ class FlickrPhotosViewController:
             }
         }
 
+        cell.cellLayerSetup()
         return cell
     }
 
