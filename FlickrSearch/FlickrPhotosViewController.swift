@@ -77,7 +77,7 @@ class FlickrPhotosViewController:
     {
         if UIInterfaceOrientationIsLandscape(toInterfaceOrientation)
         {
-            flickrPhotosLayout.numberOfColumns  = 3
+            flickrPhotosLayout.numberOfColumns  = 4
 
             var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
 
@@ -85,7 +85,7 @@ class FlickrPhotosViewController:
         }
         else
         {
-            flickrPhotosLayout.numberOfColumns  = 2
+            flickrPhotosLayout.numberOfColumns  = 3
 
             var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
             flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)

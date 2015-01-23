@@ -123,8 +123,8 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         itemInsetValue      = 10.0
         itemInsets          = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
         itemSize            = CGSizeMake(200.0, 200.0)
-        interItemSpacingY   = 2.0
-        numberOfColumns     = 2
+        interItemSpacingY   = 20.0
+        numberOfColumns     = 3
 
         // Create rotatioon at load so that they are consisten during prepareLayout()
         var cellRotations: NSMutableArray  = NSMutableArray(capacity: rotationCount)
@@ -143,7 +143,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                 deltaPercentage     = percentage - newPercentage
                 deltaPercentage     = fabs(deltaPercentage)
 
-            } while deltaPercentage < 0.006
+            } while deltaPercentage < 0.01
 
             println("percentage = \(percentage)")
             println("newPercentage = \(newPercentage)")
