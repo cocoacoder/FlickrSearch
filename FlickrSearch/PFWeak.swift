@@ -11,7 +11,7 @@
 import UIKit
 import Foundation
 
-public class Weak<T: AnyObject>
+public class PFWeak<T: AnyObject>
 {
     public weak var value: T?
     public init (value: T)

@@ -96,9 +96,9 @@
 		E6CB21D71A64CFE30070332D /* FlickrSearch */ = {
 			isa = PBXGroup;
 			children = (
+				E68B24B51A71E6E2003E5EC7 /* PFWeak.swift */,
 				E6CB21DA1A64CFE30070332D /* AppDelegate.swift */,
 				E6CB21FC1A64E02F0070332D /* FlickrPhotosViewController.swift */,
-				E68B24B51A71E6E2003E5EC7 /* PFWeak.swift */,
 				E69F0FC31A69C14E000D2427 /* FlickrPhotosViewLayout.swift */,
 				E6CB22001A6755F40070332D /* FlickrPhotoCell.swift */,
 				E69F0FC21A69C0CC000D2427 /* Search Code */,

@@ -118,13 +118,22 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
     func setup()
     {
-        println("\n\nCalling layout setup()")
+        //println("\n\nCalling layout setup()")
 
         itemInsetValue      = 10.0
         itemInsets          = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
-        itemSize            = CGSizeMake(200.0, 200.0)
         interItemSpacingY   = 20.0
-        numberOfColumns     = 3
+
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        {
+            itemSize            = CGSizeMake(200.0, 200.0)
+            numberOfColumns     = 3
+        }
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        {
+            itemSize            = CGSizeMake(150.0, 150.0)
+            numberOfColumns     = 2
+        }
 
         // Create rotatioon at load so that they are consisten during prepareLayout()
         var cellRotations: NSMutableArray  = NSMutableArray(capacity: rotationCount)
@@ -145,17 +154,12 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
             } while deltaPercentage < 0.01
 
-            println("percentage = \(percentage)")
-            println("newPercentage = \(newPercentage)")
-
             percentage      = newPercentage
 
             var angle       = CGFloat(2.0 * M_PI * (1.0 + percentage))
 
             var transform: CATransform3D
             transform       = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
-
-            println("angle = \(angle)")
 
             cellRotations.addObject(NSValue(CATransform3D: transform))
         }
@@ -177,7 +181,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         if var sections = collectionView?.numberOfSections()
         {
             var sectionCount: Int                   = sections
-            //println("sectionCount = \(sectionCount)")
+            println("sectionCount = \(sectionCount)")
 
             var indexPath: NSIndexPath              = NSIndexPath(forItem: 0, inSection: 0)
             //println("indexPath = \(indexPath)")
@@ -190,22 +194,29 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
 
                 if var items: Int   = collectionView?.numberOfItemsInSection(section)
                 {
-                    //println("items: \(items)")
+                    println("items: \(items)")
 
-                    for item in 0..<items
+                    if items != 0
                     {
-                        //println("item: \(item)")
-                        
-                        indexPath   = NSIndexPath(forItem: item, inSection: section)
-                        //println("indexPath: \(indexPath)")
+                        for item in 0..<items
+                        {
+                            println("item: \(item)")
 
-                        var itemAttributes: UICollectionViewLayoutAttributes
-                        itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                        itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
-                        itemAttributes.transform3D  = self.transformForGroupPhotoAtIndex(indexPath)
+                            indexPath   = NSIndexPath(forItem: item, inSection: section)
+                            //println("indexPath: \(indexPath)")
 
-                        cellLayoutInfo[indexPath]   = itemAttributes
-                        //println("cellLayoutInfo: \(cellLayoutInfo) for indexPath: \(indexPath)")
+                            var itemAttributes: UICollectionViewLayoutAttributes
+                            itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+                            itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
+                            itemAttributes.transform3D  = self.transformForGroupPhotoAtIndex(indexPath)
+
+                            cellLayoutInfo[indexPath]   = itemAttributes
+                            //println("cellLayoutInfo: \(cellLayoutInfo) for indexPath: \(indexPath)")
+                        }
+                    }
+                    else
+                    {
+                        return
                     }
                 }
                 else
@@ -232,8 +243,6 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
     {
         println("\n\nCalling layout layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?")
 
-        //println("rect: \(rect)")
-
 
         //
         // So, why am I doing all of this. Well, that's an interesting story. You see, rect was getting
@@ -242,26 +251,27 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         //
         var updatedRect: CGRect         = rect
 
-        if var view = collectionView?
+        if var aView = collectionView?
         {
             //println("collectionView.frame: \(view.frame)")
             //println("collectionView.bounds: \(view.bounds)")
 
             //var rectScale: CGFloat      = UIScreen.mainScreen().scale
-            var newRect: CGRect         = view.frame
+            var newRect: CGRect         = aView.frame
             //newRect.size.width          = newRect.size.width * rectScale
             //newRect.size.height         = newRect.size.height * rectScale
 
             updatedRect                 = newRect
             //println("updatedRect: \(updatedRect)")
         }
+        /*
         else
         {
             var alertView   = UIAlertView(title: "Oops!", message: "There is no collection view with which to work.", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
             assert(false, "There is no collection view with which to work.")
         }
-
+        */
         //println("layoutInfo.count = \(layoutInfo.count)")
         let allAttributes: NSMutableArray       = NSMutableArray(capacity: layoutInfo.count)
 
@@ -298,7 +308,7 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                             //alertView.show()
                             //println("Ummm...you have no attributes, dude.")
 
-                            assert(false, "Ummm...you have no attributes, dude.")
+                            //assert(false, "Ummm...you have no attributes, dude.")
                         }
                     }
                 })
@@ -356,25 +366,28 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
                 var interSpacing: CGFloat   = CGFloat(rowCount) + itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
 
                 height                      = edgeSpacing + interSpacing
+
+
+                return CGSizeMake(aCollectionView.bounds.size.width, height)
             }
+
             else
             {
-                height      = 200.0
+                //var alertView   = UIAlertView(title: "Oops!", message: "No multi-row content", delegate: self, cancelButtonTitle: "Ok")
+                //alertView.show()
+                println("Ummm...you have no rows, dude.")
 
-                var alertView   = UIAlertView(title: "Oops!", message: "No multi-row content", delegate: self, cancelButtonTitle: "Ok")
-                alertView.show()
-                //println("Ummm...you have no rows, dude.")
+                return CGSizeZero
             }
-
-            return CGSizeMake(aCollectionView.bounds.size.width, height)
         }
+
         else
         {
             var alertView   = UIAlertView(title: "Oops!", message: "No content", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
             //println("Ummm...you have no content, dude.")
 
-            return CGSizeMake(200.00, 200.00)
+            return CGSizeZero
         }
     }
 
@@ -403,8 +416,8 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         var itemSizeWidth   = Float(itemSize.width)
         var columnSpacing   = numberOfColumns * Int(itemSizeWidth)
 
-        var originX: CGFloat    = 0.0
-        var originY: CGFloat    = 0.0
+        var originX: CGFloat
+        var originY: CGFloat
 
         if var sizeWidth = collectionView?.bounds.size.width
         {
@@ -423,12 +436,10 @@ class FlickrPhotosViewLayout: UICollectionViewLayout
         {
             var alertView   = UIAlertView(title: "Oops!", message: "Collections are not available", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
+
+            return CGRectZero
         }
 
-
-        var photoSize: CGSize
-        //println("FlickrPhoto.sizeForWidth: \(FlickrPhoto.siz))
-        
         return CGRectMake(originX, originY, itemSize.width, itemSize.height)
     }
 }

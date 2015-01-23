@@ -143,6 +143,17 @@ class Flickr
                 return
             }
 
+            // This is to handle the case in which no photos are returned.
+            var totalPhotos    = (resultsDictionary!["photos"]! as NSDictionary)["total"]! as String
+            //println("The number of photo returned: \(totalPhotos)")
+
+            if totalPhotos == "0"
+            {
+                completion(results: nil,error: nil)
+                return
+            }
+
+
             switch (resultsDictionary!["stat"] as String)
             {
             case "ok":

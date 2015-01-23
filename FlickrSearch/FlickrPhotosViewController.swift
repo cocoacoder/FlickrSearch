@@ -77,18 +77,39 @@ class FlickrPhotosViewController:
     {
         if UIInterfaceOrientationIsLandscape(toInterfaceOrientation)
         {
-            flickrPhotosLayout.numberOfColumns  = 4
+            if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+            {
+                flickrPhotosLayout.numberOfColumns  = 4
 
-            var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+                var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
 
-            flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
+                flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
+            }
+            if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+            {
+                flickrPhotosLayout.numberOfColumns  = 3
+
+                var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+
+                flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
+            }
         }
         else
         {
-            flickrPhotosLayout.numberOfColumns  = 3
+            if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+            {
+                flickrPhotosLayout.numberOfColumns  = 3
 
-            var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
-            flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)
+                var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
+                flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)
+            }
+            if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+            {
+                flickrPhotosLayout.numberOfColumns  = 2
+
+                var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
+                flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)
+            }
         }
     }
 
@@ -219,6 +240,8 @@ class FlickrPhotosViewController:
         {
             results, error in
 
+            println("results: \(results)")
+
             // 2
             activityIndicator.removeFromSuperview()
             if error != nil
@@ -236,6 +259,12 @@ class FlickrPhotosViewController:
 
                 // 4
                 self.collectionView?.reloadData()
+            }
+
+            if results == nil
+            {
+                let errorAlert  = UIAlertView(title: "Oops!", message: "Your search resulted in no photos. Please try searching again. Thanks.", delegate: self, cancelButtonTitle: "Ok")
+                errorAlert.show()
             }
         }
 
