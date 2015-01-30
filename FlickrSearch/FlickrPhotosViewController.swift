@@ -11,6 +11,9 @@ import UIKit
 
 
 
+
+
+
 let reuseIdentifier: String = "FlickrCell"
 
 
@@ -240,13 +243,13 @@ class FlickrPhotosViewController:
         {
             results, error in
 
-            println("results: \(results)")
+            //println("results: \(results)")
 
             // 2
             activityIndicator.removeFromSuperview()
             if error != nil
             {
-                println("Error Searching : \(error)")
+                //println("Error Searching : \(error)")
                 let errorAlert  = UIAlertView(title: "Oops!", message: "The Internet connection appears to be offline.", delegate: self, cancelButtonTitle: "Ok")
                 errorAlert.show()
             }
@@ -254,14 +257,14 @@ class FlickrPhotosViewController:
             if results != nil
             {
                 // 3
-                println("Found \(results!.searchResults.count) matching \(results!.searchTerm)")
+                //println("Found \(results!.searchResults.count) matching \(results!.searchTerm)")
                 self.searches.insert(results!, atIndex: 0)
 
                 // 4
                 self.collectionView?.reloadData()
             }
 
-            if results == nil
+            if results == nil && error == nil
             {
                 let errorAlert  = UIAlertView(title: "Oops!", message: "Your search resulted in no photos. Please try searching again. Thanks.", delegate: self, cancelButtonTitle: "Ok")
                 errorAlert.show()

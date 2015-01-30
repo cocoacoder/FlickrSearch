@@ -124,13 +124,15 @@ class Flickr
     {
 
         let searchURL = flickrSearchURLForSearchTerm(searchTerm)
-        let searchRequest = NSURLRequest(URL: searchURL)
+        //let searchRequest = NSURLRequest(URL: searchURL)
+        let searchRequest   = NSURLRequest(URL: searchURL, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 14)
         NSURLConnection.sendAsynchronousRequest(searchRequest, queue: processingQueue)
         {
             response, data, error in
 
             if error != nil
             {
+                //println("just an error, dude!")
                 completion(results: nil,error: error)
                 return
             }
@@ -139,6 +141,7 @@ class Flickr
             let resultsDictionary = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions(0), error: &JSONError) as? NSDictionary
             if JSONError != nil
             {
+                //println("JSONError")
                 completion(results: nil, error: JSONError)
                 return
             }
@@ -149,6 +152,7 @@ class Flickr
 
             if totalPhotos == "0"
             {
+                //println("You have no images.")
                 completion(results: nil,error: nil)
                 return
             }
@@ -159,10 +163,12 @@ class Flickr
             case "ok":
                 println("Results processed OK")
             case "fail":
+                println("fail")
                 let APIError = NSError(domain: "FlickrSearch", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey:resultsDictionary!["message"]!])
                 completion(results: nil, error: APIError)
                 return
             default:
+                println("Some other error: default")
                 let APIError = NSError(domain: "FlickrSearch", code: 0, userInfo: [NSLocalizedFailureReasonErrorKey:"Uknown API response"])
                 completion(results: nil, error: APIError)
                 return
