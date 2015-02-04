@@ -27,10 +27,23 @@ class FlickrPhotosGroupViewController:
     private let flickr          = Flickr()
     private var selectedPhotos  = [FlickrPhoto]()
     private let shareTextLabel  = UILabel()
+    private var lastLongPressedIndexPath:   NSIndexPath?
 
     @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosGroupViewLayout!
+    @IBOutlet var longPressGestureRecognzer: UILongPressGestureRecognizer!
 
 
+
+    // MARK: - UICollectionViewController Methods
+
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+    }
+    
+    
+    
+    
     /*
     override init(collectionViewLayout layout: UICollectionViewLayout!)
     {
@@ -294,6 +307,7 @@ class FlickrPhotosGroupViewController:
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
     {
+        println("number of sections: \(searches.count)")
         return searches.count
     }
 
@@ -301,7 +315,18 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return searches[section].searchResults.count
+        let photoCount      = searches[section].searchResults.count
+        /*
+        if photoCount < 3
+        {
+            return photoCount
+        }
+        else
+        {
+            return 3
+        }
+        */
+        return 1
     }
 
 
@@ -451,6 +476,35 @@ class FlickrPhotosGroupViewController:
     }
     */
 
+
+
+    // MARK: - UIViewController Overrides
+
+    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool
+    {
+        println("canPerformAction")
+
+        // Make sure the menu controller lets the responder chain know that it can handle its own
+        // custom menu action.
+
+        if action == Selector("menuAction:")
+        {
+            return true
+        }
+
+        return super.canPerformAction(action, withSender: sender)
+    }
+
+
+
+    override func canBecomeFirstResponder() -> Bool
+    {
+        println("override canBecomeFirstResponder")
+        return true
+    }
+
+
+
     /*
     // MARK: - UICollectionViewDelegateFlowLayout
 
@@ -490,6 +544,96 @@ class FlickrPhotosGroupViewController:
     */
 
 
-    // MARK: - UICollectionView Animation Code
+
+    // MARK: - UIGestures
+
+    @IBAction func handleLongPress(recognizer: UILongPressGestureRecognizer)
+    {
+        if recognizer.state != UIGestureRecognizerState.Began
+        {
+            println("A long-press gesture has begun")
+            return
+        }
+
+        // Grab the location of the gesture and use it to locate the cell it was made on.
+        var selectedPoint: CGPoint      = recognizer.locationInView(self.collectionView)
+
+        var indexPath: NSIndexPath?
+        indexPath                       = collectionView?.indexPathForItemAtPoint(selectedPoint)
+
+        // Check to make sure the long press was performed on a cell and not elsewhere.
+        if let index = indexPath
+        {
+            //println("We have an indexPath @ \(index)")
+            //println("The indexPath section is @ \(index.section)")
+            //println("The indexPath row is @ \(index.row)")
+
+            // Update the instance variable for func menuAction()
+            lastLongPressedIndexPath        = index
+            println("lastLongPressedIndexPath: \(lastLongPressedIndexPath)")
+
+            //let newIndex                    = NSIndexPath(forRow: index.row, inSection: 0)
+
+            // Grab the cell from which to display the menu controller.
+            var selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
+            println("cell.bounds = \(selectedCell.bounds)")
+
+
+            //
+            // Create a custom menu item
+            //
+
+            // Custom menu with house name
+            //var menuItem: UIMenuItem        = UIMenuItem(title: housePhotoGroupTitle, action: "menuAction:")!
+
+            // Custom menu with Delete and Cut items
+            var deleteMenuItem: UIMenuItem  = UIMenuItem(title: "Delete", action: "deletePhotoGroup:")
+            //var renameMenuItem: UIMenuItem  = UIMenuItem(title: "Rename", action: Selector("renamePhotoGroup:"))
+
+
+            //
+            // Menu Controller
+            //
+
+            // Configure the shared menu controller and display it.
+            var menuController: UIMenuController    = UIMenuController.sharedMenuController()
+
+            // Menu controller for house name
+            //menuController.menuItems        = [menuItem]
+
+            // Menu controller for Delete and Cut items
+            menuController.menuItems        = [deleteMenuItem]
+            //menuController.menuItems        = [deleteMenuItem, renameMenuItem]
+
+            self.becomeFirstResponder()
+            menuController.setTargetRect(selectedCell.bounds, inView: selectedCell)
+
+            // Configure look of menu controller
+            menuController.arrowDirection   = .Down
+
+            menuController.setMenuVisible(true, animated: true)
+        }
+        else
+        {
+            return
+        }
+    }
+
+
+
+    func deletePhotoGroup(sender: AnyObject)
+    {
+        //println("deletePhotoGroup: just called")
+
+        // Grab the last long-ressed index path and use it to find its corresponding model
+        //println("indexPath = \(lastLongPressedIndexPath)")
+        if let index = lastLongPressedIndexPath
+        {
+            //println("Time to delete a photo group :)")
+
+            let errorAlert  = UIAlertView(title: "Wow!", message: "Were this a real app, you'd have just deleted a group of photos.", delegate: self, cancelButtonTitle: "Ok")
+            errorAlert.show()
+        }
+    }
 
 }

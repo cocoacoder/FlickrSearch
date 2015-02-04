@@ -27,6 +27,8 @@ class FlickrPhotosGroupCell: UICollectionViewCell
     {
         //println("Calling cell init with coder method")
 
+        var altSelectedBackgroundView: PFHouseWorksCustomCellSelectedBackground     = PFHouseWorksCustomCellSelectedBackground(frame: CGRect(x: 0, y: 0, width:300 , height: 300))
+
         super.init(coder: aDecoder)
 
         self.backgroundColor            = UIColor(white: 0.85, alpha: 1.0)
@@ -39,7 +41,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
         self.layer.shadowOpacity        = 0.9
         self.layer.shouldRasterize      = true
 
-
+        selectedBackgroundView          = altSelectedBackgroundView
     }
 
 

@@ -12,9 +12,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <collectionViewLayout key="collectionViewLayout" id="c0p-nR-leQ" customClass="FlickrPhotosGroupViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotosGroupCell" customModule="FlickrSearch" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotosGroupCell" customModule="FlickrSearch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -30,6 +31,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="dCu-Ul-9IS"/>
                                     <constraint firstAttribute="centerY" secondItem="XeW-RI-9Zp" secondAttribute="centerY" id="k7C-iV-ffE"/>
@@ -44,6 +46,7 @@
                         <connections>
                             <outlet property="dataSource" destination="CGu-wO-eFZ" id="Fac-US-WKN"/>
                             <outlet property="delegate" destination="CGu-wO-eFZ" id="MBw-i7-DcF"/>
+                            <outletCollection property="gestureRecognizers" destination="q5b-ZM-cuS" appends="YES" id="lCW-Eb-gKW"/>
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="z1e-jQ-ZZF">
@@ -65,9 +68,15 @@
                     </navigationItem>
                     <connections>
                         <outlet property="flickrPhotosLayout" destination="c0p-nR-leQ" id="xFZ-WB-twh"/>
+                        <outlet property="longPressGestureRecognzer" destination="q5b-ZM-cuS" id="vUX-cb-7eb"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SYo-Ro-I22" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="q5b-ZM-cuS">
+                    <connections>
+                        <action selector="handleLongPress:" destination="CGu-wO-eFZ" id="UN1-bL-uZ3"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1080" y="356"/>
         </scene>
