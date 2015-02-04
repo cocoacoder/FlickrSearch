@@ -19,7 +19,7 @@ let reuseIdentifier: String = "FlickrCell"
 
 
 
-class FlickrPhotosViewController:
+class FlickrPhotosGroupViewController:
     UICollectionViewController,
     UITextFieldDelegate
 {
@@ -28,7 +28,7 @@ class FlickrPhotosViewController:
     private var selectedPhotos  = [FlickrPhoto]()
     private let shareTextLabel  = UILabel()
 
-    @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosViewLayout!
+    @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosGroupViewLayout!
 
 
     /*
@@ -308,7 +308,7 @@ class FlickrPhotosViewController:
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as FlickrPhotoCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as FlickrPhotosGroupCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
         //cell.backgroundColor = UIColor.blackColor()
@@ -347,7 +347,7 @@ class FlickrPhotosViewController:
 
             if indexPath == self.largePhotoIndexPath
             {
-                if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? FlickrPhotoCell // Optional chaining
+                if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? FlickrPhotosGroupCell // Optional chaining
                 {
                     cell.imageView.image    = loadedFlickrPhoto.largeImage
                 }

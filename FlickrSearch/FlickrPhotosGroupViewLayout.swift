@@ -21,7 +21,7 @@ let PFFlickrPhotoCellKind           = "FlickrCell"
 
 
 
-class FlickrPhotosViewLayout: UICollectionViewLayout
+class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 {
     // MARK: - Properties
 

@@ -4,17 +4,17 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Flickr Photos View Controller-->
+        <!--Flickr Photos Group View Controller-->
         <scene sceneID="aIp-qY-chS">
             <objects>
-                <collectionViewController id="CGu-wO-eFZ" customClass="FlickrPhotosViewController" customModule="FlickrSearch" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="CGu-wO-eFZ" customClass="FlickrPhotosGroupViewController" customModule="FlickrSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="zpT-hw-1fF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewLayout key="collectionViewLayout" id="c0p-nR-leQ" customClass="FlickrPhotosViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
+                        <collectionViewLayout key="collectionViewLayout" id="c0p-nR-leQ" customClass="FlickrPhotosGroupViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotosGroupCell" customModule="FlickrSearch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
