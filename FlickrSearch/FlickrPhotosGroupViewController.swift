@@ -11,9 +11,6 @@ import UIKit
 
 
 
-
-
-
 let reuseIdentifier: String = "FlickrCell"
 
 
@@ -307,7 +304,7 @@ class FlickrPhotosGroupViewController:
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
     {
-        println("number of sections: \(searches.count)")
+        println("numberOfSectionsInCollectionView: \(searches.count)\n\n")
         return searches.count
     }
 
@@ -316,7 +313,7 @@ class FlickrPhotosGroupViewController:
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         let photoCount      = searches[section].searchResults.count
-        /*
+
         if photoCount < 3
         {
             return photoCount
@@ -325,8 +322,6 @@ class FlickrPhotosGroupViewController:
         {
             return 3
         }
-        */
-        return 1
     }
 
 
@@ -482,7 +477,7 @@ class FlickrPhotosGroupViewController:
 
     override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool
     {
-        println("canPerformAction")
+        //println("canPerformAction")
 
         // Make sure the menu controller lets the responder chain know that it can handle its own
         // custom menu action.
@@ -499,7 +494,7 @@ class FlickrPhotosGroupViewController:
 
     override func canBecomeFirstResponder() -> Bool
     {
-        println("override canBecomeFirstResponder")
+        //println("override canBecomeFirstResponder")
         return true
     }
 
@@ -564,19 +559,12 @@ class FlickrPhotosGroupViewController:
         // Check to make sure the long press was performed on a cell and not elsewhere.
         if let index = indexPath
         {
-            //println("We have an indexPath @ \(index)")
-            //println("The indexPath section is @ \(index.section)")
-            //println("The indexPath row is @ \(index.row)")
-
             // Update the instance variable for func menuAction()
             lastLongPressedIndexPath        = index
-            println("lastLongPressedIndexPath: \(lastLongPressedIndexPath)")
-
-            //let newIndex                    = NSIndexPath(forRow: index.row, inSection: 0)
 
             // Grab the cell from which to display the menu controller.
             var selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
-            println("cell.bounds = \(selectedCell.bounds)")
+            //println("cell.bounds = \(selectedCell.bounds)")
 
 
             //
@@ -617,23 +605,93 @@ class FlickrPhotosGroupViewController:
         {
             return
         }
+        println("\n")
     }
 
 
 
     func deletePhotoGroup(sender: AnyObject)
     {
-        //println("deletePhotoGroup: just called")
+        println("deletePhotoGroup: just called")
 
         // Grab the last long-ressed index path and use it to find its corresponding model
         //println("indexPath = \(lastLongPressedIndexPath)")
         if let index = lastLongPressedIndexPath
         {
-            //println("Time to delete a photo group :)")
+            //println("lastLongPressedIndexPath: \(lastLongPressedIndexPath)")
+            println("lastLongPressedIndexPath.section: \(lastLongPressedIndexPath?.section)")
+            println("lastLongPressedIndexPath.row: \(lastLongPressedIndexPath?.row)")
 
-            let errorAlert  = UIAlertView(title: "Wow!", message: "Were this a real app, you'd have just deleted a group of photos.", delegate: self, cancelButtonTitle: "Ok")
-            errorAlert.show()
+
+            let photoSection = searches[lastLongPressedIndexPath!.section]
+            println("searches[lastLongPressedIndexPath!.section]:\(searches[lastLongPressedIndexPath!.section])")
+
+
+            //let photo       = photoForIndexPath(lastLongPressedIndexPath!)
+            //println("photo.photoID: \(photo.photoID)")
+
+
+
+            // NSAssert(![NSThread sMainThread], @"Boom!"); // Pretty cool Obj-C code for making sure that you're not calling the main thread!!!
+
+
+            //let errorAlert  = UIAlertView(title: "Wow!", message: "Were this a real app, you'd have just deleted a group of photos.", delegate: self, cancelButtonTitle: "Ok")
+            //errorAlert.show()
+
+            let indexSet = NSMutableIndexSet()
+
+            //for (NSIndexPath *itemPath  in itemPaths) {
+            //[indexSet addIndex:itemPath.row];
+
+            //for itemPath: NSIndexPath in index
+
+            self.collectionView?.performBatchUpdates(
+                {
+                    //
+                    // 1. Delete the photo section.
+                    //    ELSE: Find out how many photos there are for the section that I am going to delete
+
+                    //self.searches.removeAtIndex(self.lastLongPressedIndexPath!.section)
+
+
+                    //
+                    // 2. Delete the section in the collection view
+                    //
+
+                    //self.collectionView?.deleteSections(NSIndexSet(index: self.lastLongPressedIndexPath!.section))
+
+
+
+
+                    //let deleteIndexPath = self.collectionView?.indexPathsForSelectedItems()[0] as NSIndexPath
+                    //self.collectionView?.deleteItemsAtIndexPaths([index])
+
+                    //self.collectionView?.deleteSections(NSIndexSet(index: index.section))
+
+
+                    //self.collectionView?.deleteSections(NSIndexSet(index: index.section))
+
+
+                    let itemPaths = self.collectionView?.indexPathsForSelectedItems()
+
+                    // Delete the items from the data source.
+                    //[self deleteItemsFromDataSourceAtIndexPaths:itemPaths];
+
+
+
+                    // Now delete the items from the collection view.
+                    //[self.collectionView deleteItemsAtIndexPaths:tempArray]
+
+                    return
+                }){
+                    completed in
+                    //self.collectionView?.deleteItemsAtIndexPaths(NSArray(object: index))
+                    //self.collectionView?.reloadData()
+                    return
+            }
+            self.collectionView?.reloadData()
         }
+        println("\n")
     }
 
 }

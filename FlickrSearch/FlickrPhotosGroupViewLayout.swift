@@ -173,7 +173,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     override func prepareLayout()
     {
-        println("\n\nCalling layout prepareLayout()")
+        //println("\n\nCalling layout prepareLayout()")
 
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
@@ -181,7 +181,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         if var sections = collectionView?.numberOfSections()
         {
             var sectionCount: Int                   = sections
-            println("sectionCount = \(sectionCount)")
+            //println("sectionCount = \(sectionCount)")
 
             var indexPath: NSIndexPath              = NSIndexPath(forItem: 0, inSection: 0)
             //println("indexPath = \(indexPath)")
@@ -194,13 +194,13 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
                 if var items: Int   = collectionView?.numberOfItemsInSection(section)
                 {
-                    println("items: \(items)")
+                    //println("items: \(items)")
 
                     if items != 0
                     {
                         for item in 0..<items
                         {
-                            println("item: \(item)")
+                            //println("item: \(item)")
 
                             indexPath   = NSIndexPath(forItem: item, inSection: section)
                             //println("indexPath: \(indexPath)")
@@ -241,7 +241,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?
     {
-        println("\n\nCalling layout layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?")
+        //println("\n\nCalling layout layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?")
 
 
         //
@@ -395,7 +395,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     func transformForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D
     {
-        println("transformForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D")
+        //println("transformForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D")
 
         var offset  = NSInteger(indexPath.section * rotationStride + indexPath.item)
 
