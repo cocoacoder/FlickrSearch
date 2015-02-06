@@ -564,7 +564,6 @@ class FlickrPhotosGroupViewController:
 
             // Grab the cell from which to display the menu controller.
             var selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
-            //println("cell.bounds = \(selectedCell.bounds)")
 
 
             //
@@ -615,35 +614,13 @@ class FlickrPhotosGroupViewController:
         println("deletePhotoGroup: just called")
 
         // Grab the last long-ressed index path and use it to find its corresponding model
-        //println("indexPath = \(lastLongPressedIndexPath)")
+
         if let index = lastLongPressedIndexPath
         {
-            //println("lastLongPressedIndexPath: \(lastLongPressedIndexPath)")
-            println("lastLongPressedIndexPath.section: \(lastLongPressedIndexPath?.section)")
-            println("lastLongPressedIndexPath.row: \(lastLongPressedIndexPath?.row)")
-
-
-            let photoSection = searches[lastLongPressedIndexPath!.section]
-            println("searches[lastLongPressedIndexPath!.section]:\(searches[lastLongPressedIndexPath!.section])")
-
-
-            //let photo       = photoForIndexPath(lastLongPressedIndexPath!)
-            //println("photo.photoID: \(photo.photoID)")
-
-
-
-            // NSAssert(![NSThread sMainThread], @"Boom!"); // Pretty cool Obj-C code for making sure that you're not calling the main thread!!!
-
-
             //let errorAlert  = UIAlertView(title: "Wow!", message: "Were this a real app, you'd have just deleted a group of photos.", delegate: self, cancelButtonTitle: "Ok")
             //errorAlert.show()
 
             let indexSet = NSMutableIndexSet()
-
-            //for (NSIndexPath *itemPath  in itemPaths) {
-            //[indexSet addIndex:itemPath.row];
-
-            //for itemPath: NSIndexPath in index
 
             self.collectionView?.performBatchUpdates(
                 {
@@ -651,42 +628,19 @@ class FlickrPhotosGroupViewController:
                     // 1. Delete the photo section.
                     //    ELSE: Find out how many photos there are for the section that I am going to delete
 
-                    self.searches.removeAtIndex(self.lastLongPressedIndexPath!.section)
+                    self.searches.removeAtIndex(index.section)
 
 
                     //
                     // 2. Delete the section in the collection view
                     //
 
-                    self.collectionView?.deleteSections(NSIndexSet(index: self.lastLongPressedIndexPath!.section))
-
-
-
-
-                    //let deleteIndexPath = self.collectionView?.indexPathsForSelectedItems()[0] as NSIndexPath
-                    //self.collectionView?.deleteItemsAtIndexPaths([index])
-
-                    //self.collectionView?.deleteSections(NSIndexSet(index: index.section))
-
-
-                    //self.collectionView?.deleteSections(NSIndexSet(index: index.section))
-
-
-                    let itemPaths = self.collectionView?.indexPathsForSelectedItems()
-
-                    // Delete the items from the data source.
-                    //[self deleteItemsFromDataSourceAtIndexPaths:itemPaths];
-
-
-
-                    // Now delete the items from the collection view.
-                    //[self.collectionView deleteItemsAtIndexPaths:tempArray]
+                    self.collectionView?.deleteSections(NSIndexSet(index: index.section))
 
                     return
                 }){
                     completed in
-                    //self.collectionView?.deleteItemsAtIndexPaths(NSArray(object: index))
-                    //self.collectionView?.reloadData()
+
                     return
             }
             self.collectionView?.reloadData()
