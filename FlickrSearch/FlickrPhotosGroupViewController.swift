@@ -651,14 +651,14 @@ class FlickrPhotosGroupViewController:
                     // 1. Delete the photo section.
                     //    ELSE: Find out how many photos there are for the section that I am going to delete
 
-                    //self.searches.removeAtIndex(self.lastLongPressedIndexPath!.section)
+                    self.searches.removeAtIndex(self.lastLongPressedIndexPath!.section)
 
 
                     //
                     // 2. Delete the section in the collection view
                     //
 
-                    //self.collectionView?.deleteSections(NSIndexSet(index: self.lastLongPressedIndexPath!.section))
+                    self.collectionView?.deleteSections(NSIndexSet(index: self.lastLongPressedIndexPath!.section))
 
 
 
