@@ -304,7 +304,6 @@ class FlickrPhotosGroupViewController:
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
     {
-        println("numberOfSectionsInCollectionView: \(searches.count)\n\n")
         return searches.count
     }
 
@@ -328,10 +327,11 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
+        println("collectionView:cellForItemAtIndexPath")
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as FlickrPhotosGroupCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
-        //cell.backgroundColor = UIColor.blackColor()
 
         cell.activityIndicator.stopAnimating()
 
@@ -374,7 +374,7 @@ class FlickrPhotosGroupViewController:
             }
         }
 
-        cell.cellLayerSetup()
+        //cell.cellLayerSetup()
         return cell
     }
 
@@ -389,6 +389,7 @@ class FlickrPhotosGroupViewController:
             let headerView          = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "FlickrPhotoHeaderView", forIndexPath: indexPath) as FlickrPhotoHeaderView
             headerView.label.text   = searches[indexPath.section].searchTerm
             return headerView
+
         default:
             assert(false, "Unexpected kind of element")
         }
@@ -546,7 +547,6 @@ class FlickrPhotosGroupViewController:
     {
         if recognizer.state != UIGestureRecognizerState.Began
         {
-            println("A long-press gesture has begun")
             return
         }
 
@@ -565,14 +565,13 @@ class FlickrPhotosGroupViewController:
             // Grab the cell from which to display the menu controller.
             var selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
 
+            println("Photo selected: \(self.photoForIndexPath(index))")
+            println("indexPath of selected item: \(index)")
+
 
             //
             // Create a custom menu item
             //
-
-            // Custom menu with house name
-            //var menuItem: UIMenuItem        = UIMenuItem(title: housePhotoGroupTitle, action: "menuAction:")!
-
             // Custom menu with Delete and Cut items
             var deleteMenuItem: UIMenuItem  = UIMenuItem(title: "Delete", action: "deletePhotoGroup:")
             //var renameMenuItem: UIMenuItem  = UIMenuItem(title: "Rename", action: Selector("renamePhotoGroup:"))
@@ -581,12 +580,8 @@ class FlickrPhotosGroupViewController:
             //
             // Menu Controller
             //
-
             // Configure the shared menu controller and display it.
             var menuController: UIMenuController    = UIMenuController.sharedMenuController()
-
-            // Menu controller for house name
-            //menuController.menuItems        = [menuItem]
 
             // Menu controller for Delete and Cut items
             menuController.menuItems        = [deleteMenuItem]

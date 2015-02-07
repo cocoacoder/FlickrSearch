@@ -98,7 +98,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
     {
         println("Calling cellLayerSetup")
 
-        /*
+        
         self.layer.masksToBounds        = true
         self.layer.borderColor          = UIColor.whiteColor().CGColor
         self.layer.borderWidth          = 1.0
@@ -107,6 +107,6 @@ class FlickrPhotosGroupCell: UICollectionViewCell
         self.layer.shadowOffset         = CGSizeMake(0.0, 3.0)
         self.layer.shadowOpacity        = 0.9
         self.layer.shouldRasterize      = true
-        */
+
     }
 }
