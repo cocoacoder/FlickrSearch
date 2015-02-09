@@ -565,9 +565,6 @@ class FlickrPhotosGroupViewController:
             // Grab the cell from which to display the menu controller.
             var selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
 
-            println("Photo selected: \(self.photoForIndexPath(index))")
-            println("indexPath of selected item: \(index)")
-
 
             //
             // Create a custom menu item
