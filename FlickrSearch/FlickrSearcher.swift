@@ -154,7 +154,7 @@ class Flickr
             }
 
             // This is to handle the case in which no photos are returned.
-            var totalPhotos    = (resultsDictionary!["photos"]! as NSDictionary)["total"]! as String
+            var totalPhotos    = (resultsDictionary!["photos"]! as! NSDictionary)["total"]! as! String
             //println("The number of photo returned: \(totalPhotos)")
 
             if totalPhotos == "0"
@@ -165,7 +165,7 @@ class Flickr
             }
 
 
-            switch (resultsDictionary!["stat"] as String)
+            switch (resultsDictionary!["stat"] as! String)
             {
             case "ok":
                 println("Results processed OK")
@@ -181,23 +181,23 @@ class Flickr
                 return
             }
 
-            let photosContainer = resultsDictionary!["photos"] as NSDictionary
-            let photosReceived = photosContainer["photo"] as [NSDictionary]
+            let photosContainer = resultsDictionary!["photos"] as! NSDictionary
+            let photosReceived = photosContainer["photo"] as! [NSDictionary]
 
             let flickrPhotos : [FlickrPhoto] = photosReceived.map
             {
                 photoDictionary in
 
-                let photoID = photoDictionary["id"] as? String ?? ""
-                let farm = photoDictionary["farm"] as? Int ?? 0
-                let server = photoDictionary["server"] as? String ?? ""
-                let secret = photoDictionary["secret"] as? String ?? ""
+                let photoID = photoDictionary["id"] as? String ; ""
+                let farm = photoDictionary["farm"] as? Int ; 0
+                let server = photoDictionary["server"] as? String ; ""
+                let secret = photoDictionary["secret"] as? String ; ""
 
-                let flickrPhoto = FlickrPhoto(photoID: photoID, farm: farm, server: server, secret: secret)
+                let flickrPhoto = FlickrPhoto(photoID: photoID!, farm: farm!, server: server!, secret: secret!)
 
                 let imageData = NSData(contentsOfURL: flickrPhoto.flickrImageURL())
 
-                if var anImageData = imageData?
+                if var anImageData = imageData
                 {
                     flickrPhoto.thumbnail = UIImage(data: anImageData)
 

@@ -238,7 +238,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         //
         var updatedRect: CGRect         = rect
 
-        if var aView = collectionView?
+        if var aView = collectionView
         {
             var newRect: CGRect         = aView.frame
             updatedRect                 = newRect
@@ -302,7 +302,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         //
         // This is how you do the same thing in Swift...
         //
-        var attributes:UICollectionViewLayoutAttributes    = (layoutInfo[PFFlickrPhotoCellKind] as NSDictionary)[indexPath] as UICollectionViewLayoutAttributes
+        var attributes:UICollectionViewLayoutAttributes    = (layoutInfo[PFFlickrPhotoCellKind] as! NSDictionary)[indexPath] as! UICollectionViewLayoutAttributes
 
         return attributes
     }
@@ -313,7 +313,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     {
         var height: CGFloat
 
-        if var aCollectionView = collectionView?
+        if var aCollectionView = collectionView
         {
             if var rowCount = collectionView?.numberOfSections()
             {

@@ -194,7 +194,7 @@ class FlickrPhotosGroupViewController:
                 largePhotoIndexPath     = nil
             }
 
-            let shareButton = self.navigationItem.rightBarButtonItems!.first as UIBarButtonItem
+            let shareButton = self.navigationItem.rightBarButtonItems!.first as! UIBarButtonItem
 
             if sharing
             {
@@ -231,7 +231,7 @@ class FlickrPhotosGroupViewController:
 
             let shareScreen     = UIActivityViewController(activityItems: imageArray, applicationActivities: nil)
             let popover         = UIPopoverController(contentViewController: shareScreen)
-            popover.presentPopoverFromBarButtonItem(self.navigationItem.rightBarButtonItems!.first as UIBarButtonItem, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover.presentPopoverFromBarButtonItem(self.navigationItem.rightBarButtonItems!.first as! UIBarButtonItem, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
 
         sharing = !sharing
@@ -329,7 +329,7 @@ class FlickrPhotosGroupViewController:
     {
         println("collectionView:cellForItemAtIndexPath")
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as FlickrPhotosGroupCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotosGroupCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
 
@@ -386,7 +386,7 @@ class FlickrPhotosGroupViewController:
         {
         case UICollectionElementKindSectionHeader:
 
-            let headerView          = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "FlickrPhotoHeaderView", forIndexPath: indexPath) as FlickrPhotoHeaderView
+            let headerView          = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "FlickrPhotoHeaderView", forIndexPath: indexPath) as! FlickrPhotoHeaderView
             headerView.label.text   = searches[indexPath.section].searchTerm
             return headerView
 
