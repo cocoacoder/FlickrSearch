@@ -56,9 +56,9 @@
                                 </constraints>
                                 <size key="customSize" width="200" height="230"/>
                                 <connections>
-                                    <outlet property="GroupLabel" destination="UmE-0a-A24" id="KPE-bV-uI5"/>
                                     <outlet property="activityIndicator" destination="krR-n8-4B0" id="hj9-cl-2y2"/>
-                                    <outlet property="imageView" destination="XeW-RI-9Zp" id="yUu-kc-2J9"/>
+                                    <outlet property="groupLabel" destination="UmE-0a-A24" id="Pg3-R6-LUg"/>
+                                    <outlet property="imageViewTop" destination="XeW-RI-9Zp" id="WdN-BX-2jY"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

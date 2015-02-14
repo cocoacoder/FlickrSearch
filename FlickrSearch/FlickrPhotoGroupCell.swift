@@ -18,7 +18,7 @@ import QuartzCore
 
 class FlickrPhotosGroupCell: UICollectionViewCell
 {
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageViewTop: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var groupLabel: UILabel!
 
@@ -83,7 +83,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        imageView.image     = nil
+        imageViewTop.image     = nil
     }
 
 

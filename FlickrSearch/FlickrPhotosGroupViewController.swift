@@ -311,44 +311,35 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        let photoCount      = searches[section].searchResults.count
-
-        if photoCount < 3
-        {
-            return photoCount
-        }
-        else
-        {
-            return 3
-        }
+        return 1
     }
 
 
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        println("collectionView:cellForItemAtIndexPath")
-        
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotosGroupCell
+        let photoCount          = searches[indexPath.section].searchResults.count
+        let customIndexPath     = NSIndexPath(forRow: 0, inSection: indexPath.section)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: customIndexPath) as! FlickrPhotosGroupCell
 
-        let flickrPhoto = photoForIndexPath(indexPath)
+        let flickrPhoto = photoForIndexPath(customIndexPath)
 
         cell.activityIndicator.stopAnimating()
 
         if indexPath != largePhotoIndexPath
         {
-            cell.imageView.image = flickrPhoto.thumbnail
+            cell.imageViewTop.image = flickrPhoto.thumbnail
 
             cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
-            cell.groupLabel.text    = searches[indexPath.section].searchTerm
-            cell.groupLabel.layer.cornerRadius  = 10.0
+            cell.groupLabel.text                    = searches[indexPath.section].searchTerm
+            cell.groupLabel.layer.cornerRadius      = 10.0
 
             return cell
         }
-
+        /*
         if flickrPhoto.largeImage != nil
         {
-            cell.imageView.image    = flickrPhoto.largeImage
+            cell.imageViewTop.image    = flickrPhoto.largeImage
 
             cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
             cell.groupLabel.text    = searches[indexPath.section].searchTerm
@@ -356,13 +347,16 @@ class FlickrPhotosGroupViewController:
 
             return cell
         }
+        */
 
-        cell.imageView.image    = flickrPhoto.thumbnail
+
+        cell.imageViewTop.image                 = flickrPhoto.thumbnail
         cell.activityIndicator.startAnimating()
         cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
-        cell.groupLabel.text    = searches[indexPath.section].searchTerm
-        cell.groupLabel.layer.cornerRadius  = 10.0
+        cell.groupLabel.text                    = searches[indexPath.section].searchTerm
+        cell.groupLabel.layer.cornerRadius      = 10.0
 
+        /*
         flickrPhoto.loadLargeImage{
             loadedFlickrPhoto, error in
 
@@ -382,11 +376,11 @@ class FlickrPhotosGroupViewController:
             {
                 if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? FlickrPhotosGroupCell // Optional chaining
                 {
-                    cell.imageView.image    = loadedFlickrPhoto.largeImage
+                    cell.imageViewTop.image    = loadedFlickrPhoto.largeImage
                 }
             }
         }
-
+        */
 
 
         //cell.cellLayerSetup()
@@ -430,7 +424,7 @@ class FlickrPhotosGroupViewController:
             println("Sharing turned on")
             return true
         }
-
+        /*
         if largePhotoIndexPath  == indexPath
         {
             largePhotoIndexPath = nil
@@ -439,6 +433,7 @@ class FlickrPhotosGroupViewController:
         {
             largePhotoIndexPath = indexPath
         }
+        */
         return false
     }
 
