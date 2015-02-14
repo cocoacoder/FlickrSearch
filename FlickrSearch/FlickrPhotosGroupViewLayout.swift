@@ -41,7 +41,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
         didSet
         {
-            println("self.invalidateLayout()")
             self.invalidateLayout()
         }
     }*/
@@ -75,7 +74,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
         didSet
         {
-            println("self.invalidateLayout()")
             self.invalidateLayout()
         }
     }

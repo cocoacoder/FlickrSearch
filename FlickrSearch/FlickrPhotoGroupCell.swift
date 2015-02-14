@@ -20,6 +20,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
 {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var groupLabel: UILabel!
 
 
 
@@ -60,6 +61,9 @@ class FlickrPhotosGroupCell: UICollectionViewCell
         self.layer.shadowRadius         = 10.0
         self.layer.shadowOffset         = CGSizeMake(0.0, 2.0)
         self.layer.shadowOpacity        = 0.5
+
+        self.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
+        self.groupLabel.layer.cornerRadius  = 5.0
 
         self.layer.rasterizationScale   = UIScreen.mainScreen().scale
         self.layer.shouldRasterize      = true
@@ -108,5 +112,8 @@ class FlickrPhotosGroupCell: UICollectionViewCell
         self.layer.shadowOpacity        = 0.9
         self.layer.shouldRasterize      = true
 
+
+        self.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
+        self.groupLabel.layer.cornerRadius  = 5.0
     }
 }

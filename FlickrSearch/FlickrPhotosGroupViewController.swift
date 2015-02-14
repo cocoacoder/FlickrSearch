@@ -338,17 +338,30 @@ class FlickrPhotosGroupViewController:
         if indexPath != largePhotoIndexPath
         {
             cell.imageView.image = flickrPhoto.thumbnail
+
+            cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
+            cell.groupLabel.text    = searches[indexPath.section].searchTerm
+            cell.groupLabel.layer.cornerRadius  = 10.0
+
             return cell
         }
 
         if flickrPhoto.largeImage != nil
         {
             cell.imageView.image    = flickrPhoto.largeImage
+
+            cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
+            cell.groupLabel.text    = searches[indexPath.section].searchTerm
+            cell.groupLabel.layer.cornerRadius  = 10.0
+
             return cell
         }
 
         cell.imageView.image    = flickrPhoto.thumbnail
         cell.activityIndicator.startAnimating()
+        cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
+        cell.groupLabel.text    = searches[indexPath.section].searchTerm
+        cell.groupLabel.layer.cornerRadius  = 10.0
 
         flickrPhoto.loadLargeImage{
             loadedFlickrPhoto, error in
@@ -373,6 +386,8 @@ class FlickrPhotosGroupViewController:
                 }
             }
         }
+
+
 
         //cell.cellLayerSetup()
         return cell
