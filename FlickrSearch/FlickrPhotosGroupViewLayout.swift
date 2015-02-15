@@ -49,7 +49,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         {
             willSet(newItemSize)
             {
-                println("Setting itemSize")
+                //println("Setting itemSize")
         }
         didSet
         {
@@ -94,8 +94,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     required init(coder aDecoder: NSCoder)
     {
-        println("Calling layout init with coder method")
-
         self.itemInsets     = UIEdgeInsetsZero
 
         super.init(coder: aDecoder)
@@ -107,7 +105,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     override func awakeFromNib()
     {
-        println("Calling layout awakeFromNib")
         super.awakeFromNib()
     }
 
@@ -145,6 +142,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     override func prepareLayout()
     {
+        println("prepareLayout()")
+        
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
 

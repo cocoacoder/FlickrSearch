@@ -64,7 +64,7 @@ class FlickrPhotosGroupViewController:
 
     override func viewDidLoad()
     {
-        println("view controller viewDidLoad()")
+        //println("view controller viewDidLoad()")
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
@@ -337,8 +337,8 @@ class FlickrPhotosGroupViewController:
 
         let flickrPhoto = photoForIndexPath(indexPath)
 
-        print("photoForIndexPath.row: \(indexPath.row)  ")
-        println("flickrPhoto ID: \(flickrPhoto.photoID)")
+        //print("photoForIndexPath.row: \(indexPath.row)  ")
+        //println("flickrPhoto ID: \(flickrPhoto.photoID)")
 
 
         cell.activityIndicator.stopAnimating()
@@ -349,9 +349,9 @@ class FlickrPhotosGroupViewController:
 
             if indexPath.row == photoCount - 1
             {
-                cell.groupLabel.layer.backgroundColor   = UIColor.redColor().CGColor
+                cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
                 cell.groupLabel.text                    = searches[indexPath.section].searchTerm
-                cell.groupLabel.layer.cornerRadius      = 15.0
+                cell.groupLabel.layer.cornerRadius      = 5.0
             }
             else
             {
@@ -368,9 +368,9 @@ class FlickrPhotosGroupViewController:
 
             if indexPath.row == photoCount - 1
             {
-                cell.groupLabel.layer.backgroundColor   = UIColor.redColor().CGColor
+                cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
                 cell.groupLabel.text                    = searches[indexPath.section].searchTerm
-                cell.groupLabel.layer.cornerRadius      = 15.0
+                cell.groupLabel.layer.cornerRadius      = 5.0
             }
             else
             {
@@ -386,7 +386,7 @@ class FlickrPhotosGroupViewController:
 
         if indexPath.row == photoCount - 1
         {
-            cell.groupLabel.layer.backgroundColor   = UIColor.redColor().CGColor
+            cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
             cell.groupLabel.text                    = searches[indexPath.section].searchTerm
             cell.groupLabel.layer.cornerRadius      = 15.0
         }
