@@ -118,7 +118,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
         {
-            itemSize            = CGSizeMake(200.0, 240.0)
+            itemSize            = CGSizeMake(200.0, 230.0)
 
             if UIDevice.currentDevice().orientation == .Portrait
             {
@@ -131,7 +131,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            itemSize            = CGSizeMake(150.0, 190.0)
+            itemSize            = CGSizeMake(150.0, 180.0)
 
             if UIDevice.currentDevice().orientation == .Portrait
             {

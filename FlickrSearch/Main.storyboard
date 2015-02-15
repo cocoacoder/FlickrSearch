@@ -15,46 +15,56 @@
                         <gestureRecognizers/>
                         <collectionViewLayout key="collectionViewLayout" id="c0p-nR-leQ" customClass="FlickrPhotosGroupViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotosGroupCell" customModule="FlickrSearch" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="FlickrCell" id="gfj-5H-K69" customClass="FlickrPhotosGroupCell" customModule="FlickrSearch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="230"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XeW-RI-9Zp">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="200" id="gdD-T8-ENM"/>
-                                                <constraint firstAttribute="height" constant="200" id="ywY-wS-15a"/>
-                                            </constraints>
-                                        </imageView>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="krR-n8-4B0">
                                             <rect key="frame" x="82" y="81" width="37" height="37"/>
                                         </activityIndicatorView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UmE-0a-A24">
-                                            <rect key="frame" x="8" y="195" width="184" height="30"/>
+                                            <rect key="frame" x="0.0" y="200" width="200" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="Y4K-Y6-35A"/>
-                                                <constraint firstAttribute="width" constant="184" id="d7m-jV-eqC"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XeW-RI-9Zp">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
+                                    <constraint firstItem="UmE-0a-A24" firstAttribute="top" secondItem="XeW-RI-9Zp" secondAttribute="bottom" id="5Ng-te-zQD"/>
                                     <constraint firstAttribute="centerX" secondItem="UmE-0a-A24" secondAttribute="centerX" id="5m0-4j-8qY"/>
                                     <constraint firstAttribute="centerX" secondItem="krR-n8-4B0" secondAttribute="centerX" id="6KF-Eh-8xJ"/>
                                     <constraint firstItem="krR-n8-4B0" firstAttribute="top" secondItem="gfj-5H-K69" secondAttribute="top" constant="81" id="8y4-xc-86i"/>
-                                    <constraint firstItem="XeW-RI-9Zp" firstAttribute="centerX" secondItem="gfj-5H-K69" secondAttribute="centerX" id="IgN-4g-HOA"/>
-                                    <constraint firstAttribute="bottom" secondItem="UmE-0a-A24" secondAttribute="bottom" constant="5" id="UVK-S2-myH"/>
-                                    <constraint firstItem="XeW-RI-9Zp" firstAttribute="top" secondItem="gfj-5H-K69" secondAttribute="top" id="h1D-Ot-aW4"/>
+                                    <constraint firstAttribute="trailing" secondItem="XeW-RI-9Zp" secondAttribute="trailing" id="Avg-kG-6us"/>
+                                    <constraint firstItem="XeW-RI-9Zp" firstAttribute="leading" secondItem="gfj-5H-K69" secondAttribute="leading" id="Hq4-GL-x6e"/>
+                                    <constraint firstAttribute="trailing" secondItem="UmE-0a-A24" secondAttribute="trailing" id="MRo-Tq-40E"/>
+                                    <constraint firstAttribute="bottom" secondItem="XeW-RI-9Zp" secondAttribute="bottom" id="T6g-kq-T7t"/>
+                                    <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="TnX-3E-hBW"/>
+                                    <constraint firstAttribute="bottom" secondItem="UmE-0a-A24" secondAttribute="bottom" id="UVK-S2-myH"/>
+                                    <constraint firstItem="UmE-0a-A24" firstAttribute="leading" secondItem="gfj-5H-K69" secondAttribute="leading" id="ZwM-1l-yXP"/>
+                                    <constraint firstAttribute="top" secondItem="XeW-RI-9Zp" secondAttribute="top" id="h1D-Ot-aW4"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="230"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="T6g-kq-T7t"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="GroupLabel" destination="UmE-0a-A24" id="KPE-bV-uI5"/>
                                     <outlet property="activityIndicator" destination="krR-n8-4B0" id="hj9-cl-2y2"/>

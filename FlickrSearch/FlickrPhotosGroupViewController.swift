@@ -351,7 +351,7 @@ class FlickrPhotosGroupViewController:
             {
                 cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
                 cell.groupLabel.text                    = searches[indexPath.section].searchTerm
-                cell.groupLabel.layer.cornerRadius      = 5.0
+                //cell.groupLabel.layer.cornerRadius      = 5.0
             }
             else
             {
@@ -464,6 +464,7 @@ class FlickrPhotosGroupViewController:
             return true
         }
 
+        /*
         if largePhotoIndexPath  == indexPath
         {
             largePhotoIndexPath = nil
@@ -472,6 +473,8 @@ class FlickrPhotosGroupViewController:
         {
             largePhotoIndexPath = indexPath
         }
+        */
+
         return false
     }
 
