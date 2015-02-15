@@ -53,18 +53,12 @@
                                     <constraint firstAttribute="trailing" secondItem="XeW-RI-9Zp" secondAttribute="trailing" id="Avg-kG-6us"/>
                                     <constraint firstItem="XeW-RI-9Zp" firstAttribute="leading" secondItem="gfj-5H-K69" secondAttribute="leading" id="Hq4-GL-x6e"/>
                                     <constraint firstAttribute="trailing" secondItem="UmE-0a-A24" secondAttribute="trailing" id="MRo-Tq-40E"/>
-                                    <constraint firstAttribute="bottom" secondItem="XeW-RI-9Zp" secondAttribute="bottom" id="T6g-kq-T7t"/>
                                     <constraint firstAttribute="centerX" secondItem="XeW-RI-9Zp" secondAttribute="centerX" id="TnX-3E-hBW"/>
                                     <constraint firstAttribute="bottom" secondItem="UmE-0a-A24" secondAttribute="bottom" id="UVK-S2-myH"/>
                                     <constraint firstItem="UmE-0a-A24" firstAttribute="leading" secondItem="gfj-5H-K69" secondAttribute="leading" id="ZwM-1l-yXP"/>
                                     <constraint firstAttribute="top" secondItem="XeW-RI-9Zp" secondAttribute="top" id="h1D-Ot-aW4"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="230"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="T6g-kq-T7t"/>
-                                    </mask>
-                                </variation>
                                 <connections>
                                     <outlet property="GroupLabel" destination="UmE-0a-A24" id="KPE-bV-uI5"/>
                                     <outlet property="activityIndicator" destination="krR-n8-4B0" id="hj9-cl-2y2"/>
