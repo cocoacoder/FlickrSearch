@@ -31,7 +31,9 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     let rotationStride: NSInteger           = 3
 
     var rotations: NSArray                  = NSArray()
+
     var offsets: NSArray                    = NSArray()
+    let offsetStride: NSInteger             = 4
 
 
     var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
@@ -196,10 +198,13 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                         {
                             indexPath   = NSIndexPath(forItem: item, inSection: section)
 
+                            println("prepareLayout() index.section: \(indexPath.section) row:\(indexPath.row)")
+
                             var itemAttributes: UICollectionViewLayoutAttributes
                             itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
                             itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
-                            itemAttributes.transform3D  = self.transformForGroupPhotoAtIndex(indexPath)
+                            //itemAttributes.transform3D  = self.transformForGroupPhotoAtIndex(indexPath)
+                            itemAttributes.zIndex       = indexPath.row
 
                             cellLayoutInfo[indexPath]   = itemAttributes
                         }
@@ -221,6 +226,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
             var alertView   = UIAlertView(title: "Oops!", message: "There are no sections in your collection.", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
         }
+
+        //println("cellLayoutInfo: \(cellLayoutInfo)")
 
         newLayoutInfo[PFFlickrPhotoCellKind]    = cellLayoutInfo
 

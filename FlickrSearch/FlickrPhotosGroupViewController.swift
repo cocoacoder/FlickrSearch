@@ -337,7 +337,7 @@ class FlickrPhotosGroupViewController:
 
         let flickrPhoto = photoForIndexPath(indexPath)
 
-        println("photoForIndexPath.row: \(indexPath.row)")
+        print("photoForIndexPath.row: \(indexPath.row)  ")
         println("flickrPhoto ID: \(flickrPhoto.photoID)")
 
 
