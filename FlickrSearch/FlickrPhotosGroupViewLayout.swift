@@ -157,8 +157,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     override func prepareLayout()
     {
-        println("prepareLayout()")
-
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
 
@@ -350,7 +348,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     func transformAffineForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CGAffineTransform
     {
 
-        var offset  = Double(indexPath.row) * 10.0
+        var offset  = Double(indexPath.row) * 8.0
         var scale   = CGFloat(0.9 + Double(indexPath.row) * 0.05)
 
         var transform: CGAffineTransform    = CGAffineTransformMakeTranslation(CGFloat(0.0), CGFloat(offset))
