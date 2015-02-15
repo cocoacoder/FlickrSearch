@@ -32,10 +32,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     var rotations: NSArray                  = NSArray()
 
-    var offsets: NSArray                    = NSArray()
-    let offsetStride: NSInteger             = 4
-
-
     var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
         /*{
             willSet(newInsets)
@@ -140,35 +136,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         //
         // The default layout for how grouped items are laid-out is as a somewhat random pile of paper, photos, things, etc.
         //
-        var cellRotations: NSMutableArray  = NSMutableArray(capacity: rotationCount)
-
-        var percentage: Double  = 0.0
-
-        for i: Int in 0..<rotationCount
-        {
-            var newPercentage: Double = 0.0
-            var deltaPercentage: Double
-
-            do
-            {
-                newPercentage       = ((Double(arc4random()) % 220.0) - 110.0) * 0.0001
-
-                deltaPercentage     = percentage - newPercentage
-                deltaPercentage     = fabs(deltaPercentage)
-
-            } while deltaPercentage < 0.01
-
-            percentage      = newPercentage
-
-            var angle       = CGFloat(2.0 * M_PI * (1.0 + percentage))
-
-            var transform: CATransform3D
-            transform       = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
-
-            cellRotations.addObject(NSValue(CATransform3D: transform))
-        }
-
-        rotations   = cellRotations
+        self.cellRotationsArray()
     }
 
 
@@ -198,12 +166,11 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                         {
                             indexPath   = NSIndexPath(forItem: item, inSection: section)
 
-                            println("prepareLayout() index.section: \(indexPath.section) row:\(indexPath.row)")
-
                             var itemAttributes: UICollectionViewLayoutAttributes
                             itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
                             itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
-                            //itemAttributes.transform3D  = self.transformForGroupPhotoAtIndex(indexPath)
+                            //itemAttributes.transform3D  = self.transform3DForGroupPhotoAtIndex(indexPath)
+                            itemAttributes.transform    = self.transformAffineForGroupPhotoAtIndex(indexPath)
                             itemAttributes.zIndex       = indexPath.row
 
                             cellLayoutInfo[indexPath]   = itemAttributes
@@ -226,8 +193,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
             var alertView   = UIAlertView(title: "Oops!", message: "There are no sections in your collection.", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
         }
-
-        //println("cellLayoutInfo: \(cellLayoutInfo)")
 
         newLayoutInfo[PFFlickrPhotoCellKind]    = cellLayoutInfo
 
@@ -359,11 +324,25 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
-    func transformForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D
+    func transform3DForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D
     {
         var offset  = NSInteger(indexPath.section * rotationStride + indexPath.item)
 
         return  rotations[offset % rotationCount].CATransform3DValue
+    }
+
+
+
+    func transformAffineForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CGAffineTransform
+    {
+
+        var offset  = Double(indexPath.row) * 10.0
+        var scale   = CGFloat(0.9 + Double(indexPath.row) * 0.05)
+
+        var transform: CGAffineTransform    = CGAffineTransformMakeTranslation(CGFloat(0.0), CGFloat(offset))
+        transform      = CGAffineTransformScale(transform, scale, scale)
+
+        return transform
     }
 
 
@@ -391,6 +370,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                 spacingX            = spacingX / (CGFloat(numberOfColumns - 1))
             }
 
+            
+
             originX         = CGFloat(floorf(Float(itemInsets.left) + Float(itemSize.width + spacingX) * Float(column)))
             originY         = CGFloat(floorf(Float(itemInsets.top) + Float(itemSize.height + interItemSpacingY) * Float(row)))
         }
@@ -403,5 +384,45 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
 
         return CGRectMake(originX, originY, itemSize.width, itemSize.height)
+    }
+
+
+
+    private func cellRotationsArray() -> Void
+    {
+        //
+        // Default layout display of grouped items
+        //
+        // The default layout for how grouped items are laid-out is as a somewhat random pile of paper, photos, things, etc.
+        //
+        var cellRotations: NSMutableArray  = NSMutableArray(capacity: rotationCount)
+
+        var percentage: Double  = 0.0
+
+        for i: Int in 0..<rotationCount
+        {
+            var newPercentage: Double = 0.0
+            var deltaPercentage: Double
+
+            do
+            {
+                newPercentage       = ((Double(arc4random()) % 220.0) - 110.0) * 0.0001
+
+                deltaPercentage     = percentage - newPercentage
+                deltaPercentage     = fabs(deltaPercentage)
+
+            } while deltaPercentage < 0.01
+
+            percentage      = newPercentage
+
+            var angle       = CGFloat(2.0 * M_PI * (1.0 + percentage))
+
+            var transform: CATransform3D
+            transform       = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
+
+            cellRotations.addObject(NSValue(CATransform3D: transform))
+        }
+        
+        rotations   = cellRotations
     }
 }
