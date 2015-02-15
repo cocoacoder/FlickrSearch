@@ -118,14 +118,29 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
         {
-            itemSize            = CGSizeMake(200.0, 250.0)
+            itemSize            = CGSizeMake(200.0, 240.0)
 
-            numberOfColumns     = 3
+            if UIDevice.currentDevice().orientation == .Portrait
+            {
+                numberOfColumns     = 3
+            }
+            else
+            {
+                numberOfColumns     = 4
+            }
         }
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            itemSize            = CGSizeMake(150.0, 200.0)
-            numberOfColumns     = 2
+            itemSize            = CGSizeMake(150.0, 190.0)
+
+            if UIDevice.currentDevice().orientation == .Portrait
+            {
+                numberOfColumns     = 2
+            }
+            else
+            {
+                numberOfColumns     = 3
+            }
         }
 
         //
@@ -143,7 +158,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     override func prepareLayout()
     {
         println("prepareLayout()")
-        
+
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
 
