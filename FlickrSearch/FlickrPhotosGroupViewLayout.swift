@@ -31,6 +31,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     let rotationStride: NSInteger           = 3
 
     var rotations: NSArray                  = NSArray()
+    var offsets: NSArray                    = NSArray()
 
 
     var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
@@ -122,12 +123,13 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
         {
-            itemSize            = CGSizeMake(200.0, 200.0)
+            itemSize            = CGSizeMake(200.0, 250.0)
+
             numberOfColumns     = 3
         }
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            itemSize            = CGSizeMake(150.0, 150.0)
+            itemSize            = CGSizeMake(150.0, 200.0)
             numberOfColumns     = 2
         }
 

@@ -63,7 +63,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
         self.layer.shadowOpacity        = 0.5
 
         self.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
-        self.groupLabel.layer.cornerRadius  = 5.0
+        self.groupLabel.layer.cornerRadius  = 15.0
 
         self.layer.rasterizationScale   = UIScreen.mainScreen().scale
         self.layer.shouldRasterize      = true
@@ -92,7 +92,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
     {
         didSet
         {
-            self.backgroundColor    = selected ? themeColor : UIColor.lightGrayColor()
+            self.backgroundColor    = selected ? themeColor : UIColor(white: 1.0, alpha: 1.0)
         }
     }
 
@@ -113,7 +113,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
         self.layer.shouldRasterize      = true
 
 
-        self.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
+        self.groupLabel.layer.backgroundColor   = UIColor(white: 1.0, alpha: 0.5).CGColor
         self.groupLabel.layer.cornerRadius  = 5.0
     }
 }

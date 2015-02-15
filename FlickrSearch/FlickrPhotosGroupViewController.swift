@@ -327,11 +327,19 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        println("collectionView:cellForItemAtIndexPath")
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FlickrPhotosGroupCell
 
+        var photoCount      = searches[indexPath.section].searchResults.count
+        if photoCount > 3
+        {
+            photoCount  = 3
+        }
+
         let flickrPhoto = photoForIndexPath(indexPath)
+
+        println("photoForIndexPath.row: \(indexPath.row)")
+        println("flickrPhoto ID: \(flickrPhoto.photoID)")
+
 
         cell.activityIndicator.stopAnimating()
 
@@ -339,9 +347,17 @@ class FlickrPhotosGroupViewController:
         {
             cell.imageView.image = flickrPhoto.thumbnail
 
-            cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
-            cell.groupLabel.text    = searches[indexPath.section].searchTerm
-            cell.groupLabel.layer.cornerRadius  = 10.0
+            if indexPath.row == photoCount - 1
+            {
+                cell.groupLabel.layer.backgroundColor   = UIColor.redColor().CGColor
+                cell.groupLabel.text                    = searches[indexPath.section].searchTerm
+                cell.groupLabel.layer.cornerRadius      = 15.0
+            }
+            else
+            {
+                cell.groupLabel.layer.backgroundColor   = UIColor.clearColor().CGColor
+                cell.groupLabel.text                    = ""
+            }
 
             return cell
         }
@@ -350,18 +366,35 @@ class FlickrPhotosGroupViewController:
         {
             cell.imageView.image    = flickrPhoto.largeImage
 
-            cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
-            cell.groupLabel.text    = searches[indexPath.section].searchTerm
-            cell.groupLabel.layer.cornerRadius  = 10.0
+            if indexPath.row == photoCount - 1
+            {
+                cell.groupLabel.layer.backgroundColor   = UIColor.redColor().CGColor
+                cell.groupLabel.text                    = searches[indexPath.section].searchTerm
+                cell.groupLabel.layer.cornerRadius      = 15.0
+            }
+            else
+            {
+                cell.groupLabel.layer.backgroundColor   = UIColor.clearColor().CGColor
+                cell.groupLabel.text                    = ""
+            }
 
             return cell
         }
 
         cell.imageView.image    = flickrPhoto.thumbnail
         cell.activityIndicator.startAnimating()
-        cell.groupLabel.layer.backgroundColor   = UIColor.lightGrayColor().CGColor
-        cell.groupLabel.text    = searches[indexPath.section].searchTerm
-        cell.groupLabel.layer.cornerRadius  = 10.0
+
+        if indexPath.row == photoCount - 1
+        {
+            cell.groupLabel.layer.backgroundColor   = UIColor.redColor().CGColor
+            cell.groupLabel.text                    = searches[indexPath.section].searchTerm
+            cell.groupLabel.layer.cornerRadius      = 15.0
+        }
+        else
+        {
+            cell.groupLabel.layer.backgroundColor   = UIColor.clearColor().CGColor
+            cell.groupLabel.text                    = ""
+        }
 
         flickrPhoto.loadLargeImage{
             loadedFlickrPhoto, error in
