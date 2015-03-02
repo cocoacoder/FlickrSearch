@@ -29,6 +29,38 @@ class FlickrPhotosGroupViewController:
     @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosGroupViewLayout!
     @IBOutlet var longPressGestureRecognzer: UILongPressGestureRecognizer!
 
+    var largePhotoIndexPath: NSIndexPath?
+        {
+        didSet
+        {
+            var indexPaths  = [NSIndexPath]()
+
+            if largePhotoIndexPath != nil
+            {
+                indexPaths.append(largePhotoIndexPath!)
+            }
+
+            if oldValue != nil
+            {
+                indexPaths.append(oldValue!)
+            }
+
+            collectionView?.performBatchUpdates(
+                {
+                    self.collectionView?.reloadItemsAtIndexPaths(indexPaths)
+                    return
+                }){
+                    completed in
+                    if self.largePhotoIndexPath != nil
+                    {
+                        self.collectionView?.scrollToItemAtIndexPath(
+                            self.largePhotoIndexPath!,
+                            atScrollPosition: .CenteredVertically,
+                            animated: true)
+                    }
+            }
+        }
+    }
 
 
     // MARK: - UICollectionViewController Methods
@@ -133,41 +165,6 @@ class FlickrPhotosGroupViewController:
     func photoForIndexPath(indexPath: NSIndexPath) -> FlickrPhoto
     {
         return searches[indexPath.section].searchResults[indexPath.row]
-    }
-
-
-
-    var largePhotoIndexPath: NSIndexPath?
-        {
-        didSet
-        {
-            var indexPaths  = [NSIndexPath]()
-
-            if largePhotoIndexPath != nil
-            {
-                indexPaths.append(largePhotoIndexPath!)
-            }
-
-            if oldValue != nil
-            {
-                indexPaths.append(oldValue!)
-            }
-
-            collectionView?.performBatchUpdates(
-                {
-                    self.collectionView?.reloadItemsAtIndexPaths(indexPaths)
-                    return
-                }){
-                    completed in
-                    if self.largePhotoIndexPath != nil
-                    {
-                        self.collectionView?.scrollToItemAtIndexPath(
-                            self.largePhotoIndexPath!,
-                            atScrollPosition: .CenteredVertically,
-                            animated: true)
-                    }
-            }
-        }
     }
 
 
