@@ -78,7 +78,8 @@ class FlickrPhotosGroupCell: UICollectionViewCell
 
 
 
-    override func prepareForReuse() {
+    override func prepareForReuse()
+    {
         super.prepareForReuse()
 
         imageView.image     = nil

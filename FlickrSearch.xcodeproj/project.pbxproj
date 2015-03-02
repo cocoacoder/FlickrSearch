@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E67A94F41AA438330095BCAC /* FlickrPhotosDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A94F31AA438330095BCAC /* FlickrPhotosDetailViewController.swift */; };
 		E68B24B61A71E6E2003E5EC7 /* PFWeak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B24B51A71E6E2003E5EC7 /* PFWeak.swift */; };
 		E69F0FC41A69C14E000D2427 /* FlickrPhotosGroupViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F0FC31A69C14E000D2427 /* FlickrPhotosGroupViewLayout.swift */; };
 		E6BCF1661A81ED260063043E /* PFHouseWorksCustomCellSelectedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCF1651A81ED260063043E /* PFHouseWorksCustomCellSelectedBackground.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E67A94F31AA438330095BCAC /* FlickrPhotosDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhotosDetailViewController.swift; sourceTree = "<group>"; };
 		E68B24B51A71E6E2003E5EC7 /* PFWeak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PFWeak.swift; sourceTree = "<group>"; };
 		E69F0FC31A69C14E000D2427 /* FlickrPhotosGroupViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhotosGroupViewLayout.swift; sourceTree = "<group>"; };
 		E6BCF1651A81ED260063043E /* PFHouseWorksCustomCellSelectedBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PFHouseWorksCustomCellSelectedBackground.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				E6CB21FC1A64E02F0070332D /* FlickrPhotosGroupViewController.swift */,
 				E69F0FC31A69C14E000D2427 /* FlickrPhotosGroupViewLayout.swift */,
 				E6CB22001A6755F40070332D /* FlickrPhotoGroupCell.swift */,
+				E67A94F31AA438330095BCAC /* FlickrPhotosDetailViewController.swift */,
 				E6BCF1651A81ED260063043E /* PFHouseWorksCustomCellSelectedBackground.swift */,
 				E69F0FC21A69C0CC000D2427 /* Search Code */,
 				E6CB21E11A64CFE30070332D /* Images.xcassets */,
@@ -245,6 +248,7 @@
 				E6CB21FD1A64E02F0070332D /* FlickrPhotosGroupViewController.swift in Sources */,
 				E68B24B61A71E6E2003E5EC7 /* PFWeak.swift in Sources */,
 				E6BCF1661A81ED260063043E /* PFHouseWorksCustomCellSelectedBackground.swift in Sources */,
+				E67A94F41AA438330095BCAC /* FlickrPhotosDetailViewController.swift in Sources */,
 				E69F0FC41A69C14E000D2427 /* FlickrPhotosGroupViewLayout.swift in Sources */,
 				E6CB21DB1A64CFE30070332D /* AppDelegate.swift in Sources */,
 			);
@@ -314,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -340,7 +344,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -351,7 +355,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -367,8 +371,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlickrSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -380,8 +387,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlickrSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
