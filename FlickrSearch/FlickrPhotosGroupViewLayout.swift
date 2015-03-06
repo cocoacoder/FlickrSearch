@@ -338,6 +338,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
+    // MARK: - Private Methods
+
     func transform3DForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D
     {
         var offset  = NSInteger(indexPath.section * rotationStride + indexPath.item)
@@ -355,14 +357,12 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         var transform: CGAffineTransform    = CGAffineTransformMakeTranslation(CGFloat(0.0), CGFloat(offset))
         transform      = CGAffineTransformScale(transform, scale, scale)
-
+        
         return transform
     }
-
-
-
-    // MARK: - Private Methods
-
+    
+    
+    
     private func frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
         var row: Int        = (indexPath.section / numberOfColumns)

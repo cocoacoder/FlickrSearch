@@ -27,12 +27,12 @@ class FlickrPhotoCell: UICollectionViewCell
     {
         println("Calling initWithCoder")
 
-        var altSelectedBackgroundView: PFHouseWorksCustomCellSelectedBackground     = PFHouseWorksCustomCellSelectedBackground(frame: CGRect(x: 0, y: 0, width:300 , height: 300))
+        //var altSelectedBackgroundView: PFHouseWorksCustomCellSelectedBackground     = PFHouseWorksCustomCellSelectedBackground(frame: CGRect(x: 0, y: 0, width:300 , height: 300))
 
         super.init(coder: aDecoder)
 
         self.layer.borderColor          = UIColor.whiteColor().CGColor
-
+        /*
         self.cellBackgroundView.layer.backgroundColor   = UIColor.whiteColor().CGColor
         self.cellBackgroundView.layer.borderWidth       = 1.0
         self.cellBackgroundView.layer.shadowColor       = UIColor.blackColor().CGColor
@@ -40,6 +40,7 @@ class FlickrPhotoCell: UICollectionViewCell
         self.cellBackgroundView.layer.shadowOffset      = CGSizeMake(0.0, 3.0)
         self.cellBackgroundView.layer.shadowOpacity     = 0.9
         self.cellBackgroundView.layer.shouldRasterize   = true
+        */
     }
 
 

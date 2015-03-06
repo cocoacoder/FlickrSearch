@@ -15,7 +15,6 @@ import QuartzCore
 
 
 
-
 class FlickrPhotosGroupCell: UICollectionViewCell
 {
     @IBOutlet weak var imageView: UIImageView!

@@ -64,6 +64,7 @@
                                     <outlet property="GroupLabel" destination="UmE-0a-A24" id="KPE-bV-uI5"/>
                                     <outlet property="activityIndicator" destination="krR-n8-4B0" id="hj9-cl-2y2"/>
                                     <outlet property="imageView" destination="XeW-RI-9Zp" id="yUu-kc-2J9"/>
+                                    <segue destination="u7d-tb-PA1" kind="show" identifier="photosDetailSegue" id="Wa6-hv-HZi"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -103,6 +104,50 @@
                 </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1080" y="356"/>
+        </scene>
+        <!--Flickr Photos Detail View Controller-->
+        <scene sceneID="hvb-WW-e90">
+            <objects>
+                <collectionViewController id="u7d-tb-PA1" userLabel="Flickr Photos Detail View Controller" customClass="FlickrPhotosDetailViewController" customModule="FlickrSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="oRV-Xp-pE1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewLayout key="collectionViewLayout" id="zBF-ep-vRr" customClass="FlickrPhotosDetailViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrPhotoCell" id="Yat-RT-7aV" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWW-F1-1ob">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <size key="customSize" width="200" height="200"/>
+                                <connections>
+                                    <outlet property="imageView" destination="uWW-F1-1ob" id="HEA-wq-ib9"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="u7d-tb-PA1" id="w0B-Mr-Uxq"/>
+                            <outlet property="delegate" destination="u7d-tb-PA1" id="H3A-0z-x23"/>
+                        </connections>
+                    </collectionView>
+                    <connections>
+                        <outlet property="flickrPhotosDetailLayout" destination="zBF-ep-vRr" id="6Lr-n0-VwD"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mKF-Mz-A5d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1905" y="356"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="43Z-Ul-E2G">

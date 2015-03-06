@@ -19,10 +19,11 @@ let detailReuseIdentifier: String   = "FlickrPhotoCell"
 class FlickrPhotosDetailViewController:
     UICollectionViewController
 {
-    private var searches        = [FlickrSearchResults]()
-    private let flickr          = Flickr()
+    //private var searches        = [FlickrSearchResults]()
 
-    private var selectedPhotos  = [FlickrPhoto]()
+    var photosSection: Int      = 0
+    var selectedPhotos          = [FlickrPhoto]()
+    //var indexPath: NSIndexPath?
 
     private var lastLongPressedIndexPath:   NSIndexPath?
 
@@ -42,8 +43,12 @@ class FlickrPhotosDetailViewController:
 
     override func viewDidLoad()
     {
-        //println("view controller viewDidLoad()")
+        println("detailedPhotoVC: viewDidLoad()")
         super.viewDidLoad()
+
+        println("selectedPhotos: \(selectedPhotos)")
+
+        self.collectionView?.delegate   = self
     }
 
 
@@ -53,6 +58,10 @@ class FlickrPhotosDetailViewController:
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+
+
+
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval)
     {
         if UIInterfaceOrientationIsLandscape(toInterfaceOrientation)
@@ -99,7 +108,8 @@ class FlickrPhotosDetailViewController:
 
     func photoForIndexPath(indexPath: NSIndexPath) -> FlickrPhoto
     {
-        return searches[indexPath.section].searchResults[indexPath.row]
+        println("detailedPhotoVC: photoForIndexPath")
+        return selectedPhotos[indexPath.row]
     }
     
     
@@ -108,39 +118,36 @@ class FlickrPhotosDetailViewController:
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
     {
-        return searches.count
+        println("detailedPhotos; numberOfSections")
+        return 1
     }
 
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        let photoCount      = searches[section].searchResults.count
-
-        if photoCount < 3
-        {
-            return photoCount
-        }
-        else
-        {
-            return 3
-        }
+        //println("indexPath: \(index)")
+        println("selectedPhotos.count: \(selectedPhotos.count)")
+        println("selectedPhotos: \(selectedPhotos)")
+        return selectedPhotos.count
     }
 
 
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
+        println("detailPhotoVC: cellForItemAtIndexPath")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(detailReuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
 
-        cell.activityIndicator.stopAnimating()
+        //cell.activityIndicator.stopAnimating()
 
         cell.imageView.image    = flickrPhoto.thumbnail
 
-        cell.activityIndicator.startAnimating()
+        //cell.activityIndicator.startAnimating()
 
         return cell
     }
+    
 }

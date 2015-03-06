@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 PortableFrontier. All rights reserved.
 //
 
+
+
+
+import Foundation
 import UIKit
 
 
@@ -20,11 +24,12 @@ class FlickrPhotosGroupViewController:
     UICollectionViewController,
     UITextFieldDelegate
 {
-    private var searches        = [FlickrSearchResults]()
-    private let flickr          = Flickr()
-    private var selectedPhotos  = [FlickrPhoto]()
-    private let shareTextLabel  = UILabel()
-    private var lastLongPressedIndexPath:   NSIndexPath?
+    private var searches            = [FlickrSearchResults]()
+    private let flickr              = Flickr()
+    private var groupPhotos         = [FlickrPhoto]()
+    private let shareTextLabel      = UILabel()
+    private var selectedIndexPath: NSIndexPath?
+    private var lastLongPressedIndexPath: NSIndexPath?
 
     @IBOutlet private weak var flickrPhotosLayout: FlickrPhotosGroupViewLayout!
     @IBOutlet var longPressGestureRecognzer: UILongPressGestureRecognizer!
@@ -169,10 +174,17 @@ class FlickrPhotosGroupViewController:
 
 
 
+    func photosForIndexPath(indexPath: NSIndexPath) -> [FlickrPhoto]
+    {
+        return searches[indexPath.section].searchResults
+    }
+
+
+
     func updateSharedPhotoCount()
     {
         shareTextLabel.textColor    = UIColor.darkGrayColor()
-        shareTextLabel.text         = "\(selectedPhotos.count) photos selected."
+        shareTextLabel.text         = "\(groupPhotos.count) photos selected."
         shareTextLabel.sizeToFit()
     }
 
@@ -184,7 +196,7 @@ class FlickrPhotosGroupViewController:
         {
             collectionView?.allowsMultipleSelection = sharing
             collectionView?.selectItemAtIndexPath(nil, animated: true, scrollPosition: .None)
-            selectedPhotos.removeAll(keepCapacity: false)
+            groupPhotos.removeAll(keepCapacity: false)
 
             if sharing && largePhotoIndexPath != nil
             {
@@ -218,10 +230,10 @@ class FlickrPhotosGroupViewController:
             return
         }
 
-        if !selectedPhotos.isEmpty
+        if !groupPhotos.isEmpty
         {
             var imageArray      = [UIImage]()
-            for photo in self.selectedPhotos
+            for photo in self.groupPhotos
             {
                 imageArray.append(photo.thumbnail!)
             }
@@ -455,11 +467,15 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
+        println("should be selecting this cell.")
+
+        /*
         if (sharing)
         {
             println("Sharing turned on")
             return true
         }
+        */
 
         /*
         if largePhotoIndexPath  == indexPath
@@ -472,19 +488,34 @@ class FlickrPhotosGroupViewController:
         }
         */
 
-        return false
+        return true
     }
 
 
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
+        println("didSelectItemAtIndexPath")
+
+        selectedIndexPath           = indexPath
+
+        if let selectedIndexPathSection = selectedIndexPath?.section
+        {
+            var indexRowArray           = searches[selectedIndexPathSection].searchResults
+            println("selected rows: \(indexRowArray)")
+
+            self.performSegueWithIdentifier("photosDetailSegue", sender: self)
+        }
+
+
+        /*
         if sharing
         {
             let photo   = photoForIndexPath(indexPath)
-            selectedPhotos.append(photo)
+            groupPhotos.append(photo)
             updateSharedPhotoCount()
         }
+        */
     }
 
 
@@ -493,9 +524,9 @@ class FlickrPhotosGroupViewController:
     {
         if sharing
         {
-            if let foundIndex   = find(selectedPhotos, photoForIndexPath(indexPath))
+            if let foundIndex   = find(groupPhotos, photoForIndexPath(indexPath))
             {
-                selectedPhotos.removeAtIndex(foundIndex)
+                groupPhotos.removeAtIndex(foundIndex)
                 updateSharedPhotoCount()
             }
         }
@@ -545,6 +576,28 @@ class FlickrPhotosGroupViewController:
     {
         //println("override canBecomeFirstResponder")
         return true
+    }
+
+
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        println("prepareForSegue with indexPath: \(selectedIndexPath)")
+
+        if segue.identifier == "photosDetailSegue"
+        {
+            var controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
+
+            if let photosIndexPathWithSection = selectedIndexPath?.section
+            {
+                println("photosIndexPathWithSection: \(photosIndexPathWithSection)")
+                controller.selectedPhotos       = searches[photosIndexPathWithSection].searchResults
+                //var indices: [Int]              = [0, 0]
+                //var length: Int                 = searches[photosIndexPathWithSection].searchResults.count
+                //controller.indexPath            = NSIndexPath(indexes: indices, length: length)
+            }
+
+        }
     }
 
 
@@ -651,15 +704,12 @@ class FlickrPhotosGroupViewController:
 
     func deletePhotoGroup(sender: AnyObject)
     {
-        println("deletePhotoGroup: just called")
+        //println("deletePhotoGroup: just called")
 
         // Grab the last long-ressed index path and use it to find its corresponding model
 
         if let index = lastLongPressedIndexPath
         {
-            //let errorAlert  = UIAlertView(title: "Wow!", message: "Were this a real app, you'd have just deleted a group of photos.", delegate: self, cancelButtonTitle: "Ok")
-            //errorAlert.show()
-
             let indexSet = NSMutableIndexSet()
 
             self.collectionView?.performBatchUpdates(
