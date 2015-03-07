@@ -174,7 +174,7 @@ class FlickrPhotosGroupViewController:
 
 
 
-    func photosForIndexPath(indexPath: NSIndexPath) -> [FlickrPhoto]
+    func groupPhotosForIndexPath(indexPath: NSIndexPath) -> [FlickrPhoto]
     {
         return searches[indexPath.section].searchResults
     }
@@ -578,11 +578,10 @@ class FlickrPhotosGroupViewController:
         {
             var controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
 
-            if let photosIndexPathWithSection = selectedIndexPath?.section
+            if let groupIndexPathWithSection = selectedIndexPath?.section
             {
-                controller.selectedPhotos       = searches[photosIndexPathWithSection].searchResults
+                controller.selectedPhotos       = searches[groupIndexPathWithSection].searchResults
             }
-
         }
     }
 
