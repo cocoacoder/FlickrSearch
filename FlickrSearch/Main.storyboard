@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7519.1" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jlb-fM-i1q">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7513.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Flickr Photos Group View Controller-->
@@ -25,7 +26,7 @@
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="krR-n8-4B0">
                                             <rect key="frame" x="82" y="81" width="37" height="37"/>
                                         </activityIndicatorView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XeW-RI-9Zp">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XeW-RI-9Zp">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="tintColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,7 +65,6 @@
                                     <outlet property="GroupLabel" destination="UmE-0a-A24" id="KPE-bV-uI5"/>
                                     <outlet property="activityIndicator" destination="krR-n8-4B0" id="hj9-cl-2y2"/>
                                     <outlet property="imageView" destination="XeW-RI-9Zp" id="yUu-kc-2J9"/>
-                                    <segue destination="u7d-tb-PA1" kind="show" identifier="photosDetailSegue" id="Wa6-hv-HZi"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -94,6 +94,7 @@
                     <connections>
                         <outlet property="flickrPhotosLayout" destination="c0p-nR-leQ" id="xFZ-WB-twh"/>
                         <outlet property="longPressGestureRecognzer" destination="q5b-ZM-cuS" id="vUX-cb-7eb"/>
+                        <segue destination="u7d-tb-PA1" kind="show" identifier="photosDetailSegue" id="Fqu-xb-qmA"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SYo-Ro-I22" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -112,26 +113,52 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="oRV-Xp-pE1">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewLayout key="collectionViewLayout" id="zBF-ep-vRr" customClass="FlickrPhotosDetailViewLayout" customModule="FlickrSearch" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrPhotoCell" id="Yat-RT-7aV" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="FlickrPhotoCell" id="Yat-RT-7aV" customClass="FlickrPhotoCell" customModule="FlickrSearch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWW-F1-1ob">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                                        </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QH7-ei-J7o">
+                                            <rect key="frame" x="5" y="5" width="190" height="190"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="uWW-F1-1ob">
+                                                    <rect key="frame" x="10" y="10" width="170" height="170"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="uWW-F1-1ob" secondAttribute="bottom" constant="10" id="214-Gl-GZ4"/>
+                                                <constraint firstAttribute="trailing" secondItem="uWW-F1-1ob" secondAttribute="trailing" constant="10" id="5cu-pi-hno"/>
+                                                <constraint firstItem="uWW-F1-1ob" firstAttribute="top" secondItem="QH7-ei-J7o" secondAttribute="top" constant="10" id="loI-IL-fLc"/>
+                                                <constraint firstItem="uWW-F1-1ob" firstAttribute="leading" secondItem="QH7-ei-J7o" secondAttribute="leading" constant="10" id="p9H-FO-7bp"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="QH7-ei-J7o" firstAttribute="leading" secondItem="Yat-RT-7aV" secondAttribute="leading" constant="5" id="3mR-WZ-Vtn"/>
+                                    <constraint firstAttribute="trailing" secondItem="QH7-ei-J7o" secondAttribute="trailing" constant="5" id="CI5-6d-bAp"/>
+                                    <constraint firstItem="QH7-ei-J7o" firstAttribute="leading" secondItem="Yat-RT-7aV" secondAttribute="leadingMargin" constant="-3" id="EGQ-4H-1s3"/>
+                                    <constraint firstAttribute="centerY" secondItem="QH7-ei-J7o" secondAttribute="centerY" id="Elo-Ci-pnB"/>
+                                    <constraint firstAttribute="bottom" secondItem="QH7-ei-J7o" secondAttribute="bottom" constant="5" id="Lb1-E9-Hy9"/>
+                                    <constraint firstAttribute="centerX" secondItem="QH7-ei-J7o" secondAttribute="centerX" id="NcN-BC-UrT"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="QH7-ei-J7o" secondAttribute="bottom" constant="-3" id="Nej-ue-tCb"/>
+                                    <constraint firstItem="QH7-ei-J7o" firstAttribute="top" secondItem="Yat-RT-7aV" secondAttribute="topMargin" constant="-3" id="Rie-qo-ixf"/>
+                                    <constraint firstItem="QH7-ei-J7o" firstAttribute="top" secondItem="Yat-RT-7aV" secondAttribute="top" constant="5" id="UGS-W6-e2T"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="QH7-ei-J7o" secondAttribute="trailing" constant="-3" id="zvh-yx-iy6"/>
+                                </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>
+                                    <outlet property="cellBackgroundView" destination="QH7-ei-J7o" id="P9l-2W-iEY"/>
                                     <outlet property="imageView" destination="uWW-F1-1ob" id="HEA-wq-ib9"/>
                                 </connections>
                             </collectionViewCell>

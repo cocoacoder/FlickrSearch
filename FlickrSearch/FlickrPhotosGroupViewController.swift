@@ -468,6 +468,7 @@ class FlickrPhotosGroupViewController:
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         println("should be selecting this cell.")
+        selectedIndexPath           = indexPath
 
         /*
         if (sharing)
@@ -495,18 +496,9 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        println("didSelectItemAtIndexPath")
-
         selectedIndexPath           = indexPath
 
-        if let selectedIndexPathSection = selectedIndexPath?.section
-        {
-            var indexRowArray           = searches[selectedIndexPathSection].searchResults
-            println("selected rows: \(indexRowArray)")
-
-            self.performSegueWithIdentifier("photosDetailSegue", sender: self)
-        }
-
+        self.performSegueWithIdentifier("photosDetailSegue", sender: self)
 
         /*
         if sharing
@@ -582,19 +574,13 @@ class FlickrPhotosGroupViewController:
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
-        println("prepareForSegue with indexPath: \(selectedIndexPath)")
-
         if segue.identifier == "photosDetailSegue"
         {
             var controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
 
             if let photosIndexPathWithSection = selectedIndexPath?.section
             {
-                println("photosIndexPathWithSection: \(photosIndexPathWithSection)")
                 controller.selectedPhotos       = searches[photosIndexPathWithSection].searchResults
-                //var indices: [Int]              = [0, 0]
-                //var length: Int                 = searches[photosIndexPathWithSection].searchResults.count
-                //controller.indexPath            = NSIndexPath(indexes: indices, length: length)
             }
 
         }

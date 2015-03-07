@@ -25,42 +25,14 @@ class FlickrPhotoCell: UICollectionViewCell
 
     required init(coder aDecoder: NSCoder)
     {
-        println("Calling initWithCoder")
-
-        //var altSelectedBackgroundView: PFHouseWorksCustomCellSelectedBackground     = PFHouseWorksCustomCellSelectedBackground(frame: CGRect(x: 0, y: 0, width:300 , height: 300))
-
         super.init(coder: aDecoder)
-
-        self.layer.borderColor          = UIColor.whiteColor().CGColor
-        /*
-        self.cellBackgroundView.layer.backgroundColor   = UIColor.whiteColor().CGColor
-        self.cellBackgroundView.layer.borderWidth       = 1.0
-        self.cellBackgroundView.layer.shadowColor       = UIColor.blackColor().CGColor
-        self.cellBackgroundView.layer.shadowRadius      = 3.0
-        self.cellBackgroundView.layer.shadowOffset      = CGSizeMake(0.0, 3.0)
-        self.cellBackgroundView.layer.shadowOpacity     = 0.9
-        self.cellBackgroundView.layer.shouldRasterize   = true
-        */
     }
 
 
 
     override init(frame: CGRect)
     {
-        println("Calling initWithFrame: \(frame)")
-
         super.init(frame: frame)
-
-        //self.backgroundColor            = UIColor(white: 0.85, alpha: 1.0)
-        self.layer.borderColor          = UIColor.whiteColor().CGColor
-
-        self.cellBackgroundView.layer.backgroundColor   = UIColor.whiteColor().CGColor
-        self.cellBackgroundView.layer.borderWidth       = 1.0
-        self.cellBackgroundView.layer.shadowColor       = UIColor.blackColor().CGColor
-        self.cellBackgroundView.layer.shadowRadius      = 3.0
-        self.cellBackgroundView.layer.shadowOffset      = CGSizeMake(0.0, 3.0)
-        self.cellBackgroundView.layer.shadowOpacity     = 0.9
-        self.cellBackgroundView.layer.shouldRasterize   = true
     }
 
 
@@ -87,7 +59,7 @@ class FlickrPhotoCell: UICollectionViewCell
         {
         didSet
         {
-            self.backgroundColor    = selected ? themeColor : UIColor(white: 1.0, alpha: 1.0)
+            self.cellBackgroundView.backgroundColor    = selected ? themeColor : UIColor(white: 1.0, alpha: 1.0)
         }
     }
 
@@ -95,20 +67,19 @@ class FlickrPhotoCell: UICollectionViewCell
 
     func cellLayerSetup() -> Void
     {
-        println("Calling cellLayerSetup")
-
-        //self.backgroundColor            = UIColor(white: 0.85, alpha: 1.0)
-
         self.layer.masksToBounds        = true
-        self.layer.borderColor          = UIColor.whiteColor().CGColor
-        self.layer.borderWidth          = 1.0
+        self.layer.shouldRasterize      = true
 
         self.cellBackgroundView.layer.backgroundColor   = UIColor.whiteColor().CGColor
-        self.cellBackgroundView.layer.borderWidth       = 1.0
-        self.cellBackgroundView.layer.shadowColor       = UIColor.blackColor().CGColor
-        self.cellBackgroundView.layer.shadowRadius      = 3.0
-        self.cellBackgroundView.layer.shadowOffset      = CGSizeMake(0.0, 3.0)
-        self.cellBackgroundView.layer.shadowOpacity     = 0.9
+        self.cellBackgroundView.layer.shadowRadius      = 2.0
+        self.cellBackgroundView.layer.shadowOffset      = CGSizeMake(1.0, 2.0)
+        self.cellBackgroundView.layer.shadowOpacity     = 0.7
         self.cellBackgroundView.layer.shouldRasterize   = true
+
+        /*
+        self.imageView.layer.borderWidth                = 10.0
+        self.imageView.layer.borderColor                = UIColor.whiteColor().CGColor
+        self.imageView.layer.shouldRasterize            = true
+        */
     }
 }

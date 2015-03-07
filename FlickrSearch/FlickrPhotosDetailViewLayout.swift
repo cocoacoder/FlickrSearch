@@ -66,7 +66,6 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
     // MARK: - Initializer
     required init(coder aDecoder: NSCoder)
     {
-        println("photosDetailLayout init'd")
         self.itemInsets     = UIEdgeInsetsZero
 
         super.init(coder: aDecoder)
@@ -91,7 +90,7 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
         {
-            itemSize            = CGSizeMake(200.0, 230.0)
+            itemSize            = CGSizeMake(200.0, 200.0)
 
             if UIDevice.currentDevice().orientation == .Portrait
             {
@@ -104,7 +103,7 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
         }
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            itemSize            = CGSizeMake(150.0, 180.0)
+            itemSize            = CGSizeMake(150.0, 150.0)
 
             if UIDevice.currentDevice().orientation == .Portrait
             {
@@ -130,7 +129,6 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
 
     override func prepareLayout()
     {
-        println("photosDetail: prepareLayout")
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
 
@@ -153,9 +151,8 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
                         var itemAttributes: UICollectionViewLayoutAttributes
                         itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
                         itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
-                        //itemAttributes.transform3D  = self.transform3DForPhotoAtIndex(indexPath)
+                        itemAttributes.transform3D  = self.transform3DForPhotoAtIndex(indexPath)
                         //itemAttributes.zIndex       = indexPath.row
-                        println("photosDetail: indexPath \(indexPath)")
 
                         cellLayoutInfo[indexPath]   = itemAttributes
                     }
@@ -181,7 +178,6 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
         //newLayoutInfo[detailReuseIdentifier]    = cellLayoutInfo
         
         layoutInfo      = newLayoutInfo
-        println("photosDetail: layoutInfo: \(layoutInfo)")
     }
 
 

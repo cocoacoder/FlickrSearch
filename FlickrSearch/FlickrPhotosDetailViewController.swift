@@ -43,10 +43,7 @@ class FlickrPhotosDetailViewController:
 
     override func viewDidLoad()
     {
-        println("detailedPhotoVC: viewDidLoad()")
         super.viewDidLoad()
-
-        println("selectedPhotos: \(selectedPhotos)")
 
         self.collectionView?.delegate   = self
     }
@@ -56,7 +53,6 @@ class FlickrPhotosDetailViewController:
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 
@@ -108,7 +104,6 @@ class FlickrPhotosDetailViewController:
 
     func photoForIndexPath(indexPath: NSIndexPath) -> FlickrPhoto
     {
-        println("detailedPhotoVC: photoForIndexPath")
         return selectedPhotos[indexPath.row]
     }
     
@@ -118,7 +113,6 @@ class FlickrPhotosDetailViewController:
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
     {
-        println("detailedPhotos; numberOfSections")
         return 1
     }
 
@@ -126,9 +120,6 @@ class FlickrPhotosDetailViewController:
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        //println("indexPath: \(index)")
-        println("selectedPhotos.count: \(selectedPhotos.count)")
-        println("selectedPhotos: \(selectedPhotos)")
         return selectedPhotos.count
     }
 
@@ -136,7 +127,6 @@ class FlickrPhotosDetailViewController:
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        println("detailPhotoVC: cellForItemAtIndexPath")
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(detailReuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
 
         let flickrPhoto = photoForIndexPath(indexPath)
@@ -147,6 +137,7 @@ class FlickrPhotosDetailViewController:
 
         //cell.activityIndicator.startAnimating()
 
+        cell.cellLayerSetup()
         return cell
     }
     
