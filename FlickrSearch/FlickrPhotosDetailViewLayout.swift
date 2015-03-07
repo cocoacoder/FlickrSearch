@@ -266,20 +266,25 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
     {
         var height: CGFloat
 
+        var indexPath: NSIndexPath              = NSIndexPath(forItem: 0, inSection: 0)
+
+        var section: Int                        = indexPath.section
+
         if var aCollectionView = collectionView
         {
-            if var rowCount = collectionView?.numberOfSections()
+            if var rowCount = collectionView?.numberOfItemsInSection(section) // numberOfSections()
             {
+                println("rowCount % numberOfColumns = \(rowCount % numberOfColumns)")
                 if rowCount % numberOfColumns > 0
                 {
                     rowCount++
                 }
 
                 var edgeSpacing: CGFloat    = itemInsets.top + itemInsets.bottom
-                var interSpacing: CGFloat   = CGFloat(rowCount) + itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
+                var interSpacing: CGFloat   = CGFloat(rowCount / numberOfColumns) * itemSize.height + CGFloat(interItemSpacingY)
+                interSpacing                /= 2
 
                 height                      = edgeSpacing + interSpacing
-
 
                 return CGSizeMake(aCollectionView.bounds.size.width, height)
             }

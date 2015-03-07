@@ -9,7 +9,7 @@
         <scene sceneID="aIp-qY-chS">
             <objects>
                 <collectionViewController id="CGu-wO-eFZ" customClass="FlickrPhotosGroupViewController" customModule="FlickrSearch" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="zpT-hw-1fF">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" id="zpT-hw-1fF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
@@ -110,7 +110,7 @@
         <scene sceneID="hvb-WW-e90">
             <objects>
                 <collectionViewController id="u7d-tb-PA1" userLabel="Flickr Photos Detail View Controller" customClass="FlickrPhotosDetailViewController" customModule="FlickrSearch" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="oRV-Xp-pE1">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" id="oRV-Xp-pE1">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
@@ -168,8 +168,16 @@
                             <outlet property="delegate" destination="u7d-tb-PA1" id="H3A-0z-x23"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="Title" id="cSk-8x-feQ" userLabel="Navigation Item">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Ccs-Tw-fVM">
+                            <connections>
+                                <action selector="share:" destination="u7d-tb-PA1" id="MLX-OD-qBX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="flickrPhotosDetailLayout" destination="zBF-ep-vRr" id="6Lr-n0-VwD"/>
+                        <outlet property="navBarItem" destination="cSk-8x-feQ" id="Sq6-ED-Hnc"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mKF-Mz-A5d" userLabel="First Responder" sceneMemberID="firstResponder"/>

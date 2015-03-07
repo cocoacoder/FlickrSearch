@@ -303,16 +303,26 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         {
             if var rowCount = collectionView?.numberOfSections()
             {
+                println("numberOfSections(): \(rowCount)")
+
                 if rowCount % numberOfColumns > 0
                 {
                     rowCount++
                 }
 
                 var edgeSpacing: CGFloat    = itemInsets.top + itemInsets.bottom
-                var interSpacing: CGFloat   = CGFloat(rowCount) + itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
+                var interSpacing: CGFloat   = CGFloat(rowCount / numberOfColumns) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
+                //interSpacing                /= 2
 
                 height                      = edgeSpacing + interSpacing
 
+                println("rowCount: \(rowCount)")
+                println("rowCount / numberOfColumns = \(rowCount / numberOfColumns)")
+                println("edgeSpacing: \(edgeSpacing)")
+                println("itemSize.height: \(itemSize.height)")
+                println("interSpacing: \(interSpacing)")
+
+                println("CGSizeMake(aCollectionView.bounds.size.width, height): \(CGSizeMake(aCollectionView.bounds.size.width, height))")
 
                 return CGSizeMake(aCollectionView.bounds.size.width, height)
             }
