@@ -199,6 +199,7 @@ class FlickrPhotosDetailViewController:
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
+        println("number of detailed photos: \(selectedPhotos.count)")
         return selectedPhotos.count
     }
 
@@ -207,6 +208,8 @@ class FlickrPhotosDetailViewController:
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(detailReuseIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
+
+        //println("detailed photo")
 
         let flickrPhoto = photoForIndexPath(indexPath)
 

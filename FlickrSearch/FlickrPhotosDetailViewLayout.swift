@@ -142,10 +142,12 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
 
             if var items: Int   = collectionView?.numberOfItemsInSection(section)
             {
+                println("How many photos: \(items)")
                 if items != 0
                 {
                     for item in 0..<items
                     {
+                        println("item: \(item)")
                         indexPath   = NSIndexPath(forItem: item, inSection: section)
 
                         var itemAttributes: UICollectionViewLayoutAttributes
@@ -176,8 +178,9 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
         
         newLayoutInfo[flickrPhotoDetailCell]    = cellLayoutInfo
         //newLayoutInfo[detailReuseIdentifier]    = cellLayoutInfo
-        
+
         layoutInfo      = newLayoutInfo
+        println("layoutInfo.count: \(layoutInfo.count)")
     }
 
 
@@ -190,13 +193,11 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
         // screwing things up!
         //
         var updatedRect: CGRect         = rect
+        println("rect: \(rect)")
 
         if var aView = collectionView
         {
-            var newRect: CGRect         = aView.frame
-            updatedRect                 = newRect
         }
-
         else
         {
             var alertView   = UIAlertView(title: "Oops!", message: "There is no collection view with which to work.", delegate: self, cancelButtonTitle: "Ok")
@@ -206,6 +207,7 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
 
 
         let allAttributes: NSMutableArray       = NSMutableArray(capacity: layoutInfo.count)
+        println("allAttributes.count: \(allAttributes.count)")
 
         layoutInfo.enumerateKeysAndObjectsUsingBlock({ (elementID, elementsInfo, stopBool) -> Void in
             var myKey = elementID as? NSString
@@ -239,6 +241,7 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
 
         let attributesArray    = allAttributes as Array
 
+        println("attributesArray.count: \(attributesArray.count)")
         return allAttributes as Array
     }
 
@@ -272,19 +275,25 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
 
         if var aCollectionView = collectionView
         {
-            if var rowCount = collectionView?.numberOfItemsInSection(section) // numberOfSections()
+            println("collectionView Beginning dimensions in collectionViewContentSize: \(aCollectionView.frame.size.height), \(aCollectionView.frame.size.width)")
+            if var rowItems = collectionView?.numberOfItemsInSection(section) // numberOfSections()
             {
-                println("rowCount % numberOfColumns = \(rowCount % numberOfColumns)")
-                if rowCount % numberOfColumns > 0
+                var rowCount    = rowItems / numberOfColumns
+
+                println("rowCount % numberOfColumns = \(rowItems % numberOfColumns)")
+                if rowItems % numberOfColumns > 0
                 {
                     rowCount++
                 }
+                println("rowCount = \(rowCount)")
+                println("numberOfColumns = \(numberOfColumns)")
 
-                var edgeSpacing: CGFloat    = itemInsets.top + itemInsets.bottom
-                var interSpacing: CGFloat   = CGFloat(rowCount / numberOfColumns) * itemSize.height + CGFloat(interItemSpacingY)
-                interSpacing                /= 2
+                var topBottomSpacing: CGFloat   = itemInsets.top + itemInsets.bottom
+                var interSpacing: CGFloat       = CGFloat(rowCount) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
 
-                height                      = edgeSpacing + interSpacing
+                height                          = topBottomSpacing + interSpacing
+                println("collectionView height/width: = \(height), \(aCollectionView.bounds.size.width)")
+
 
                 return CGSizeMake(aCollectionView.bounds.size.width, height)
             }

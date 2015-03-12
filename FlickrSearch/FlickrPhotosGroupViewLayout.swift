@@ -226,8 +226,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         if var aView = collectionView
         {
-            var newRect: CGRect         = aView.frame
-            updatedRect                 = newRect
         }
 
         else
@@ -301,29 +299,22 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         if var aCollectionView = collectionView
         {
-            if var rowCount = collectionView?.numberOfSections()
+            if var rowItems = collectionView?.numberOfSections()
             {
-                println("numberOfSections(): \(rowCount)")
+                var rowCount    = rowItems / numberOfColumns
 
-                if rowCount % numberOfColumns > 0
+                if rowItems % numberOfColumns > 0
                 {
                     rowCount++
                 }
 
-                var edgeSpacing: CGFloat    = itemInsets.top + itemInsets.bottom
-                var interSpacing: CGFloat   = CGFloat(rowCount / numberOfColumns) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
-                //interSpacing                /= 2
+                var topBottomSpacing: CGFloat   = itemInsets.top + itemInsets.bottom
+                var interSpacing: CGFloat       = CGFloat(rowCount) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
 
-                height                      = edgeSpacing + interSpacing
+                height                          = topBottomSpacing + interSpacing
+                println("collectionView height = \(height)")
 
-                println("rowCount: \(rowCount)")
-                println("rowCount / numberOfColumns = \(rowCount / numberOfColumns)")
-                println("edgeSpacing: \(edgeSpacing)")
-                println("itemSize.height: \(itemSize.height)")
-                println("interSpacing: \(interSpacing)")
-
-                println("CGSizeMake(aCollectionView.bounds.size.width, height): \(CGSizeMake(aCollectionView.bounds.size.width, height))")
-
+                println("collectionView height/width: = \(height), \(aCollectionView.bounds.size.width)")
                 return CGSizeMake(aCollectionView.bounds.size.width, height)
             }
 
@@ -375,7 +366,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     
     private func frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
-        var row: Int        = (indexPath.section / numberOfColumns)
+        var row: Int        = indexPath.section / numberOfColumns
         var column: Int     = indexPath.section % numberOfColumns
 
         var itemSizeWidth   = Float(itemSize.width)
