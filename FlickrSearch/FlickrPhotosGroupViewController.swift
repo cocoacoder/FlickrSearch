@@ -104,12 +104,6 @@ class FlickrPhotosGroupViewController:
         //println("view controller viewDidLoad()")
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.registerClass(FlickrPhotoCell.self, forCellWithReuseIdentifier: "FlickrCell")
-
         // Do any additional setup after loading the view.
     }
 
@@ -253,7 +247,6 @@ class FlickrPhotosGroupViewController:
 
     func textFieldShouldReturn(textField: UITextField) -> Bool
     {
-        // 1
         let activityIndicator   = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         textField.addSubview(activityIndicator)
         activityIndicator.frame = textField.bounds
@@ -264,7 +257,6 @@ class FlickrPhotosGroupViewController:
 
             //println("results: \(results)")
 
-            // 2
             activityIndicator.removeFromSuperview()
             if error != nil
             {
@@ -275,11 +267,9 @@ class FlickrPhotosGroupViewController:
 
             if results != nil
             {
-                // 3
                 //println("Found \(results!.searchResults.count) matching \(results!.searchTerm)")
                 self.searches.insert(results!, atIndex: 0)
 
-                // 4
                 self.collectionView?.reloadData()
             }
 
@@ -356,18 +346,6 @@ class FlickrPhotosGroupViewController:
         {
             cell.imageView.image = flickrPhoto.thumbnail
 
-            if indexPath.row == photoCount - 1
-            {
-                cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
-                cell.groupLabel.text                    = searches[indexPath.section].searchTerm
-                //cell.groupLabel.layer.cornerRadius      = 5.0
-            }
-            else
-            {
-                cell.groupLabel.layer.backgroundColor   = UIColor.clearColor().CGColor
-                cell.groupLabel.text                    = ""
-            }
-
             return cell
         }
 
@@ -375,35 +353,13 @@ class FlickrPhotosGroupViewController:
         {
             cell.imageView.image    = flickrPhoto.largeImage
 
-            if indexPath.row == photoCount - 1
-            {
-                cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
-                cell.groupLabel.text                    = searches[indexPath.section].searchTerm
-                cell.groupLabel.layer.cornerRadius      = 5.0
-            }
-            else
-            {
-                cell.groupLabel.layer.backgroundColor   = UIColor.clearColor().CGColor
-                cell.groupLabel.text                    = ""
-            }
-
             return cell
         }
+
 
         cell.imageView.image    = flickrPhoto.thumbnail
         cell.activityIndicator.startAnimating()
 
-        if indexPath.row == photoCount - 1
-        {
-            cell.groupLabel.layer.backgroundColor   = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.8).CGColor
-            cell.groupLabel.text                    = searches[indexPath.section].searchTerm
-            cell.groupLabel.layer.cornerRadius      = 15.0
-        }
-        else
-        {
-            cell.groupLabel.layer.backgroundColor   = UIColor.clearColor().CGColor
-            cell.groupLabel.text                    = ""
-        }
 
         flickrPhoto.loadLargeImage{
             loadedFlickrPhoto, error in
@@ -467,7 +423,6 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
-        println("should be selecting this cell.")
         selectedIndexPath           = indexPath
 
         /*
@@ -693,14 +648,13 @@ class FlickrPhotosGroupViewController:
         {
             return
         }
-        println("\n")
     }
 
 
 
     func deletePhotoGroup(sender: AnyObject)
     {
-        //println("deletePhotoGroup: just called")
+        //println("deletePhotoGroup:")
 
         // Grab the last long-ressed index path and use it to find its corresponding model
 

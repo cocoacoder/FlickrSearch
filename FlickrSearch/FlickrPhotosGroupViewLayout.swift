@@ -115,12 +115,12 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     func setup()
     {
         itemInsetValue      = 15.0
-        itemInsets          = UIEdgeInsetsMake(15.0, 10.0, 15.0, 10.0)
-        interItemSpacingY   = 35.0
+        itemInsets          = UIEdgeInsetsMake(25.0, 10.0, 15.0, 10.0)
+        interItemSpacingY   = 25.0
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
         {
-            itemSize            = CGSizeMake(200.0, 230.0)
+            itemSize            = CGSizeMake(200.0, 200.0)
 
             if UIDevice.currentDevice().orientation == .Portrait
             {
@@ -133,7 +133,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            itemSize            = CGSizeMake(150.0, 180.0)
+            itemSize            = CGSizeMake(150.0, 150.0)
 
             if UIDevice.currentDevice().orientation == .Portrait
             {
@@ -161,6 +161,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     {
         var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
         var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
+        let baseCellZIndex  = 20
 
         if var sections = collectionView?.numberOfSections()
         {
@@ -185,7 +186,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                             itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
                             //itemAttributes.transform3D  = self.transform3DForGroupPhotoAtIndex(indexPath)
                             itemAttributes.transform    = self.transformAffineForGroupPhotoAtIndex(indexPath)
-                            itemAttributes.zIndex       = indexPath.row
+                            itemAttributes.zIndex       = baseCellZIndex - indexPath.row
 
                             cellLayoutInfo[indexPath]   = itemAttributes
                         }
@@ -312,9 +313,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                 var interSpacing: CGFloat       = CGFloat(rowCount) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
 
                 height                          = topBottomSpacing + interSpacing
-                println("collectionView height = \(height)")
 
-                println("collectionView height/width: = \(height), \(aCollectionView.bounds.size.width)")
+                //println("collectionView height/width: = \(height), \(aCollectionView.bounds.size.width)")
                 return CGSizeMake(aCollectionView.bounds.size.width, height)
             }
 
@@ -353,8 +353,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     func transformAffineForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CGAffineTransform
     {
 
-        var offset  = Double(indexPath.row) * 8.0
-        var scale   = CGFloat(0.9 + Double(indexPath.row) * 0.05)
+        var offset  = Double(-indexPath.row) * 8.0
+        var scale   = CGFloat(1.0 - Double(indexPath.row) * 0.05)
 
         var transform: CGAffineTransform    = CGAffineTransformMakeTranslation(CGFloat(0.0), CGFloat(offset))
         transform      = CGAffineTransformScale(transform, scale, scale)
