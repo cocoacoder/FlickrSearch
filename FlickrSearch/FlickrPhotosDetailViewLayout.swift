@@ -85,7 +85,7 @@ class FlickrPhotosDetailViewLayout: UICollectionViewLayout
     func setup()
     {
         itemInsetValue      = 15.0
-        itemInsets          = UIEdgeInsetsMake(15.0, 10.0, 15.0, 10.0)
+        itemInsets          = UIEdgeInsetsMake(25.0, 10.0, 15.0, 10.0)
         interItemSpacingY   = 35.0
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
