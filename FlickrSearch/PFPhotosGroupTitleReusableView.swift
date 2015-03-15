@@ -41,7 +41,7 @@ class PFPhotosGroupTitleReusableView: UICollectionReusableView
         self.titleLabel.autoresizingMask    = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
         self.titleLabel.backgroundColor     = UIColor.clearColor()
         self.titleLabel.textAlignment       = NSTextAlignment.Center
-        self.titleLabel.font                = UIFont.boldSystemFontOfSize(15.0)
+        self.titleLabel.font                = UIFont.systemFontOfSize(15.0)
         self.titleLabel.textColor           = UIColor.whiteColor()
         self.titleLabel.shadowColor         = UIColor(white: 0.0, alpha: 0.3)
         self.titleLabel.shadowOffset        = CGSizeMake(0.0, 1.0)
