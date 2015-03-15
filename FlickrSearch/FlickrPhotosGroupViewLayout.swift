@@ -17,6 +17,7 @@ import QuartzCore
 
 
 //let flickrPhotoCellKind         = "FlickrCell"
+let PFPhotoGroupTitleKind: String   = "PhotoGroupTitle"
 
 
 
@@ -79,6 +80,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
     }
 
+    var titleHeight: CGFloat                = CGFloat()
+
 
 
     // MARK: - Initializer
@@ -117,6 +120,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         itemInsetValue      = 15.0
         itemInsets          = UIEdgeInsetsMake(25.0, 10.0, 15.0, 10.0)
         interItemSpacingY   = 25.0
+        titleHeight         = 30.0
 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad
         {
@@ -155,12 +159,28 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
+    func setTitleHeight(#newTitleHeight: CGFloat)  ->  Void
+    {
+        if  newTitleHeight == titleHeight
+        {
+            return
+        }
+
+        titleHeight     = newTitleHeight
+
+        self.invalidateLayout()
+    }
+
+
+
     // MARK: - Layout Methods
 
     override func prepareLayout()
     {
-        var newLayoutInfo: NSMutableDictionary  = NSMutableDictionary()
-        var cellLayoutInfo: NSMutableDictionary = NSMutableDictionary()
+        var newLayoutInfo: NSMutableDictionary      = NSMutableDictionary()
+        var cellLayoutInfo: NSMutableDictionary     = NSMutableDictionary()
+        var titleLayoutInfo: NSMutableDictionary    = NSMutableDictionary()
+
         let baseCellZIndex  = 20
 
         if var sections = collectionView?.numberOfSections()
@@ -183,12 +203,19 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
                             var itemAttributes: UICollectionViewLayoutAttributes
                             itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                            itemAttributes.frame        = self.frameForFlickrPhotoAtIndexPath(indexPath)
+                            itemAttributes.frame        = self.frameForPhotoGroupAtIndexPath(indexPath)
                             //itemAttributes.transform3D  = self.transform3DForGroupPhotoAtIndex(indexPath)
                             itemAttributes.transform    = self.transformAffineForGroupPhotoAtIndex(indexPath)
                             itemAttributes.zIndex       = baseCellZIndex - indexPath.row
 
                             cellLayoutInfo[indexPath]   = itemAttributes
+
+                            if indexPath.item == 0
+                            {
+                                var titleAttributes         = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: PFPhotoGroupTitleKind, withIndexPath: indexPath)
+                                titleAttributes.frame       = self.frameForPhotoAlbumAtIndexPath(indexPath)
+                                titleLayoutInfo[indexPath]  = titleAttributes
+                            }
                         }
                     }
                     else
@@ -209,8 +236,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
             alertView.show()
         }
 
-        newLayoutInfo[flickrPhotoCellKind]    = cellLayoutInfo
-
+        newLayoutInfo[flickrPhotoCellKind]      = cellLayoutInfo
+        newLayoutInfo[PFPhotoGroupTitleKind]    = titleLayoutInfo
         layoutInfo      = newLayoutInfo
     }
 
@@ -294,6 +321,13 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
+    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes!
+    {
+        return (layoutInfo[PFPhotoGroupTitleKind] as! NSDictionary)[indexPath] as! UICollectionViewLayoutAttributes
+    }
+
+
+
     override func collectionViewContentSize() -> CGSize
     {
         var height: CGFloat
@@ -311,8 +345,9 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
                 var topBottomSpacing: CGFloat   = itemInsets.top + itemInsets.bottom
                 var interSpacing: CGFloat       = CGFloat(rowCount) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
+                var interTitleSpacing: CGFloat  = CGFloat(rowCount) * titleHeight
 
-                height                          = topBottomSpacing + interSpacing
+                height                          = topBottomSpacing + interSpacing + interTitleSpacing
 
                 //println("collectionView height/width: = \(height), \(aCollectionView.bounds.size.width)")
                 return CGSizeMake(aCollectionView.bounds.size.width, height)
@@ -364,7 +399,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     
     
     
-    private func frameForFlickrPhotoAtIndexPath(indexPath: NSIndexPath) -> CGRect
+    private func frameForPhotoGroupAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
         var row: Int        = indexPath.section / numberOfColumns
         var column: Int     = indexPath.section % numberOfColumns
@@ -388,7 +423,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
             
 
             originX         = CGFloat(floorf(Float(itemInsets.left) + Float(itemSize.width + spacingX) * Float(column)))
-            originY         = CGFloat(floorf(Float(itemInsets.top) + Float(itemSize.height + interItemSpacingY) * Float(row)))
+            originY         = CGFloat(floorf(Float(itemInsets.top) + Float(itemSize.height + titleHeight + interItemSpacingY) * Float(row)))
         }
         else
         {
@@ -399,6 +434,17 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
 
         return CGRectMake(originX, originY, itemSize.width, itemSize.height)
+    }
+
+
+
+    private func frameForPhotoAlbumAtIndexPath(indexPath: NSIndexPath) -> CGRect
+    {
+        var frame: CGRect   = self.frameForPhotoGroupAtIndexPath(indexPath)
+        frame.origin.y     += frame.size.height
+        frame.size.height   = titleHeight
+
+        return frame
     }
 
 

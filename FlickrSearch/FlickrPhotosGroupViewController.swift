@@ -15,7 +15,8 @@ import UIKit
 
 
 
-let reuseIdentifier: String = "FlickrCell"
+let reuseIdentifier: String             = "FlickrCell"
+let GroupTitleIdentifier: NSString      = "GroupTitle"
 
 
 
@@ -105,6 +106,7 @@ class FlickrPhotosGroupViewController:
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.collectionView?.registerClass(PFPhotosGroupTitleReusableView.self, forSupplementaryViewOfKind: PFPhotoGroupTitleKind, withReuseIdentifier: GroupTitleIdentifier as String)
     }
 
 
@@ -395,17 +397,10 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
     {
-        switch kind
-        {
-        case UICollectionElementKindSectionHeader:
+        var titleView               = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: GroupTitleIdentifier as String, forIndexPath: indexPath) as! PFPhotosGroupTitleReusableView
+        titleView.titleLabel.text   = searches[indexPath.section].searchTerm
 
-            let headerView          = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "FlickrPhotoHeaderView", forIndexPath: indexPath) as! FlickrPhotoHeaderView
-            headerView.label.text   = searches[indexPath.section].searchTerm
-            return headerView
-
-        default:
-            assert(false, "Unexpected kind of element")
-        }
+        return titleView
     }
 
 
