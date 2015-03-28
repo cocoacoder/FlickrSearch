@@ -539,8 +539,8 @@ class FlickrPhotosGroupViewController:
 
             if let groupIndexPathWithSection = selectedIndexPath?.section
             {
-                controller.selectedPhotos       = searches[groupIndexPathWithSection].searchResults
-                controller.selectedPhotosTitle  = searches[groupIndexPathWithSection].searchTerm
+                controller.selectedPhotos               = searches[groupIndexPathWithSection].searchResults
+                controller.selectedPhotosTitle          = searches[groupIndexPathWithSection].searchTerm
                 controller.navigationController?.title  = searches[groupIndexPathWithSection].searchTerm
             }
         }

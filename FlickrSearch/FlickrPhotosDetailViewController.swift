@@ -16,8 +16,7 @@ let detailReuseIdentifier: String   = "FlickrPhotoCell"
 
 
 
-class FlickrPhotosDetailViewController:
-    UICollectionViewController
+class FlickrPhotosDetailViewController: UICollectionViewController
 {
     var selectedPhotos              = [FlickrPhoto]()
     var selectedPhotosTitle: String = "I Love Airplanes"

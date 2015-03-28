@@ -28,25 +28,10 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     let flickrPhotoCellKind                 = "FlickrCell"
 
-    var itemInsetValue: CGFloat             = CGFloat()
     private var layoutInfo: NSDictionary    = NSDictionary()
-    let rotationCount: NSInteger            = 32
-    let rotationStride: NSInteger           = 3
-
-    var rotations: NSArray                  = NSArray()
+    var itemInsetValue: CGFloat             = CGFloat()
 
     var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
-        /*{
-            willSet(newInsets)
-            {
-                //println("About to set itemInsets to \(newInsets)")
-        }
-        didSet
-        {
-            self.invalidateLayout()
-        }
-    }*/
-
 
     var itemSize: CGSize                    = CGSize()
         {
@@ -61,12 +46,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     }
 
     var interItemSpacingY: CGFloat          = CGFloat()
-        /*{
-        didSet
-        {
-            self.invalidateLayout()
-        }
-    }*/
 
     var numberOfColumns: Int                = Int()
         {
@@ -82,19 +61,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     var titleHeight: CGFloat                = CGFloat()
 
-
-
-    // MARK: - Initializer
-    /*
-    override init()
-    {
-        println("Calling layout init method")
-
-        super.init()
-
-        self.setup()
-    }
-    */
 
 
     required init(coder aDecoder: NSCoder)
@@ -148,13 +114,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                 numberOfColumns     = 3
             }
         }
-
-        //
-        // Default layout display of grouped items
-        //
-        // The default layout for how grouped items are laid-out is as a somewhat random pile of paper, photos, things, etc.
-        //
-        self.cellRotationsArray()
     }
 
 
@@ -204,7 +163,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                             var itemAttributes: UICollectionViewLayoutAttributes
                             itemAttributes              = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
                             itemAttributes.frame        = self.frameForPhotoGroupAtIndexPath(indexPath)
-                            //itemAttributes.transform3D  = self.transform3DForGroupPhotoAtIndex(indexPath)
                             itemAttributes.transform    = self.transformAffineForGroupPhotoAtIndex(indexPath)
                             itemAttributes.zIndex       = baseCellZIndex - indexPath.row
 
@@ -213,7 +171,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                             if indexPath.item == 0
                             {
                                 var titleAttributes         = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: PFPhotoGroupTitleKind, withIndexPath: indexPath)
-                                titleAttributes.frame       = self.frameForPhotoAlbumAtIndexPath(indexPath)
+                                titleAttributes.frame       = self.frameForPhotoGroupTitleAtIndexPath(indexPath)
                                 titleLayoutInfo[indexPath]  = titleAttributes
                             }
                         }
@@ -376,15 +334,6 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     // MARK: - Private Methods
 
-    func transform3DForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CATransform3D
-    {
-        var offset  = NSInteger(indexPath.section * rotationStride + indexPath.item)
-
-        return  rotations[offset % rotationCount].CATransform3DValue
-    }
-
-
-
     func transformAffineForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CGAffineTransform
     {
 
@@ -438,52 +387,12 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
-    private func frameForPhotoAlbumAtIndexPath(indexPath: NSIndexPath) -> CGRect
+    private func frameForPhotoGroupTitleAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
         var frame: CGRect   = self.frameForPhotoGroupAtIndexPath(indexPath)
         frame.origin.y     += frame.size.height
         frame.size.height   = titleHeight
 
         return frame
-    }
-
-
-
-    private func cellRotationsArray() -> Void
-    {
-        //
-        // Default layout display of grouped items
-        //
-        // The default layout for how grouped items are laid-out is as a somewhat random pile of paper, photos, things, etc.
-        //
-        var cellRotations: NSMutableArray  = NSMutableArray(capacity: rotationCount)
-
-        var percentage: Double  = 0.0
-
-        for i: Int in 0..<rotationCount
-        {
-            var newPercentage: Double = 0.0
-            var deltaPercentage: Double
-
-            do
-            {
-                newPercentage       = ((Double(arc4random()) % 220.0) - 110.0) * 0.0001
-
-                deltaPercentage     = percentage - newPercentage
-                deltaPercentage     = fabs(deltaPercentage)
-
-            } while deltaPercentage < 0.01
-
-            percentage      = newPercentage
-
-            var angle       = CGFloat(2.0 * M_PI * (1.0 + percentage))
-
-            var transform: CATransform3D
-            transform       = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
-
-            cellRotations.addObject(NSValue(CATransform3D: transform))
-        }
-        
-        rotations   = cellRotations
     }
 }
