@@ -18,13 +18,16 @@ let detailReuseIdentifier: String   = "FlickrPhotoCell"
 
 class FlickrPhotosDetailViewController: UICollectionViewController
 {
-    var selectedPhotos              = [FlickrPhoto]()
-    var selectedPhotosTitle: String = "I Love Airplanes"
-    var photosSection: Int          = 0
+    var selectedPhotos: [FlickrPhoto]   = [FlickrPhoto]()
+    var selectedPhoto: FlickrPhoto?
+    var selectedPhotoLargeImage: UIImage?
+    var selectedPhotosTitle: String     = "I Love Airplanes"
+    var selectedPhotosSection: Int?
 
-    private var groupPhotos         = [FlickrPhoto]()
-    private let shareTextLabel      = UILabel()
+    private var groupPhotos             = [FlickrPhoto]()
+    private let shareTextLabel          = UILabel()
 
+    private var selectedIndexPath: NSIndexPath?
     private var lastLongPressedIndexPath:   NSIndexPath?
 
     @IBOutlet weak var navBarItem: UINavigationItem!
@@ -110,6 +113,39 @@ class FlickrPhotosDetailViewController: UICollectionViewController
     {
         return selectedPhotos[indexPath.row]
     }
+    
+    
+    
+    func largePhotoForIndexPath(indexPath: NSIndexPath) -> Void
+    {
+        var photo                   = selectedPhotos[indexPath.row]
+
+        photo.loadLargeImage{
+            photo, error in
+            
+            //cell.activityIndicator.stopAnimating()
+            
+            if error != nil
+            {
+                println("You've got large photo!")
+                return
+            }
+            
+            if photo.largeImage == nil
+            {
+                println("No large photo found for the selected photo.")
+                return
+            }
+            
+            if photo.largeImage != nil
+            {
+                println("Returning large photo now. Size: \(photo.largeImage?.size)")
+            }
+        }
+        
+        //println("Returning large photo now. Size: \(photo.largeImage?.size)")
+        //return photo
+    }
 
 
 
@@ -175,15 +211,17 @@ class FlickrPhotosDetailViewController: UICollectionViewController
 
 
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "photoSegue"
+        {
+            var controller: PFFlickrPhotosPhotoViewController    = segue.destinationViewController as! PFFlickrPhotosPhotoViewController
+            controller.flickrPhotoImage     = selectedPhotoLargeImage
+        }
     }
-    */
     
     
     
@@ -210,14 +248,71 @@ class FlickrPhotosDetailViewController: UICollectionViewController
 
         let flickrPhoto = photoForIndexPath(indexPath)
 
-        //cell.activityIndicator.stopAnimating()
-
-        cell.imageView.image    = flickrPhoto.thumbnail
-
-        //cell.activityIndicator.startAnimating()
-
+        cell.imageView.image        = flickrPhoto.thumbnail
+        
         cell.cellLayerSetup()
         return cell
+    }
+    
+    
+    
+    // MARK: - UICollectionViewDelegate
+    
+    /*
+    // Uncomment this method to specify if the specified item should be highlighted during tracking
+    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    return true
+    }
+    */
+    
+    
+    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        selectedIndexPath           = indexPath
+        
+        return true
+    }
+    
+    
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        selectedIndexPath           = indexPath
+        
+        if let photoIndexPath       = selectedIndexPath
+        {
+            var photo: FlickrPhoto?
+            photo                   = photoForIndexPath(photoIndexPath)
+            
+            if photo == nil
+            {
+                println("Error! No photo!")
+            }
+            
+            photo!.loadLargeImage {
+                loadedFlickrPhoto, error in
+                
+                if error != nil
+                {
+                    println("No errors in obtaining a large image.")
+                    return
+                }
+                
+                if loadedFlickrPhoto.largeImage == nil
+                {
+                    println("Photo has no larger version.")
+                    return
+                }
+                
+                if loadedFlickrPhoto.largeImage != nil
+                {
+                    self.selectedPhotoLargeImage         = loadedFlickrPhoto.largeImage
+                    
+                    self.performSegueWithIdentifier("photoSegue", sender: self)
+                    
+                }
+            }
+        }
     }
     
 }

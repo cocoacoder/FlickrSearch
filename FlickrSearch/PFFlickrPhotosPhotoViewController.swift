@@ -16,15 +16,27 @@ import UIKit
 
 class PFFlickrPhotosPhotoViewController: UIViewController
 {
-    var flickrPhoto: UIImage            = UIImage()
+    var flickrPhotoImage: UIImage?
     
+    @IBOutlet var flickrPhotoView: UIView!
     @IBOutlet weak var flickrPhotoImageView: UIImageView!
+    
     
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+        
+        if flickrPhotoImage != nil
+        {
+            flickrPhotoImageView.image                  = flickrPhotoImage
+        }
+        
+        if flickrPhotoImage == nil
+        {
+            println("No large image available.")
+        }
+        
         // Do any additional setup after loading the view.
     }
 

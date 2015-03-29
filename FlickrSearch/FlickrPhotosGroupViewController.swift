@@ -43,6 +43,7 @@ class FlickrPhotosGroupViewController:
 
             if largePhotoIndexPath != nil
             {
+                //println("largePhotoIndexPath != nil: \(largePhotoIndexPath)")
                 indexPaths.append(largePhotoIndexPath!)
             }
 
@@ -78,28 +79,6 @@ class FlickrPhotosGroupViewController:
     
     
     
-    
-    /*
-    override init(collectionViewLayout layout: UICollectionViewLayout!)
-    {
-        super.init(collectionViewLayout: layout)
-
-        collectionView?.registerClass(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: reuseIdentifier)
-
-        collectionView?.backgroundColor     = UIColor(white: 0.85, alpha: 1.0)
-    }
-    */
-
-    /*
-    convenience required init(coder aDecoder: NSCoder)
-    {
-        let collectionLayout    = FlickrPhotosViewLayout()
-
-        self.init(collectionViewLayout: collectionLayout)
-    }
-    */
-
-
     override func viewDidLoad()
     {
         //println("view controller viewDidLoad()")
@@ -177,7 +156,23 @@ class FlickrPhotosGroupViewController:
 
 
 
-    func updateSharedPhotoCount()
+    func largePhotoForIndexPath(indexPath: NSIndexPath) -> FlickrPhoto
+    {
+        largePhotoIndexPath     = indexPath
+        return searches[largePhotoIndexPath!.section].searchResults[largePhotoIndexPath!.row]
+    }
+    
+    
+    
+    func largeGroupPhotosForIndexPath(indexPath: NSIndexPath) -> [FlickrPhoto]
+    {
+        largePhotoIndexPath     = indexPath
+        return searches[largePhotoIndexPath!.section].searchResults
+    }
+    
+    
+    
+func updateSharedPhotoCount()
     {
         shareTextLabel.textColor    = UIColor.darkGrayColor()
         shareTextLabel.text         = "\(groupPhotos.count) photos selected."
@@ -289,15 +284,25 @@ class FlickrPhotosGroupViewController:
 
 
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "photosDetailSegue"
+        {
+            var controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
+            
+            if let groupIndexPathWithSection = selectedIndexPath?.section
+            {
+                controller.selectedPhotos               = searches[groupIndexPathWithSection].searchResults
+                controller.selectedPhotosTitle          = searches[groupIndexPathWithSection].searchTerm
+                controller.selectedPhotosSection        = groupIndexPathWithSection
+                controller.navigationController?.title  = searches[groupIndexPathWithSection].searchTerm
+            }
+        }
     }
-    */
 
 
 
@@ -341,7 +346,7 @@ class FlickrPhotosGroupViewController:
         //print("photoForIndexPath.row: \(indexPath.row)  ")
         //println("flickrPhoto ID: \(flickrPhoto.photoID)")
 
-
+        /*
         cell.activityIndicator.stopAnimating()
 
         if indexPath != largePhotoIndexPath
@@ -351,9 +356,11 @@ class FlickrPhotosGroupViewController:
             return cell
         }
 
+        
         if flickrPhoto.largeImage != nil
         {
             cell.imageView.image    = flickrPhoto.largeImage
+            println("largePhotoIndexPath: \(largePhotoIndexPath)")
 
             return cell
         }
@@ -366,7 +373,7 @@ class FlickrPhotosGroupViewController:
         flickrPhoto.loadLargeImage{
             loadedFlickrPhoto, error in
 
-            cell.activityIndicator.stopAnimating()
+            //cell.activityIndicator.stopAnimating()
 
             if error != nil
             {
@@ -386,9 +393,21 @@ class FlickrPhotosGroupViewController:
                 }
             }
         }
+        */
 
-
-
+        
+        if let largeImage = flickrPhoto.largeImage
+        {
+            cell.imageView.image        = largeImage
+            //println("largeImageSize: \(largeImage.size)")
+            return cell
+        }
+        else
+        {
+            cell.imageView.image        = flickrPhoto.thumbnail
+            //println("thumbnailImageSize: \(flickrPhoto.thumbnail!.size)")
+        }
+        
         //cell.cellLayerSetup()
         return cell
     }
@@ -467,7 +486,7 @@ class FlickrPhotosGroupViewController:
             updateSharedPhotoCount()
         }
         */
-}
+    }
 
 
 
@@ -527,23 +546,6 @@ class FlickrPhotosGroupViewController:
     {
         //println("override canBecomeFirstResponder")
         return true
-    }
-
-
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
-    {
-        if segue.identifier == "photosDetailSegue"
-        {
-            var controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
-
-            if let groupIndexPathWithSection = selectedIndexPath?.section
-            {
-                controller.selectedPhotos               = searches[groupIndexPathWithSection].searchResults
-                controller.selectedPhotosTitle          = searches[groupIndexPathWithSection].searchTerm
-                controller.navigationController?.title  = searches[groupIndexPathWithSection].searchTerm
-            }
-        }
     }
 
 
