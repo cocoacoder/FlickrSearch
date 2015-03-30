@@ -36,7 +36,7 @@ class FlickrPhotosGroupViewController:
     @IBOutlet var longPressGestureRecognzer: UILongPressGestureRecognizer!
 
     var largePhotoIndexPath: NSIndexPath?
-        {
+    {
         didSet
         {
             var indexPaths  = [NSIndexPath]()
@@ -172,7 +172,7 @@ class FlickrPhotosGroupViewController:
     
     
     
-func updateSharedPhotoCount()
+    func updateSharedPhotoCount()
     {
         shareTextLabel.textColor    = UIColor.darkGrayColor()
         shareTextLabel.text         = "\(groupPhotos.count) photos selected."
@@ -298,8 +298,6 @@ func updateSharedPhotoCount()
             {
                 controller.selectedPhotos               = searches[groupIndexPathWithSection].searchResults
                 controller.selectedPhotosTitle          = searches[groupIndexPathWithSection].searchTerm
-                controller.selectedPhotosSection        = groupIndexPathWithSection
-                controller.navigationController?.title  = searches[groupIndexPathWithSection].searchTerm
             }
         }
     }
@@ -341,74 +339,10 @@ func updateSharedPhotoCount()
             photoCount  = 3
         }
 
-        let flickrPhoto = photoForIndexPath(indexPath)
-
-        //print("photoForIndexPath.row: \(indexPath.row)  ")
-        //println("flickrPhoto ID: \(flickrPhoto.photoID)")
-
-        /*
-        cell.activityIndicator.stopAnimating()
-
-        if indexPath != largePhotoIndexPath
-        {
-            cell.imageView.image = flickrPhoto.thumbnail
-
-            return cell
-        }
-
-        
-        if flickrPhoto.largeImage != nil
-        {
-            cell.imageView.image    = flickrPhoto.largeImage
-            println("largePhotoIndexPath: \(largePhotoIndexPath)")
-
-            return cell
-        }
-
-
+        let flickrPhoto         = photoForIndexPath(indexPath)
         cell.imageView.image    = flickrPhoto.thumbnail
-        cell.activityIndicator.startAnimating()
-
-
-        flickrPhoto.loadLargeImage{
-            loadedFlickrPhoto, error in
-
-            //cell.activityIndicator.stopAnimating()
-
-            if error != nil
-            {
-                return
-            }
-
-            if loadedFlickrPhoto.largeImage == nil
-            {
-                return
-            }
-
-            if indexPath == self.largePhotoIndexPath
-            {
-                if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? FlickrPhotosGroupCell // Optional chaining
-                {
-                    cell.imageView.image    = loadedFlickrPhoto.largeImage
-                }
-            }
-        }
-        */
-
+        cell.cellLayerSetup()
         
-        if let largeImage = flickrPhoto.largeImage
-        {
-            cell.imageView.image        = largeImage
-            //println("largeImageSize: \(largeImage.size)")
-            return cell
-        }
-        else
-        {
-            cell.imageView.image        = flickrPhoto.thumbnail
-            //println("thumbnailImageSize: \(flickrPhoto.thumbnail!.size)")
-        }
-        
-        //cell.cellLayerSetup()
         return cell
     }
 
@@ -422,41 +356,11 @@ func updateSharedPhotoCount()
         return titleView
     }
 
-
-
-
-    // MARK: - UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
+    
 
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         selectedIndexPath           = indexPath
-
-        /*
-        if (sharing)
-        {
-            println("Sharing turned on")
-            return true
-        }
-        */
-
-        /*
-        if largePhotoIndexPath  == indexPath
-        {
-            largePhotoIndexPath = nil
-        }
-        else
-        {
-            largePhotoIndexPath = indexPath
-        }
-        */
 
         return true
     }
@@ -468,15 +372,6 @@ func updateSharedPhotoCount()
         selectedIndexPath           = indexPath
 
         self.performSegueWithIdentifier("photosDetailSegue", sender: self)
-
-        /*
-        if sharing
-        {
-            let photo   = photoForIndexPath(indexPath)
-            groupPhotos.append(photo)
-            updateSharedPhotoCount()
-        }
-        */
 
         /*
         if sharing
@@ -504,25 +399,6 @@ func updateSharedPhotoCount()
 
 
 
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-
-
-
     // MARK: - UIViewController Overrides
 
     override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool
@@ -531,7 +407,6 @@ func updateSharedPhotoCount()
 
         // Make sure the menu controller lets the responder chain know that it can handle its own
         // custom menu action.
-
         if action == Selector("menuAction:")
         {
             return true
@@ -547,46 +422,6 @@ func updateSharedPhotoCount()
         //println("override canBecomeFirstResponder")
         return true
     }
-
-
-
-    /*
-    // MARK: - UICollectionViewDelegateFlowLayout
-
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
-    {
-        let flickrPhoto = photoForIndexPath(indexPath)
-
-        if indexPath == largePhotoIndexPath
-        {
-            var size    = collectionView.bounds.size
-            size.height -= topLayoutGuide.length
-            size.height -= (sectionInsets.top + sectionInsets.right)
-            size.width  -= (sectionInsets.left + sectionInsets.right)
-            return flickrPhoto.sizeToFillWidthOfSize(size)
-        }
-
-        if var size = flickrPhoto.thumbnail?.size
-        {
-            size.width  += 10
-            size.height += 10
-            return size
-        }
-
-        return CGSize(width: 100, height: 100)
-    }
-
-
-
-    private let sectionInsets   = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-
-
-
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets
-    {
-        return sectionInsets
-    }
-    */
 
 
 
@@ -654,7 +489,6 @@ func updateSharedPhotoCount()
         //println("deletePhotoGroup:")
 
         // Grab the last long-ressed index path and use it to find its corresponding model
-
         if let index = lastLongPressedIndexPath
         {
             let indexSet = NSMutableIndexSet()
@@ -664,14 +498,12 @@ func updateSharedPhotoCount()
                     //
                     // 1. Delete the photo section.
                     //    ELSE: Find out how many photos there are for the section that I am going to delete
-
                     self.searches.removeAtIndex(index.section)
 
 
                     //
                     // 2. Delete the section in the collection view
                     //
-
                     self.collectionView?.deleteSections(NSIndexSet(index: index.section))
 
                     return
@@ -682,7 +514,7 @@ func updateSharedPhotoCount()
             }
             self.collectionView?.reloadData()
         }
-        println("\n")
     }
-
+    
+    // MARK: End of FlickrPhotosGroupViewController
 }

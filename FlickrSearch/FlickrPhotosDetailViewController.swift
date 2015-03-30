@@ -22,7 +22,6 @@ class FlickrPhotosDetailViewController: UICollectionViewController
     var selectedPhoto: FlickrPhoto?
     var selectedPhotoLargeImage: UIImage?
     var selectedPhotosTitle: String     = "I Love Airplanes"
-    var selectedPhotosSection: Int?
 
     private var groupPhotos             = [FlickrPhoto]()
     private let shareTextLabel          = UILabel()
@@ -250,6 +249,32 @@ class FlickrPhotosDetailViewController: UICollectionViewController
 
         cell.imageView.image        = flickrPhoto.thumbnail
         
+        /*
+        flickrPhoto.loadLargeImage{
+            loadedFlickrPhoto, error in
+            
+            //cell.activityIndicator.stopAnimating()
+            
+            if error != nil
+            {
+                return
+            }
+            
+            if loadedFlickrPhoto.largeImage == nil
+            {
+                return
+            }
+            
+            if indexPath == self.largePhotoIndexPath
+            {
+                if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? FlickrPhotosGroupCell // Optional chaining
+                {
+                    cell.imageView.image    = loadedFlickrPhoto.largeImage
+                }
+            }
+        }
+        */
+        
         cell.cellLayerSetup()
         return cell
     }
@@ -270,6 +295,29 @@ class FlickrPhotosDetailViewController: UICollectionViewController
     {
         selectedIndexPath           = indexPath
         
+        /*
+        if (sharing)
+        {
+        println("Sharing turned on")
+        return true
+        }
+        */
+        
+        /*
+        //
+        // largePhotoIndexPath is simply to allow for the choosing of a large image, the retrieval of which is done through
+        // flickrPhoto.loadLargeImage()
+        //
+        if largePhotoIndexPath  == indexPath
+        {
+        largePhotoIndexPath = nil
+        }
+        else
+        {
+        largePhotoIndexPath = indexPath
+        }
+        */
+        
         return true
     }
     
@@ -279,6 +327,10 @@ class FlickrPhotosDetailViewController: UICollectionViewController
     {
         selectedIndexPath           = indexPath
         
+        
+        //
+        // This retrieves a larger version of the selected FlickrPhoto
+        //
         if let photoIndexPath       = selectedIndexPath
         {
             var photo: FlickrPhoto?
@@ -312,7 +364,17 @@ class FlickrPhotosDetailViewController: UICollectionViewController
                     
                 }
             }
+            
+            /*
+            if sharing
+            {
+            let photo   = photoForIndexPath(indexPath)
+            groupPhotos.append(photo)
+            updateSharedPhotoCount()
+            }
+            */
         }
     }
     
+    // MARK: - End of FlickrPhotosDetailViewController
 }

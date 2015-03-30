@@ -16,7 +16,6 @@ import QuartzCore
 
 
 
-//let flickrPhotoCellKind         = "FlickrCell"
 let PFPhotoGroupTitleKind: String   = "PhotoGroupTitle"
 
 
@@ -26,6 +25,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 {
     // MARK: - Properties
 
+    // cell ID can be defined pretty much anywhere, as a VC property or, as in the FlickrPhotosDetailedViewController, as a constant.
     let flickrPhotoCellKind                 = "FlickrCell"
 
     private var layoutInfo: NSDictionary    = NSDictionary()
@@ -34,9 +34,9 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     var itemInsets: UIEdgeInsets = UIEdgeInsetsZero
 
     var itemSize: CGSize                    = CGSize()
+    {
+        willSet(newItemSize)
         {
-            willSet(newItemSize)
-            {
                 //println("Setting itemSize")
         }
         didSet
@@ -48,10 +48,10 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     var interItemSpacingY: CGFloat          = CGFloat()
 
     var numberOfColumns: Int                = Int()
+    {
+        willSet(newColumnNumber)
         {
-            willSet(newColumnNumber)
-            {
-                //println("About to set numberOfColumns to \(newColumnNumber)")
+            //println("About to set numberOfColumns to \(newColumnNumber)")
         }
         didSet
         {
