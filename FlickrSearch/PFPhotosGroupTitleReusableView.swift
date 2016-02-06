@@ -21,7 +21,7 @@ class PFPhotosGroupTitleReusableView: UICollectionReusableView
 
 
 
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         self.titleLabel                     = UILabel()
 
@@ -38,7 +38,7 @@ class PFPhotosGroupTitleReusableView: UICollectionReusableView
         super.init(frame: frame)
 
         self.titleLabel                     = UILabel(frame: self.bounds)
-        self.titleLabel.autoresizingMask    = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+        self.titleLabel.autoresizingMask    = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
         self.titleLabel.backgroundColor     = UIColor.clearColor()
         self.titleLabel.textAlignment       = NSTextAlignment.Center
         self.titleLabel.font                = UIFont.systemFontOfSize(15.0)

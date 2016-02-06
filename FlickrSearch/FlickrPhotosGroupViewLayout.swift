@@ -63,7 +63,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         self.itemInsets     = UIEdgeInsetsZero
 
@@ -118,7 +118,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
-    func setTitleHeight(#newTitleHeight: CGFloat)  ->  Void
+    func titleHeight(newTitleHeight: CGFloat)  ->  Void
     {
         if  newTitleHeight == titleHeight
         {
@@ -136,23 +136,23 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
     override func prepareLayout()
     {
-        var newLayoutInfo: NSMutableDictionary      = NSMutableDictionary()
-        var cellLayoutInfo: NSMutableDictionary     = NSMutableDictionary()
-        var titleLayoutInfo: NSMutableDictionary    = NSMutableDictionary()
+        let newLayoutInfo: NSMutableDictionary      = NSMutableDictionary()
+        let cellLayoutInfo: NSMutableDictionary     = NSMutableDictionary()
+        let titleLayoutInfo: NSMutableDictionary    = NSMutableDictionary()
 
         let baseCellZIndex  = 20
 
-        if var sections = collectionView?.numberOfSections()
+        if let sections = collectionView?.numberOfSections()
         {
-            var sectionCount: Int                   = sections
+            let sectionCount: Int                   = sections
 
             var indexPath: NSIndexPath              = NSIndexPath(forItem: 0, inSection: 0)
 
-            var section: Int
+            //var section: Int
 
             for section in 0..<sectionCount
             {
-                if var items: Int   = collectionView?.numberOfItemsInSection(section)
+                if let items: Int   = collectionView?.numberOfItemsInSection(section)
                 {
                     if items != 0
                     {
@@ -170,7 +170,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
                             if indexPath.item == 0
                             {
-                                var titleAttributes         = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: PFPhotoGroupTitleKind, withIndexPath: indexPath)
+                                let titleAttributes         = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: PFPhotoGroupTitleKind, withIndexPath: indexPath)
                                 titleAttributes.frame       = self.frameForPhotoGroupTitleAtIndexPath(indexPath)
                                 titleLayoutInfo[indexPath]  = titleAttributes
                             }
@@ -183,14 +183,14 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                 }
                 else
                 {
-                    var alertView   = UIAlertView(title: "Oops!", message: "There are no items in your section.", delegate: self, cancelButtonTitle: "Ok")
+                    let alertView   = UIAlertView(title: "Oops!", message: "There are no items in your section.", delegate: self, cancelButtonTitle: "Ok")
                     alertView.show()
                 }
             }
         }
         else
         {
-            var alertView   = UIAlertView(title: "Oops!", message: "There are no sections in your collection.", delegate: self, cancelButtonTitle: "Ok")
+            let alertView   = UIAlertView(title: "Oops!", message: "There are no sections in your collection.", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
         }
 
@@ -201,22 +201,23 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
 
 
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]?
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]?
     {
         //
         // So, why am I doing all of this. Well, that's an interesting story. You see, rect was getting
         // passed-in with values like (0.0,-768.0,1024.0,1536.0) or (0.0,-1024.0, 0.0,1536.0). Talk about
         // screwing things up!
         //
-        var updatedRect: CGRect         = rect
+        let updatedRect: CGRect         = rect
 
-        if var aView = collectionView
+
+        if let aView = collectionView
         {
+            _   = aView
         }
-
         else
         {
-            var alertView   = UIAlertView(title: "Oops!", message: "There is no collection view with which to work.", delegate: self, cancelButtonTitle: "Ok")
+            let alertView   = UIAlertView(title: "Oops!", message: "There is no collection view with which to work.", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
             //assert(false, "There is no collection view with which to work.")
         }
@@ -225,15 +226,15 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         let allAttributes: NSMutableArray       = NSMutableArray(capacity: layoutInfo.count)
 
         layoutInfo.enumerateKeysAndObjectsUsingBlock({ (elementID, elementsInfo, stopBool) -> Void in
-            var myKey = elementID as? NSString
+            //var myKey = elementID as? NSString
 
-            if var myObj = elementsInfo as? NSDictionary
+            if let myObj = elementsInfo as? NSDictionary
             {
                 myObj.enumerateKeysAndObjectsUsingBlock({ (indexPath, attributes, innerStop) -> Void in
-                    var myObjIndexPath  = indexPath as? NSIndexPath
-                    var myObjAttributes = attributes as? UICollectionViewLayoutAttributes
+                    //var myObjIndexPath  = indexPath as? NSIndexPath
+                    let myObjAttributes = attributes as? UICollectionViewLayoutAttributes
 
-                    if var myAttributes = myObjAttributes
+                    if let myAttributes = myObjAttributes
                     {
                         if CGRectIntersectsRect(updatedRect, myAttributes.frame) // Oops, in simulator rect is (0.0,-1024.0,0.0,2048.0), which is weird.
                         {
@@ -241,7 +242,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
                         }
                         else
                         {
-                            var alertView   = UIAlertView(title: "Oops!", message: "No attributes are available.", delegate: self, cancelButtonTitle: "Ok")
+                            let alertView   = UIAlertView(title: "Oops!", message: "No attributes are available.", delegate: self, cancelButtonTitle: "Ok")
                             alertView.show()
                         }
                     }
@@ -249,19 +250,19 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
             }
             else
             {
-                var alertView   = UIAlertView(title: "Oops!", message: "No elements are available.", delegate: self, cancelButtonTitle: "Ok")
+                let alertView   = UIAlertView(title: "Oops!", message: "No elements are available.", delegate: self, cancelButtonTitle: "Ok")
                 alertView.show()
             }
         })
 
-        let attributesArray    = allAttributes as Array
+        //let attributesArray    = allAttributes as Array
 
-        return allAttributes as Array
+        return allAttributes as? Array
     }
 
 
 
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes!
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?
     {
         //
         // Interesting note
@@ -272,16 +273,16 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         //
         // This is how you do the same thing in Swift...
         //
-        var attributes:UICollectionViewLayoutAttributes    = (layoutInfo[flickrPhotoCellKind] as! NSDictionary)[indexPath] as! UICollectionViewLayoutAttributes
+        let attributes:UICollectionViewLayoutAttributes    = (layoutInfo[flickrPhotoCellKind] as! NSDictionary)[indexPath] as! UICollectionViewLayoutAttributes
 
         return attributes
     }
 
 
 
-    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes!
+    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?
     {
-        return (layoutInfo[PFPhotoGroupTitleKind] as! NSDictionary)[indexPath] as! UICollectionViewLayoutAttributes
+        return (layoutInfo[PFPhotoGroupTitleKind] as! NSDictionary)[indexPath] as? UICollectionViewLayoutAttributes
     }
 
 
@@ -290,20 +291,20 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     {
         var height: CGFloat
 
-        if var aCollectionView = collectionView
+        if let aCollectionView = collectionView
         {
-            if var rowItems = collectionView?.numberOfSections()
+            if let rowItems = collectionView?.numberOfSections()
             {
                 var rowCount    = rowItems / numberOfColumns
 
                 if rowItems % numberOfColumns > 0
                 {
-                    rowCount++
+                    rowCount += 1
                 }
 
-                var topBottomSpacing: CGFloat   = itemInsets.top + itemInsets.bottom
-                var interSpacing: CGFloat       = CGFloat(rowCount) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
-                var interTitleSpacing: CGFloat  = CGFloat(rowCount) * titleHeight
+                let topBottomSpacing: CGFloat   = itemInsets.top + itemInsets.bottom
+                let interSpacing: CGFloat       = CGFloat(rowCount) * itemSize.height + CGFloat(rowCount - 1) * CGFloat(interItemSpacingY)
+                let interTitleSpacing: CGFloat  = CGFloat(rowCount) * titleHeight
 
                 height                          = topBottomSpacing + interSpacing + interTitleSpacing
 
@@ -313,9 +314,9 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
             else
             {
-                var alertView   = UIAlertView(title: "Oops!", message: "There is no multi-row content to display.", delegate: self, cancelButtonTitle: "Ok")
+                let alertView   = UIAlertView(title: "Oops!", message: "There is no multi-row content to display.", delegate: self, cancelButtonTitle: "Ok")
                 alertView.show()
-                println("Ummm...you have no rows, dude.")
+                print("Ummm...you have no rows, dude.")
 
                 return CGSizeZero
             }
@@ -323,7 +324,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
 
         else
         {
-            var alertView   = UIAlertView(title: "Oops!", message: "There is no content to display.", delegate: self, cancelButtonTitle: "Ok")
+            let alertView   = UIAlertView(title: "Oops!", message: "There is no content to display.", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
 
             return CGSizeZero
@@ -337,8 +338,8 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     func transformAffineForGroupPhotoAtIndex(indexPath: NSIndexPath) -> CGAffineTransform
     {
 
-        var offset  = Double(-indexPath.row) * 8.0
-        var scale   = CGFloat(1.0 - Double(indexPath.row) * 0.05)
+        let offset  = Double(-indexPath.row) * 8.0
+        let scale   = CGFloat(1.0 - Double(indexPath.row) * 0.05)
 
         var transform: CGAffineTransform    = CGAffineTransformMakeTranslation(CGFloat(0.0), CGFloat(offset))
         transform      = CGAffineTransformScale(transform, scale, scale)
@@ -350,18 +351,18 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
     
     private func frameForPhotoGroupAtIndexPath(indexPath: NSIndexPath) -> CGRect
     {
-        var row: Int        = indexPath.section / numberOfColumns
-        var column: Int     = indexPath.section % numberOfColumns
+        let row: Int        = indexPath.section / numberOfColumns
+        let column: Int     = indexPath.section % numberOfColumns
 
-        var itemSizeWidth   = Float(itemSize.width)
-        var columnSpacing   = numberOfColumns * Int(itemSizeWidth)
+        //let itemSizeWidth   = Float(itemSize.width)
+        //var columnSpacing   = numberOfColumns * Int(itemSizeWidth)
 
         var originX: CGFloat
         var originY: CGFloat
 
-        if var sizeWidth = collectionView?.bounds.size.width
+        if let sizeWidth = collectionView?.bounds.size.width
         {
-            var itemWidth       = CGFloat(numberOfColumns) * itemSize.width
+            let itemWidth       = CGFloat(numberOfColumns) * itemSize.width
             var spacingX        = sizeWidth - itemInsets.left - itemInsets.right - itemWidth
 
             if self.numberOfColumns > 1
@@ -376,7 +377,7 @@ class FlickrPhotosGroupViewLayout: UICollectionViewLayout
         }
         else
         {
-            var alertView   = UIAlertView(title: "Oops!", message: "Collections are not available", delegate: self, cancelButtonTitle: "Ok")
+            let alertView   = UIAlertView(title: "Oops!", message: "Collections are not available", delegate: self, cancelButtonTitle: "Ok")
             alertView.show()
 
             return CGRectZero

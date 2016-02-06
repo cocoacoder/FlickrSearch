@@ -106,7 +106,7 @@ class FlickrPhotosGroupViewController:
             {
                 flickrPhotosLayout.numberOfColumns  = 4
 
-                var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+                let sideInset: CGFloat              = UIScreen.mainScreen().preferredMode!.size.width == 1136.0 ? 45.0 : 25.0
 
                 flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
             }
@@ -114,7 +114,7 @@ class FlickrPhotosGroupViewController:
             {
                 flickrPhotosLayout.numberOfColumns  = 3
 
-                var sideInset: CGFloat              = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+                let sideInset: CGFloat              = UIScreen.mainScreen().preferredMode!.size.width == 1136.0 ? 45.0 : 25.0
 
                 flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
             }
@@ -125,14 +125,14 @@ class FlickrPhotosGroupViewController:
             {
                 flickrPhotosLayout.numberOfColumns  = 3
 
-                var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
+                let inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
                 flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)
             }
             if UIDevice.currentDevice().userInterfaceIdiom == .Phone
             {
                 flickrPhotosLayout.numberOfColumns  = 2
 
-                var inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
+                let inset: CGFloat                  = flickrPhotosLayout.itemInsetValue
                 flickrPhotosLayout.itemInsets       = UIEdgeInsetsMake(inset, inset, inset, inset)
             }
         }
@@ -194,7 +194,7 @@ class FlickrPhotosGroupViewController:
                 largePhotoIndexPath     = nil
             }
 
-            let shareButton = self.navigationItem.rightBarButtonItems!.first as! UIBarButtonItem
+            let shareButton = self.navigationItem.rightBarButtonItems!.first! as UIBarButtonItem
 
             if sharing
             {
@@ -231,7 +231,7 @@ class FlickrPhotosGroupViewController:
 
             let shareScreen     = UIActivityViewController(activityItems: imageArray, applicationActivities: nil)
             let popover         = UIPopoverController(contentViewController: shareScreen)
-            popover.presentPopoverFromBarButtonItem(self.navigationItem.rightBarButtonItems!.first as! UIBarButtonItem, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover.presentPopoverFromBarButtonItem(self.navigationItem.rightBarButtonItems!.first! as UIBarButtonItem, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
 
         sharing = !sharing
@@ -248,7 +248,7 @@ class FlickrPhotosGroupViewController:
         textField.addSubview(activityIndicator)
         activityIndicator.frame = textField.bounds
         activityIndicator.startAnimating()
-        flickr.searchFlickrForTerm(textField.text)
+        flickr.searchFlickrForTerm(textField.text!)
         {
             results, error in
 
@@ -292,7 +292,7 @@ class FlickrPhotosGroupViewController:
     {
         if segue.identifier == "photosDetailSegue"
         {
-            var controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
+            let controller: FlickrPhotosDetailViewController    = segue.destinationViewController as! FlickrPhotosDetailViewController
             
             if let groupIndexPathWithSection = selectedIndexPath?.section
             {
@@ -350,7 +350,7 @@ class FlickrPhotosGroupViewController:
 
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
     {
-        var titleView               = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: GroupTitleIdentifier as String, forIndexPath: indexPath) as! PFPhotosGroupTitleReusableView
+        let titleView               = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: GroupTitleIdentifier as String, forIndexPath: indexPath) as! PFPhotosGroupTitleReusableView
         titleView.titleLabel.text   = searches[indexPath.section].searchTerm
 
         return titleView
@@ -389,7 +389,7 @@ class FlickrPhotosGroupViewController:
     {
         if sharing
         {
-            if let foundIndex   = find(groupPhotos, photoForIndexPath(indexPath))
+            if let foundIndex   = groupPhotos.indexOf(photoForIndexPath(indexPath))
             {
                 groupPhotos.removeAtIndex(foundIndex)
                 updateSharedPhotoCount()
@@ -435,7 +435,7 @@ class FlickrPhotosGroupViewController:
         }
 
         // Grab the location of the gesture and use it to locate the cell it was made on.
-        var selectedPoint: CGPoint      = recognizer.locationInView(self.collectionView)
+        let selectedPoint: CGPoint      = recognizer.locationInView(self.collectionView)
 
         var indexPath: NSIndexPath?
         indexPath                       = collectionView?.indexPathForItemAtPoint(selectedPoint)
@@ -447,14 +447,14 @@ class FlickrPhotosGroupViewController:
             lastLongPressedIndexPath        = index
 
             // Grab the cell from which to display the menu controller.
-            var selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
+            let selectedCell: UICollectionViewCell  = self.collectionView!.cellForItemAtIndexPath(index)!
 
 
             //
             // Create a custom menu item
             //
             // Custom menu with Delete and Cut items
-            var deleteMenuItem: UIMenuItem  = UIMenuItem(title: "Delete", action: "deletePhotoGroup:")
+            let deleteMenuItem: UIMenuItem  = UIMenuItem(title: "Delete", action: "deletePhotoGroup:")
             //var renameMenuItem: UIMenuItem  = UIMenuItem(title: "Rename", action: Selector("renamePhotoGroup:"))
 
 
@@ -462,7 +462,7 @@ class FlickrPhotosGroupViewController:
             // Menu Controller
             //
             // Configure the shared menu controller and display it.
-            var menuController: UIMenuController    = UIMenuController.sharedMenuController()
+            let menuController: UIMenuController    = UIMenuController.sharedMenuController()
 
             // Menu controller for Delete and Cut items
             menuController.menuItems        = [deleteMenuItem]
@@ -491,7 +491,7 @@ class FlickrPhotosGroupViewController:
         // Grab the last long-ressed index path and use it to find its corresponding model
         if let index = lastLongPressedIndexPath
         {
-            let indexSet = NSMutableIndexSet()
+            //let indexSet = NSMutableIndexSet()
 
             self.collectionView?.performBatchUpdates(
                 {

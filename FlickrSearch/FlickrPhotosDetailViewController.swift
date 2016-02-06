@@ -72,7 +72,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
             {
                 flickrPhotosDetailLayout.numberOfColumns    = 4
 
-                var sideInset: CGFloat                      = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+                let sideInset: CGFloat                      = UIScreen.mainScreen().preferredMode!.size.width == 1136.0 ? 45.0 : 25.0
 
                 flickrPhotosDetailLayout.itemInsets         = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
             }
@@ -80,7 +80,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
             {
                 flickrPhotosDetailLayout.numberOfColumns    = 3
 
-                var sideInset: CGFloat                      = UIScreen.mainScreen().preferredMode.size.width == 1136.0 ? 45.0 : 25.0
+                let sideInset: CGFloat                      = UIScreen.mainScreen().preferredMode!.size.width == 1136.0 ? 45.0 : 25.0
 
                 flickrPhotosDetailLayout.itemInsets         = UIEdgeInsetsMake(22.0, sideInset, 13.0, sideInset)
             }
@@ -91,14 +91,14 @@ class FlickrPhotosDetailViewController: UICollectionViewController
             {
                 flickrPhotosDetailLayout.numberOfColumns    = 3
 
-                var inset: CGFloat                          = flickrPhotosDetailLayout.itemInsetValue
+                let inset: CGFloat                          = flickrPhotosDetailLayout.itemInsetValue
                 flickrPhotosDetailLayout.itemInsets         = UIEdgeInsetsMake(inset, inset, inset, inset)
             }
             if UIDevice.currentDevice().userInterfaceIdiom == .Phone
             {
                 flickrPhotosDetailLayout.numberOfColumns    = 2
 
-                var inset: CGFloat                          = flickrPhotosDetailLayout.itemInsetValue
+                let inset: CGFloat                          = flickrPhotosDetailLayout.itemInsetValue
                 flickrPhotosDetailLayout.itemInsets         = UIEdgeInsetsMake(inset, inset, inset, inset)
             }
         }
@@ -117,7 +117,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
     
     func largePhotoForIndexPath(indexPath: NSIndexPath) -> Void
     {
-        var photo                   = selectedPhotos[indexPath.row]
+        let photo                   = selectedPhotos[indexPath.row]
 
         photo.loadLargeImage{
             photo, error in
@@ -126,19 +126,19 @@ class FlickrPhotosDetailViewController: UICollectionViewController
             
             if error != nil
             {
-                println("You've got large photo!")
+                print("You've got large photo!")
                 return
             }
             
             if photo.largeImage == nil
             {
-                println("No large photo found for the selected photo.")
+                print("No large photo found for the selected photo.")
                 return
             }
             
             if photo.largeImage != nil
             {
-                println("Returning large photo now. Size: \(photo.largeImage?.size)")
+                print("Returning large photo now. Size: \(photo.largeImage?.size)")
             }
         }
         
@@ -165,7 +165,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
             collectionView?.selectItemAtIndexPath(nil, animated: true, scrollPosition: .None)
             groupPhotos.removeAll(keepCapacity: false)
 
-            let shareButton = self.navigationItem.rightBarButtonItems!.first as! UIBarButtonItem
+            let shareButton = self.navigationItem.rightBarButtonItems!.first! as UIBarButtonItem
 
             if sharing
             {
@@ -202,7 +202,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
 
             let shareScreen     = UIActivityViewController(activityItems: imageArray, applicationActivities: nil)
             let popover         = UIPopoverController(contentViewController: shareScreen)
-            popover.presentPopoverFromBarButtonItem(self.navigationItem.rightBarButtonItems!.first as! UIBarButtonItem, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover.presentPopoverFromBarButtonItem(self.navigationItem.rightBarButtonItems!.first! as UIBarButtonItem, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
 
         sharing = !sharing
@@ -217,7 +217,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
     {
         if segue.identifier == "photoSegue"
         {
-            var controller: PFFlickrPhotosPhotoViewController    = segue.destinationViewController as! PFFlickrPhotosPhotoViewController
+            let controller: PFFlickrPhotosPhotoViewController    = segue.destinationViewController as! PFFlickrPhotosPhotoViewController
             controller.flickrPhotoImage     = selectedPhotoLargeImage
         }
     }
@@ -338,7 +338,7 @@ class FlickrPhotosDetailViewController: UICollectionViewController
             
             if photo == nil
             {
-                println("Error! No photo!")
+                print("Error! No photo!")
             }
             
             photo!.loadLargeImage {
@@ -346,13 +346,13 @@ class FlickrPhotosDetailViewController: UICollectionViewController
                 
                 if error != nil
                 {
-                    println("No errors in obtaining a large image.")
+                    print("No errors in obtaining a large image.")
                     return
                 }
                 
                 if loadedFlickrPhoto.largeImage == nil
                 {
-                    println("Photo has no larger version.")
+                    print("Photo has no larger version.")
                     return
                 }
                 

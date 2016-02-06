@@ -17,7 +17,7 @@ import UIKit
 class PFHouseWorksCustomCellSelectedBackground: UIView
 {
 
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
         //println("cell selected background init coder.")
@@ -42,14 +42,14 @@ class PFHouseWorksCustomCellSelectedBackground: UIView
         //println("cell selected background drawing code")
 
         // draw a rounded rect bezier path filled with light grey
-        var aRef: CGContextRef          = UIGraphicsGetCurrentContext()
+        let aRef: CGContextRef          = UIGraphicsGetCurrentContext()!
         CGContextSaveGState(aRef)
 
-        var bezierPath: UIBezierPath    = UIBezierPath.init(roundedRect: rect, cornerRadius: 3.0)
+        let bezierPath: UIBezierPath    = UIBezierPath.init(roundedRect: rect, cornerRadius: 3.0)
         bezierPath.lineWidth            = 5.0
         UIColor.blackColor().setStroke()
 
-        var fillColor: UIColor          = UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
+        let fillColor: UIColor          = UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
         fillColor.setFill()
 
         bezierPath.stroke()

@@ -34,7 +34,7 @@ class PFFlickrPhotosPhotoViewController: UIViewController
         
         if flickrPhotoImage == nil
         {
-            println("No large image available.")
+            print("No large image available.")
         }
         
         // Do any additional setup after loading the view.
