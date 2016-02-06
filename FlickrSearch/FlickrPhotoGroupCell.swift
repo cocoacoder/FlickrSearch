@@ -24,7 +24,7 @@ class FlickrPhotosGroupCell: UICollectionViewCell
 
     required init?(coder aDecoder: NSCoder)
     {
-        var altSelectedBackgroundView: PFHouseWorksCustomCellSelectedBackground     = PFHouseWorksCustomCellSelectedBackground(frame: CGRect(x: 0, y: 0, width:300 , height: 300))
+        //var altSelectedBackgroundView: PFHouseWorksCustomCellSelectedBackground     = PFHouseWorksCustomCellSelectedBackground(frame: CGRect(x: 0, y: 0, width:300 , height: 300))
 
         super.init(coder: aDecoder)
     }

@@ -190,10 +190,11 @@ class Flickr
                     completion(results:FlickrSearchResults(searchTerm: searchTerm, searchResults: flickrPhotos), error: nil)
                 })
             }
-            catch
+            catch let JSONError as NSError
             {
                 print("Oops! Couldn't parse the JSON. All. Is. Lost!")
-                //completion(results: nil, error: error)
+                completion(results: nil, error: JSONError)
+                return
             }
         }
     }
@@ -201,8 +202,8 @@ class Flickr
 
     private func flickrSearchURLForSearchTerm(searchTerm:String) -> NSURL
     {
-        let escapedTerm = searchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        //let escapedTerm = searchTerm.stringByAddingPercentEncodingWithAllowedCharacters(NSUTF8StringEncoding)!
+        //let escapedTerm = searchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let escapedTerm = searchTerm.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
         let URLString   = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(apiKey)&text=\(escapedTerm)&per_page=20&format=json&nojsoncallback=1"
         return NSURL(string: URLString)!
     }
