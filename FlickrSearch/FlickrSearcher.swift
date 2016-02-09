@@ -3,6 +3,9 @@
 //  flickrSearch
 //
 //  Created by Richard Turton on 31/07/2014.
+// 
+//  Modified by Jim Hillhouse on 02/04/2016.
+//
 //  Copyright (c) 2014 Razeware. All rights reserved.
 //
 
@@ -134,10 +137,6 @@ class Flickr
                 completion(results: nil,error: error)
                 return
             }
-
-            //var JSONError : NSError?
-
-            //let resultsDictionary = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions(0), error: &JSONError) as? NSDictionary
 
             do
             {
